@@ -1,12 +1,16 @@
 ---
-import '../styles/global.css';
+import "../styles/global.css";
+import { ClientRouter } from "astro:transitions";
 
 interface Props {
 	title: string;
 	description?: string;
 }
 
-const { title, description = "Portafolio profesional de Desarrollo Full Stack" } = Astro.props;
+const {
+	title,
+	description = "Portafolio profesional de Desarrollo Full Stack",
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -17,15 +21,21 @@ const { title, description = "Portafolio profesional de Desarrollo Full Stack" }
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<ClientRouter />
 		<title>{title}</title>
 	</head>
 	<body class="bg-slate-950 text-white selection:bg-fuchsia-500/30">
-		<div class="fixed inset-0 -z-10 h-full w-full bg-slate-950 [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)] opacity-20"></div>
-		
+		<div
+			class="fixed inset-0 -z-10 h-full w-full bg-slate-950 [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)] opacity-20"
+		>
+		</div>
+
 		<slot />
-		
 	</body>
 </html>
