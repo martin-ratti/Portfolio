@@ -1,0 +1,63 @@
+---
+import { skills } from "../data/skills";
+
+const skillCategories = [
+    {
+        title: "Frontend",
+        skills: skills.frontend,
+        colorClass:
+            "border-violet-500/30 bg-violet-500/10 text-violet-300 hover:bg-violet-500/20",
+    },
+    {
+        title: "Backend",
+        skills: skills.backend,
+        colorClass:
+            "border-fuchsia-500/30 bg-fuchsia-500/10 text-fuchsia-300 hover:bg-fuchsia-500/20",
+    },
+    {
+        title: "Lenguajes",
+        skills: skills.languages,
+        colorClass:
+            "border-cyan-500/30 bg-cyan-500/10 text-cyan-300 hover:bg-cyan-500/20",
+    },
+    {
+        title: "Herramientas",
+        skills: skills.tools,
+        colorClass:
+            "border-emerald-500/30 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20",
+    },
+];
+---
+
+<section class="py-20 px-4 relative">
+    <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl font-bold mb-12 text-center">Stack Tecnológico</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {
+                skillCategories.map((category) => (
+                    <div class="glass-card p-8 rounded-2xl relative overflow-hidden group">
+                        {/* Decorative blur */}
+                        <div
+                            class={`absolute -right-4 -top-4 w-24 h-24 rounded-full blur-2xl opacity-20 ${category.colorClass.split(" ")[1].replace("/10", "/30")}`}
+                        />
+
+                        <h3 class="text-xl font-semibold mb-6 text-slate-200">
+                            {category.title}
+                        </h3>
+
+                        <div class="flex flex-wrap gap-3">
+                            {category.skills.map((skill) => (
+                                <span
+                                    class={`px-4 py-2 rounded-lg text-sm font-medium border transition-colors cursor-default ${category.colorClass}`}
+                                >
+                                    {skill}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</section>

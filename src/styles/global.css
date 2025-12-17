@@ -1,0 +1,24 @@
+/* src/styles/global.css */
+@import "tailwindcss";
+
+@layer base {
+    html {
+        font-family: 'Outfit', system-ui, sans-serif;
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply bg-slate-950 text-slate-100;
+        overflow-x: hidden;
+    }
+}
+
+@layer utilities {
+    .text-gradient {
+        @apply bg-clip-text text-transparent bg-gradient-to-r from-violet-500 via-fuchsia-500 to-cyan-500;
+    }
+
+    .glass-card {
+        @apply bg-slate-900/50 backdrop-blur-xl border border-slate-800/50;
+    }
+}
