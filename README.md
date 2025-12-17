@@ -137,6 +137,6 @@ Estoy buscando activamente nuevas oportunidades para aportar valor en equipos de
 ---
 
 <p align="center">
-© 2024 Martín Ratti. Todos los derechos reservados.<br />
+© 2025 Martín Ratti. Todos los derechos reservados.<br />
 Desarrollado con Astro y ❤️
 </p>
