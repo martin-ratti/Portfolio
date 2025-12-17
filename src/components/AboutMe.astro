@@ -1,5 +1,8 @@
 ---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
 
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <section id="sobre-mi" class="py-20 px-4 max-w-6xl mx-auto">
@@ -22,7 +25,7 @@
                 cy="7"
                 r="4"></circle></svg
         >
-        Sobre mí
+        {t("about.title")}
     </h2>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -35,20 +38,12 @@
             >
             </div>
             <p class="text-lg text-slate-300 leading-relaxed relative z-10">
-                Me llamo <strong class="text-violet-300">Martín Ratti</strong> y soy
-                un apasionado de la tecnología. Comencé mi camino en la programación
-                por curiosidad y necesidad, desarrollando herramientas para resolver
-                problemas reales (como un organizador de playlists o un lector OCR).
+                {t("about.story")}
             </p>
             <p
                 class="text-lg text-slate-300 leading-relaxed mt-4 relative z-10"
             >
-                Me especializo en el desarrollo <strong class="text-cyan-300"
-                    >Full Stack</strong
-                >, disfrutando tanto de la lógica del backend con Node.js y C#
-                como de la creatividad del frontend con React y Astro. Mi
-                objetivo es crear software funcional, bonito y que aporte valor
-                real.
+                {t("about.specialty")}
             </p>
         </article>
 
@@ -56,7 +51,6 @@
         <article
             class="glass-card rounded-2xl p-4 flex items-center justify-center bg-slate-800/50"
         >
-            <!-- Placeholder for an image. The user can replace this later -->
             <div
                 class="w-full h-full min-h-[200px] bg-slate-700/50 rounded-xl flex items-center justify-center text-slate-500 relative overflow-hidden"
             >
@@ -91,13 +85,10 @@
             class="glass-card p-6 rounded-2xl md:col-span-1 flex flex-col justify-center hover:bg-slate-800/60 transition-colors"
         >
             <h3 class="text-xl font-bold text-fuchsia-300 mb-2">
-                Ingeniería en Sistemas
+                {t("about.education.title")}
             </h3>
             <p class="text-slate-400">
-                Estudiante avanzado en la <strong class="text-slate-200"
-                    >UTN Rosario</strong
-                >. Combinando la teoría académica con la práctica profesional,
-                listo para mi primera experiencia laboral.
+                {t("about.education.desc")}
             </p>
         </article>
 
@@ -106,24 +97,24 @@
             class="glass-card p-6 rounded-2xl md:col-span-2 flex flex-col justify-center hover:bg-slate-800/60 transition-colors"
         >
             <h3 class="text-xl font-bold text-emerald-300 mb-2">
-                Lo que me define
+                {t("about.skills.title")}
             </h3>
             <div class="flex flex-wrap gap-2 mt-2">
                 <span
                     class="px-3 py-1 bg-emerald-900/30 text-emerald-200 rounded-full text-sm border border-emerald-800/50"
-                    >Proactivo</span
+                    >{t("about.skills.proactive")}</span
                 >
                 <span
                     class="px-3 py-1 bg-emerald-900/30 text-emerald-200 rounded-full text-sm border border-emerald-800/50"
-                    >Curioso</span
+                    >{t("about.skills.curious")}</span
                 >
                 <span
                     class="px-3 py-1 bg-emerald-900/30 text-emerald-200 rounded-full text-sm border border-emerald-800/50"
-                    >Orientado a soluciones</span
+                    >{t("about.skills.solution")}</span
                 >
                 <span
                     class="px-3 py-1 bg-emerald-900/30 text-emerald-200 rounded-full text-sm border border-emerald-800/50"
-                    >Clean Code</span
+                    >{t("about.skills.clean")}</span
                 >
             </div>
         </article>

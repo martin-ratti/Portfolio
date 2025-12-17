@@ -1,5 +1,8 @@
 ---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
 
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <section
@@ -15,7 +18,7 @@
             <span
                 class="inline-block px-3 py-1 text-sm font-medium text-cyan-400 bg-cyan-950/30 border border-cyan-800 rounded-full"
             >
-                Disponible para trabajar
+                {t("hero.available")}
             </span>
         </div>
 
@@ -23,7 +26,8 @@
             class="text-6xl md:text-8xl font-bold tracking-tight animate-fade-in-up"
             style="animation-delay: 0.2s"
         >
-            Hola, soy <br />
+            {t("hero.greeting")}
+            <br />
             <span class="text-gradient">Martín Ratti</span>
         </h1>
 
@@ -31,12 +35,10 @@
             class="text-xl md:text-2xl text-slate-400 max-w-2xl mx-auto animate-fade-in-up"
             style="animation-delay: 0.3s"
         >
-            Desarrollador Full Stack especializado en crear experiencias
-            digitales excepcionales con <span class="text-violet-400"
-                >Astro</span
-            >, <span class="text-cyan-400">React</span> y <span
-                class="text-fuchsia-400">Node.js</span
-            >.
+            {t("hero.role")}
+            <span class="text-violet-400">Astro</span>, <span
+                class="text-cyan-400">React</span
+            > y <span class="text-fuchsia-400">Node.js</span>.
         </p>
 
         <div
@@ -47,13 +49,13 @@
                 href="#proyectos"
                 class="px-8 py-3 bg-white text-slate-950 font-semibold rounded-full hover:scale-105 transition-transform"
             >
-                Ver Proyectos
+                {t("hero.viewProjects")}
             </a>
             <a
                 href="#contacto"
                 class="px-8 py-3 glass-card hover:bg-slate-800/50 rounded-full font-medium transition-all border-slate-700"
             >
-                Contactarme
+                {t("hero.contactMe")}
             </a>
         </div>
     </div>

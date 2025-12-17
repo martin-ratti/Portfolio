@@ -1,17 +1,24 @@
 ---
 const currentYear = new Date().getFullYear();
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <footer
     class="py-8 text-center text-slate-500 text-sm border-t border-slate-900 bg-slate-950/50 backdrop-blur-sm"
 >
-    <p>© {currentYear} Martín Ratti. Todos los derechos reservados.</p>
+    <p>© {currentYear} Martín Ratti. {t("footer.rights")}</p>
     <p class="mt-2 text-xs">
-        Desarrollado con <a
+        {t("footer.developed")}
+        <a
             href="https://astro.build"
             target="_blank"
             class="text-violet-400 hover:text-violet-300">Astro</a
-        > y <a
+        >
+        {t("footer.and")}
+        <a
             href="https://tailwindcss.com"
             target="_blank"
             class="text-cyan-400 hover:text-cyan-300">Tailwind CSS</a

@@ -1,5 +1,9 @@
 ---
 import { skills } from "../data/skills";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 const skillCategories = [
     {
@@ -15,13 +19,13 @@ const skillCategories = [
             "border-fuchsia-500/30 bg-fuchsia-500/10 text-fuchsia-300 hover:bg-fuchsia-500/20",
     },
     {
-        title: "Lenguajes",
+        title: t("stack.languages"),
         skills: skills.languages,
         colorClass:
             "border-cyan-500/30 bg-cyan-500/10 text-cyan-300 hover:bg-cyan-500/20",
     },
     {
-        title: "Herramientas",
+        title: t("stack.tools"),
         skills: skills.tools,
         colorClass:
             "border-emerald-500/30 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20",
@@ -31,7 +35,7 @@ const skillCategories = [
 
 <section class="py-20 px-4 relative">
     <div class="max-w-6xl mx-auto">
-        <h2 class="text-3xl font-bold mb-12 text-center">Stack Tecnológico</h2>
+        <h2 class="text-3xl font-bold mb-12 text-center">{t("stack.title")}</h2>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             {
