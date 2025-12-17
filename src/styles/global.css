@@ -1,5 +1,6 @@
-/* src/styles/global.css */
 @import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
     html {
@@ -8,18 +9,18 @@
     }
 
     body {
-        @apply bg-slate-950 text-slate-100;
+        @apply bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300;
         overflow-x: hidden;
     }
 }
 
 @layer utilities {
     .text-gradient {
-        @apply bg-clip-text text-transparent bg-linear-to-r from-violet-500 via-fuchsia-500 to-cyan-500;
+        @apply bg-clip-text text-transparent bg-linear-to-r from-violet-600 via-fuchsia-600 to-cyan-600 dark:from-violet-400 dark:via-fuchsia-400 dark:to-cyan-400;
     }
 
     .glass-card {
-        @apply bg-slate-900/50 backdrop-blur-xl border border-slate-800 relative overflow-hidden;
+        @apply bg-white/70 dark:bg-slate-900/50 backdrop-blur-xl border border-slate-200 dark:border-slate-800 relative overflow-hidden transition-colors duration-300;
     }
 
     .glass-card::before {

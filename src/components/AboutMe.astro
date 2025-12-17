@@ -37,11 +37,13 @@ const t = useTranslations(lang);
                 class="absolute inset-0 bg-linear-to-br from-violet-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
             >
             </div>
-            <p class="text-lg text-slate-300 leading-relaxed relative z-10">
+            <p
+                class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed relative z-10"
+            >
                 {t("about.story")}
             </p>
             <p
-                class="text-lg text-slate-300 leading-relaxed mt-4 relative z-10"
+                class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed mt-4 relative z-10"
             >
                 {t("about.specialty")}
             </p>
@@ -49,10 +51,11 @@ const t = useTranslations(lang);
 
         <!-- Card: Foto o Avatar -->
         <article
-            class="glass-card rounded-2xl p-4 flex items-center justify-center bg-slate-800/50"
+            class="glass-card rounded-2xl p-4 flex items-center justify-center bg-slate-100/50 dark:bg-slate-800/50"
         >
+            <!-- Placeholder for an image. The user can replace this later -->
             <div
-                class="w-full h-full min-h-[200px] bg-slate-700/50 rounded-xl flex items-center justify-center text-slate-500 relative overflow-hidden"
+                class="w-full h-full min-h-[200px] bg-slate-200/50 dark:bg-slate-700/50 rounded-xl flex items-center justify-center text-slate-400 dark:text-slate-500 relative overflow-hidden"
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -82,12 +85,14 @@ const t = useTranslations(lang);
 
         <!-- Card: Estudios / Enfoque -->
         <article
-            class="glass-card p-6 rounded-2xl md:col-span-1 flex flex-col justify-center hover:bg-slate-800/60 transition-colors"
+            class="glass-card p-6 rounded-2xl md:col-span-1 flex flex-col justify-center hover:bg-slate-100/60 dark:hover:bg-slate-800/60 transition-colors"
         >
-            <h3 class="text-xl font-bold text-fuchsia-300 mb-2">
+            <h3
+                class="text-xl font-bold text-fuchsia-500 dark:text-fuchsia-300 mb-2"
+            >
                 {t("about.education.title")}
             </h3>
-            <p class="text-slate-400">
+            <p class="text-slate-600 dark:text-slate-400">
                 {t("about.education.desc")}
             </p>
         </article>
@@ -96,24 +101,26 @@ const t = useTranslations(lang);
         <article
             class="glass-card p-6 rounded-2xl md:col-span-2 flex flex-col justify-center hover:bg-slate-800/60 transition-colors"
         >
-            <h3 class="text-xl font-bold text-emerald-300 mb-2">
+            <h3
+                class="text-xl font-bold text-emerald-600 dark:text-emerald-300 mb-2"
+            >
                 {t("about.skills.title")}
             </h3>
             <div class="flex flex-wrap gap-2 mt-2">
                 <span
-                    class="px-3 py-1 bg-emerald-900/30 text-emerald-200 rounded-full text-sm border border-emerald-800/50"
+                    class="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-200 rounded-full text-sm border border-emerald-200 dark:border-emerald-800/50"
                     >{t("about.skills.proactive")}</span
                 >
                 <span
-                    class="px-3 py-1 bg-emerald-900/30 text-emerald-200 rounded-full text-sm border border-emerald-800/50"
+                    class="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-200 rounded-full text-sm border border-emerald-200 dark:border-emerald-800/50"
                     >{t("about.skills.curious")}</span
                 >
                 <span
-                    class="px-3 py-1 bg-emerald-900/30 text-emerald-200 rounded-full text-sm border border-emerald-800/50"
+                    class="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-200 rounded-full text-sm border border-emerald-200 dark:border-emerald-800/50"
                     >{t("about.skills.solution")}</span
                 >
                 <span
-                    class="px-3 py-1 bg-emerald-900/30 text-emerald-200 rounded-full text-sm border border-emerald-800/50"
+                    class="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-200 rounded-full text-sm border border-emerald-200 dark:border-emerald-800/50"
                     >{t("about.skills.clean")}</span
                 >
             </div>

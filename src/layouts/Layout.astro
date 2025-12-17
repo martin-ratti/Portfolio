@@ -33,19 +33,66 @@ const lang = getLangFromUrl(Astro.url);
 		<ClientRouter />
 		<title>{title}</title>
 	</head>
-	<body class="bg-slate-950 text-white selection:bg-fuchsia-500/30 relative">
+	<body
+		class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-white selection:bg-fuchsia-500/30 relative transition-colors duration-300"
+	>
 		<!-- Background Elements -->
-		<div class="fixed inset-0 -z-10 h-full w-full bg-slate-950">
+		<div
+			class="fixed inset-0 -z-10 h-full w-full bg-slate-50 dark:bg-slate-950 transition-colors duration-300"
+		>
 			<!-- Radial Gradients -->
 			<div
-				class="absolute top-0 z-[-2] h-screen w-screen bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"
+				class="absolute top-0 z-[-2] h-screen w-screen bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.15),rgba(255,255,255,0))] dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"
 			>
 			</div>
 			<div
-				class="absolute bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-size-[14px_24px] mask-[radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"
+				class="absolute bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-size-[14px_24px] mask-[radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"
 			>
 			</div>
 		</div>
+
+		<script is:inline>
+			// Theme Initialization
+			const getTheme = () => {
+				if (
+					typeof localStorage !== "undefined" &&
+					localStorage.getItem("theme")
+				) {
+					return localStorage.getItem("theme");
+				}
+				if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+					return "dark";
+				}
+				return "light";
+			};
+
+			const applyTheme = () => {
+				const theme = getTheme();
+				if (theme === "dark") {
+					document.documentElement.classList.add("dark");
+				} else {
+					document.documentElement.classList.remove("dark");
+				}
+				window.localStorage.setItem("theme", theme);
+			};
+
+			applyTheme();
+
+			applyTheme();
+
+			// Runs on view transitions navigation
+			document.addEventListener("astro:after-swap", applyTheme);
+
+			// Prevent flash of white content
+			document.addEventListener("astro:before-swap", (ev) => {
+				const theme = getTheme();
+				if (theme === "dark") {
+					ev.newDocument.documentElement.classList.add("dark");
+				} else {
+					ev.newDocument.documentElement.classList.remove("dark");
+				}
+			});
+		</script>
 
 		<slot />
 
