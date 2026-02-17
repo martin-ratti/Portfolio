@@ -8,9 +8,22 @@
         scroll-behavior: smooth;
     }
 
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: 'Sora', sans-serif;
+    }
+
     body {
         @apply bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300;
         overflow-x: hidden;
+    }
+
+    :focus-visible {
+        @apply outline-none ring-2 ring-violet-500 ring-offset-2 ring-offset-slate-50 dark:ring-offset-slate-950 rounded-sm;
     }
 }
 
@@ -20,7 +33,7 @@
     }
 
     .glass-card {
-        @apply bg-white/70 dark:bg-slate-900/50 backdrop-blur-xl border border-slate-200 dark:border-slate-800 relative overflow-hidden transition-colors duration-300;
+        @apply bg-white/70 dark:bg-slate-900/50 backdrop-blur-xl border border-slate-300 dark:border-slate-800 relative overflow-hidden transition-all duration-300;
     }
 
     .glass-card::before {
@@ -58,6 +71,24 @@
 
     .animate-float {
         animation: float 6s ease-in-out infinite;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+        .animate-fade-in-up,
+        .animate-float {
+            animation: none;
+            opacity: 1;
+            transform: none;
+        }
+
+        *,
+        *::before,
+        *::after {
+            transition-duration: 0.01ms !important;
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+        }
     }
 }
 
