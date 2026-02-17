@@ -62,18 +62,16 @@ const t = useTranslations(lang);
                 { text: ".NET", color: "text-purple-600 dark:text-purple-400" },
             ];
 
-            const textElement = document.getElementById("typewriter-text");
+            let typeTimeout: ReturnType<typeof setTimeout>;
             let wordIndex = 0;
             let charIndex = 0;
             let isDeleting = false;
-            let isWaiting = false;
 
-            function type() {
+            function type(textElement: HTMLElement) {
                 const currentWord = words[wordIndex];
 
                 if (!textElement) return;
 
-                // Update color
                 textElement.className = `font-bold ${currentWord.color}`;
 
                 if (isDeleting) {
@@ -93,20 +91,26 @@ const t = useTranslations(lang);
                 let typeSpeed = isDeleting ? 50 : 100;
 
                 if (!isDeleting && charIndex === currentWord.text.length) {
-                    isWaiting = true;
-                    typeSpeed = 2000; // Wait at end of word
+                    typeSpeed = 2000;
                     isDeleting = true;
                 } else if (isDeleting && charIndex === 0) {
                     isDeleting = false;
                     wordIndex = (wordIndex + 1) % words.length;
-                    typeSpeed = 500; // Pause before next word
+                    typeSpeed = 500;
                 }
 
-                setTimeout(type, typeSpeed);
+                typeTimeout = setTimeout(() => type(textElement), typeSpeed);
             }
 
-            // Start typing when DOM is loaded
-            document.addEventListener("DOMContentLoaded", type);
+            function initTypewriter() {
+                clearTimeout(typeTimeout);
+                const textElement = document.getElementById("typewriter-text");
+                if (textElement) {
+                    type(textElement);
+                }
+            }
+
+            document.addEventListener("astro:page-load", initTypewriter);
         </script>
 
         <style>
@@ -121,6 +125,9 @@ const t = useTranslations(lang);
             }
             .animate-blink {
                 animation: blink 1s infinite;
+            }
+            #typewriter-text::before {
+                content: "\200b";
             }
         </style>
 
