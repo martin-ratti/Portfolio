@@ -30,17 +30,25 @@ const lang = getLangFromUrl(Astro.url);
 			href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Sora:wght@400;500;600;700&display=swap"
 			rel="stylesheet"
 		/>
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={Astro.url} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content="/og-image.jpg" />
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:url" content={Astro.url} />
+		<meta property="twitter:title" content={title} />
+		<meta property="twitter:description" content={description} />
+		<meta property="twitter:image" content="/og-image.jpg" />
 		<ClientRouter />
 		<title>{title}</title>
 	</head>
 	<body
 		class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-white selection:bg-fuchsia-500/30 relative transition-colors duration-300"
 	>
-		<!-- Background Elements -->
 		<div
 			class="fixed inset-0 -z-10 h-full w-full bg-slate-50 dark:bg-slate-950 transition-colors duration-300"
 		>
-			<!-- Radial Gradients -->
 			<div
 				class="absolute top-0 z-[-2] h-screen w-screen bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.15),rgba(255,255,255,0))] dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"
 			>
@@ -52,7 +60,6 @@ const lang = getLangFromUrl(Astro.url);
 		</div>
 
 		<script is:inline>
-			// Theme Initialization
 			const getTheme = () => {
 				if (
 					typeof localStorage !== "undefined" &&
@@ -65,7 +72,6 @@ const lang = getLangFromUrl(Astro.url);
 				}
 				return "light";
 			};
-
 			const applyTheme = () => {
 				const theme = getTheme();
 				if (theme === "dark") {
@@ -75,52 +81,42 @@ const lang = getLangFromUrl(Astro.url);
 				}
 				window.localStorage.setItem("theme", theme);
 			};
-
 			applyTheme();
-
-			// Runs on view transitions navigation
 			document.addEventListener("astro:after-swap", applyTheme);
-
-			// Prevent flash of white content
-			document.addEventListener("astro:before-swap", (ev) => {
-				const theme = getTheme();
-				if (theme === "dark") {
-					ev.newDocument.documentElement.classList.add("dark");
-				} else {
-					ev.newDocument.documentElement.classList.remove("dark");
-				}
-			});
 		</script>
 
 		<slot />
 
 		<script>
-			// Spotlight Effect Logic Optimized
-			const cards = document.querySelectorAll(".glass-card");
-			let ticking = false;
+			const initSpotlight = () => {
+				const cards = document.querySelectorAll(".glass-card");
+				if (cards.length === 0) return;
 
-			document.addEventListener("mousemove", (e) => {
-				if (!ticking) {
-					window.requestAnimationFrame(() => {
-						cards.forEach((card) => {
-							const rect = card.getBoundingClientRect();
-							const x = e.clientX - rect.left;
-							const y = e.clientY - rect.top;
-
-							(card as HTMLElement).style.setProperty(
-								"--mouse-x",
-								`${x}px`,
-							);
-							(card as HTMLElement).style.setProperty(
-								"--mouse-y",
-								`${y}px`,
-							);
+				document.addEventListener(
+					"mousemove",
+					(e) => {
+						window.requestAnimationFrame(() => {
+							cards.forEach((card) => {
+								const rect = card.getBoundingClientRect();
+								const x = e.clientX - rect.left;
+								const y = e.clientY - rect.top;
+								(card as HTMLElement).style.setProperty(
+									"--mouse-x",
+									`${x}px`,
+								);
+								(card as HTMLElement).style.setProperty(
+									"--mouse-y",
+									`${y}px`,
+								);
+							});
 						});
-						ticking = false;
-					});
-					ticking = true;
-				}
-			});
+					},
+					{ passive: true },
+				);
+			};
+
+			initSpotlight();
+			document.addEventListener("astro:after-swap", initSpotlight);
 		</script>
 	</body>
 </html>

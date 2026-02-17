@@ -17,10 +17,30 @@ export const projects: Project[] = [
             es: "Plataforma de comercio electrónico de alto rendimiento con arquitectura monorepo. Incluye tienda online, sistema de usuarios, panel administrativo y business intelligence.",
             en: "High-performance e-commerce platform with monorepo architecture. Includes online store, user system, admin panel, and business intelligence."
         },
-        tags: ["Astro", "React", "Express", "Prisma", "TypeScript"],
+        tags: ["Astro", "React", "Express", "Prisma", "TypeScript", "PostgreSQL", "Docker"],
         link: "https://www.pcfixbaru.com.ar",
         repo: "https://github.com/martin-ratti/PCFIX-Baru",
         featured: true
+    },
+    {
+        title: "EstacionAR - Smart Parking",
+        description: {
+            es: "Plataforma mobile-first para gestión y reserva de estacionamientos. Arquitectura escalable monorepo con geolocalización y pagos integrados.",
+            en: "Mobile-first platform for parking management and reliable reservations. Scalable monorepo architecture with geolocation and integrated payments."
+        },
+        tags: ["React Native", "Expo", "Turborepo", "Node.js", "Express", "PostgreSQL"],
+        repo: "https://github.com/agussantinelli/EstacionAR",
+        featured: true
+    },
+    {
+        title: "ImpulsaMe - Crowdfunding Java",
+        description: {
+            es: "Plataforma de financiamiento colectivo con moderación y pagos. Arquitectura MVC pura con Java Servlets, JSP y MySQL.",
+            en: "Crowdfunding platform with moderation and payments. Pure MVC architecture with Java Servlets, JSP, and MySQL."
+        },
+        tags: ["Java", "JSP", "Servlets", "MySQL", "Maven", "Stripe"],
+        repo: "https://github.com/martin-ratti/ProyectoJava-Crowdfunding",
+        featured: false
     },
     {
         title: "TicketApp - Venta de Entradas",
@@ -30,7 +50,7 @@ export const projects: Project[] = [
         },
         tags: ["React", "TypeScript", "Node.js", "Stripe", "Context API"],
         repo: "https://github.com/valenpeppi/FrontEnd-Venta-de-Entradas",
-        featured: true
+        featured: false
     },
     {
         title: "BuyJugador - Gestión Integral",
@@ -38,7 +58,7 @@ export const projects: Project[] = [
             es: "Sistema multicapa para gestión de inventario y ventas. Clientes Web (Blazor) y Desktop (WinForms) consumiendo una misma API REST en .NET.",
             en: "Multi-layer system for inventory and sales management. Web (Blazor) and Desktop (WinForms) clients consuming a single .NET REST API."
         },
-        tags: [".NET 8", "Blazor", "WinForms", "Web API", "C#"],
+        tags: [".NET 8", "Blazor", "WinForms", "Web API", "C#", "SQL Server"],
         repo: "https://github.com/agussantinelli/ProyectoIDE-BuyJugador"
     },
     {
