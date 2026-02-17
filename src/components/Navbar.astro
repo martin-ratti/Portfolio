@@ -15,23 +15,23 @@ const navItems = [
     class="fixed top-4 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none"
 >
     <div
-        class="glass-card rounded-full px-5 py-2 md:px-6 md:py-3 flex items-center gap-4 md:gap-8 shadow-lg shadow-violet-900/10 pointer-events-auto"
+        class="glass-card rounded-full px-3 py-2 md:px-6 md:py-3 flex items-center gap-2 md:gap-8 shadow-lg shadow-violet-900/10 pointer-events-auto max-w-[95vw] overflow-x-auto no-scrollbar"
     >
         <a
             href={lang === "en" ? "/en" : "/"}
-            class="font-bold text-transparent bg-clip-text bg-linear-to-r from-violet-400 to-cyan-400 hover:opacity-80 transition"
+            class="font-bold text-transparent bg-clip-text bg-linear-to-r from-violet-400 to-cyan-400 hover:opacity-80 transition shrink-0"
             >MR</a
         >
 
-        <div class="h-4 w-px bg-slate-700/50"></div>
+        <div class="h-4 w-px bg-slate-700/50 hidden md:block"></div>
 
-        <ul class="flex gap-6">
+        <ul class="flex gap-3 md:gap-6 shrink-0">
             {
                 navItems.map((item) => (
                     <li>
                         <a
                             href={item.url}
-                            class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-violet-600 dark:hover:text-white transition"
+                            class="text-xs md:text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-violet-600 dark:hover:text-white transition whitespace-nowrap"
                         >
                             {item.name}
                         </a>
@@ -40,13 +40,13 @@ const navItems = [
             }
         </ul>
 
-        <div class="h-4 w-px bg-slate-700/50"></div>
+        <div class="h-4 w-px bg-slate-700/50 hidden md:block"></div>
 
-        <div class="flex gap-4 items-center">
+        <div class="flex gap-1 md:gap-4 items-center shrink-0">
             <a
                 href="https://github.com/martin-ratti"
                 target="_blank"
-                class="text-slate-400 hover:text-white transition"
+                class="text-slate-400 hover:text-white transition hidden sm:block delay-75"
                 aria-label="GitHub"
             >
                 <svg
@@ -63,19 +63,19 @@ const navItems = [
 
             <a
                 href={lang === "en" ? "/" : "/en"}
-                class="text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-violet-600 dark:hover:text-white transition uppercase border border-slate-300 dark:border-slate-700 px-2 py-1 rounded"
+                class="text-[10px] md:text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-violet-600 dark:hover:text-white transition uppercase border border-slate-300 dark:border-slate-700 px-1.5 py-0.5 md:px-2 md:py-1 rounded"
             >
                 {lang === "es" ? "EN" : "ES"}
             </a>
 
             <button
                 id="theme-toggle"
-                class="p-3 text-slate-500 dark:text-slate-400 hover:text-violet-600 dark:hover:text-white transition rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
+                class="p-1.5 md:p-3 text-slate-500 dark:text-slate-400 hover:text-violet-600 dark:hover:text-white transition rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
                 aria-label="Toggle Theme"
             >
                 <svg
                     id="sun-icon"
-                    class="hidden dark:block"
+                    class="hidden dark:block w-5 h-5 md:w-5 md:h-5"
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
                     height="20"
@@ -108,7 +108,7 @@ const navItems = [
                 >
                 <svg
                     id="moon-icon"
-                    class="block dark:hidden"
+                    class="block dark:hidden w-5 h-5 md:w-5 md:h-5"
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
                     height="20"
@@ -125,7 +125,7 @@ const navItems = [
 
             <button
                 onclick="alert('¡El CV estará disponible próximamente!')"
-                class="text-xs font-medium text-violet-300 hover:text-white border border-violet-500/30 bg-violet-500/10 px-3 py-1.5 rounded-full transition"
+                class="hidden sm:block text-xs font-medium text-violet-300 hover:text-white border border-violet-500/30 bg-violet-500/10 px-3 py-1.5 rounded-full transition"
             >
                 {t("nav.cv")}
             </button>

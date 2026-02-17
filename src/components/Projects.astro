@@ -20,8 +20,9 @@ const otherProjects = projects.filter((p) => !p.featured);
         {
             featuredProjects.map((project, index) => (
                 <article
-                    class="glass-card rounded-2xl p-6 md:p-8 hover:border-violet-500/50 transition-colors group relative overflow-hidden animate-fade-in-up"
+                    class="project-card glass-card rounded-2xl p-6 md:p-8 hover:border-violet-500/50 transition-all duration-500 group relative overflow-hidden animate-fade-in-up"
                     style={`animation-delay: ${index * 0.1}s`}
+                    data-techs={JSON.stringify(project.tags)}
                 >
                     <div class="absolute inset-0 bg-linear-to-br from-violet-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                     <div class="relative z-10 flex flex-col h-full">
@@ -103,8 +104,9 @@ const otherProjects = projects.filter((p) => !p.featured);
         {
             otherProjects.map((project, index) => (
                 <article
-                    class="glass-card rounded-xl p-6 hover:bg-slate-100/40 dark:hover:bg-slate-800/40 transition flex flex-col h-full animate-fade-in-up"
+                    class="project-card glass-card rounded-xl p-6 hover:bg-slate-100/40 dark:hover:bg-slate-800/40 transition-all duration-500 flex flex-col h-full animate-fade-in-up"
                     style={`animation-delay: ${(index + featuredProjects.length) * 0.1}s`}
+                    data-techs={JSON.stringify(project.tags)}
                 >
                     <div class="flex justify-between items-start mb-3">
                         <h4 class="text-lg font-bold text-slate-800 dark:text-slate-200">
@@ -141,3 +143,48 @@ const otherProjects = projects.filter((p) => !p.featured);
         }
     </div>
 </section>
+
+<script>
+    window.addEventListener("filter-projects", (e) => {
+        // @ts-ignore
+        const selectedSkill = e.detail?.skill;
+        const cards = document.querySelectorAll(".project-card");
+
+        if (!selectedSkill) {
+            // Reset View (Show All)
+            cards.forEach((card) => {
+                (card as HTMLElement).style.opacity = "1";
+                (card as HTMLElement).style.filter = "grayscale(0)";
+                (card as HTMLElement).style.transform = "scale(1)";
+                (card as HTMLElement).style.borderColor = "transparent";
+                (card as HTMLElement).style.zIndex = "0";
+                (card as HTMLElement).style.boxShadow = "none";
+            });
+            return;
+        }
+
+        cards.forEach((card) => {
+            const techs = JSON.parse(card.getAttribute("data-techs") || "[]");
+
+            if (techs.includes(selectedSkill)) {
+                // Match - Highlight Effect
+                (card as HTMLElement).style.opacity = "1";
+                (card as HTMLElement).style.filter =
+                    "grayscale(0) drop-shadow(0 0 15px rgba(139, 92, 246, 0.4))"; // Glow
+                (card as HTMLElement).style.transform = "scale(1.05)"; // Pop
+                (card as HTMLElement).style.borderColor =
+                    "rgba(139, 92, 246, 0.8)"; // Border
+                (card as HTMLElement).style.zIndex = "10"; // Keep on top
+            } else {
+                // No match - Dim Effect
+                (card as HTMLElement).style.opacity = "0.1"; // Fade more
+                (card as HTMLElement).style.filter =
+                    "grayscale(100%) blur(2px)"; // Blur
+                (card as HTMLElement).style.transform = "scale(0.95)";
+                (card as HTMLElement).style.borderColor = "transparent";
+                (card as HTMLElement).style.zIndex = "0";
+                (card as HTMLElement).style.boxShadow = "none";
+            }
+        });
+    });
+</script>

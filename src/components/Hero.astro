@@ -36,12 +36,93 @@ const t = useTranslations(lang);
             style="animation-delay: 0.3s"
         >
             {t("hero.role")}
-            <span class="text-violet-600 dark:text-violet-400">Astro</span>, <span
-                class="text-cyan-600 dark:text-cyan-400">React</span
-            > y <span class="text-fuchsia-600 dark:text-fuchsia-400"
-                >Node.js</span
-            >.
+            <span
+                class="inline-flex min-w-[120px] justify-start text-left relative"
+            >
+                <span id="typewriter-text" class="font-bold"></span>
+                <span class="animate-blink ml-1">|</span>
+            </span>
         </p>
+
+        <script>
+            const words = [
+                {
+                    text: "Astro",
+                    color: "text-violet-600 dark:text-violet-400",
+                },
+                { text: "React", color: "text-cyan-600 dark:text-cyan-400" },
+                {
+                    text: "Node.js",
+                    color: "text-emerald-600 dark:text-emerald-400",
+                },
+                {
+                    text: "Python",
+                    color: "text-yellow-600 dark:text-yellow-400",
+                },
+                { text: ".NET", color: "text-purple-600 dark:text-purple-400" },
+            ];
+
+            const textElement = document.getElementById("typewriter-text");
+            let wordIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            let isWaiting = false;
+
+            function type() {
+                const currentWord = words[wordIndex];
+
+                if (!textElement) return;
+
+                // Update color
+                textElement.className = `font-bold ${currentWord.color}`;
+
+                if (isDeleting) {
+                    textElement.textContent = currentWord.text.substring(
+                        0,
+                        charIndex - 1,
+                    );
+                    charIndex--;
+                } else {
+                    textElement.textContent = currentWord.text.substring(
+                        0,
+                        charIndex + 1,
+                    );
+                    charIndex++;
+                }
+
+                let typeSpeed = isDeleting ? 50 : 100;
+
+                if (!isDeleting && charIndex === currentWord.text.length) {
+                    isWaiting = true;
+                    typeSpeed = 2000; // Wait at end of word
+                    isDeleting = true;
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    wordIndex = (wordIndex + 1) % words.length;
+                    typeSpeed = 500; // Pause before next word
+                }
+
+                setTimeout(type, typeSpeed);
+            }
+
+            // Start typing when DOM is loaded
+            document.addEventListener("DOMContentLoaded", type);
+        </script>
+
+        <style>
+            @keyframes blink {
+                0%,
+                100% {
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 0;
+                }
+            }
+            .animate-blink {
+                animation: blink 1s infinite;
+            }
+        </style>
 
         <div
             class="flex flex-wrap gap-4 justify-center pt-8 animate-fade-in-up"
@@ -59,9 +140,8 @@ const t = useTranslations(lang);
             >
                 {t("hero.contactMe")}
             </a>
-            <a
-                href="/cv.pdf"
-                target="_blank"
+            <button
+                onclick="alert('¡El CV estará disponible próximamente!')"
                 class="px-8 py-3 glass-card hover:bg-slate-100/50 dark:hover:bg-slate-800/50 rounded-full font-medium transition-all border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 flex items-center justify-center gap-2 group min-w-[160px]"
             >
                 <svg
@@ -79,7 +159,7 @@ const t = useTranslations(lang);
                     ></path>
                 </svg>
                 CV
-            </a>
+            </button>
         </div>
     </div>
 </section>

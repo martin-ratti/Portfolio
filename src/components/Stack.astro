@@ -55,11 +55,13 @@ const skillCategories = [
 
                         <div class="flex flex-wrap gap-3">
                             {category.skills.map((skill) => (
-                                <span
-                                    class={`px-4 py-2 rounded-lg text-sm font-medium border transition-colors cursor-default ${category.colorClass}`}
+                                <button
+                                    class={`skill-btn px-4 py-2 rounded-lg text-sm font-medium border transition-all cursor-pointer hover:scale-105 active:scale-95 ${category.colorClass}`}
+                                    data-skill={skill}
+                                    aria-label={`Filtrar proyectos por ${skill}`}
                                 >
                                     {skill}
-                                </span>
+                                </button>
                             ))}
                         </div>
                     </div>
@@ -68,3 +70,92 @@ const skillCategories = [
         </div>
     </div>
 </section>
+
+<script>
+    // @ts-nocheck
+    const buttons = document.querySelectorAll(".skill-btn");
+    let activeSkill = null;
+
+    buttons.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+            e.stopPropagation(); // Prevent document click from firing immediately
+            const skill = btn.getAttribute("data-skill");
+
+            // Toggle Logic
+            if (activeSkill === skill) {
+                // Deselect
+                activeSkill = null;
+                buttons.forEach((b) => {
+                    b.classList.remove(
+                        "ring-2",
+                        "ring-offset-2",
+                        "ring-violet-500",
+                        "scale-105",
+                    );
+                    b.classList.add("opacity-100");
+                    b.classList.remove("opacity-50");
+                });
+            } else {
+                // Select
+                activeSkill = skill;
+                buttons.forEach((b) => {
+                    if (b.getAttribute("data-skill") === skill) {
+                        b.classList.add(
+                            "ring-2",
+                            "ring-offset-2",
+                            "ring-violet-500",
+                            "scale-105",
+                        );
+                        b.classList.remove("opacity-50", "opacity-100");
+                    } else {
+                        b.classList.remove(
+                            "ring-2",
+                            "ring-offset-2",
+                            "ring-violet-500",
+                            "scale-105",
+                        );
+                        b.classList.add("opacity-50"); // Dim others
+                        b.classList.remove("opacity-100");
+                    }
+                });
+            }
+
+            // Dispatch event
+            window.dispatchEvent(
+                new CustomEvent("filter-projects", {
+                    detail: { skill: activeSkill },
+                }),
+            );
+
+            // Scroll only on selection
+            if (activeSkill) {
+                const projectsSection = document.getElementById("proyectos");
+                if (projectsSection) {
+                    projectsSection.scrollIntoView({ behavior: "smooth" });
+                }
+            }
+        });
+    });
+
+    // Click outside to deselect
+    document.addEventListener("click", (e) => {
+        if (!e.target.closest(".skill-btn") && activeSkill) {
+            activeSkill = null;
+            buttons.forEach((b) => {
+                b.classList.remove(
+                    "ring-2",
+                    "ring-offset-2",
+                    "ring-violet-500",
+                    "scale-105",
+                );
+                b.classList.add("opacity-100");
+                b.classList.remove("opacity-50");
+            });
+            window.dispatchEvent(
+                new CustomEvent("filter-projects", {
+                    detail: { skill: null },
+                }),
+            );
+        }
+    });
+</script>
