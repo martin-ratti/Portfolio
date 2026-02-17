@@ -66,16 +66,12 @@ ${context}
         let lastError = null;
         let successDat = null;
 
-        // Prepare messages: Inject system prompt into the first user message
-        // This avoids "Developer instruction is not enabled" errors on some free models
         const conversation = [...messages];
         if (conversation.length > 0) {
-            // Check if the prompt is already injected (to avoid duplication on retries/client logic)
             if (!conversation[0].content.startsWith("You are Martín AI")) {
                 conversation[0].content = `${systemPrompt} \n\nUser Question: ${conversation[0].content} `;
             }
         } else {
-            // Fallback if no messages (shouldn't happen)
             conversation.push({ role: 'user', content: systemPrompt });
         }
 

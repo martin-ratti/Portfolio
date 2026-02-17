@@ -6,227 +6,223 @@
     id="chat-widget"
     class="fixed bottom-4 right-4 z-50 flex flex-col items-end pointer-events-none"
 >
-    <!-- Chat Window -->
     <div
-        id="chat-window"
-        class="pointer-events-auto transition-all duration-300 transform origin-bottom-right scale-0 opacity-0 mb-4 w-[350px] max-w-[calc(100vw-2rem)] h-[500px] max-h-[80vh] flex flex-col bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-2xl shadow-2xl overflow-hidden"
+        id="chat-widget"
+        class="fixed bottom-4 right-4 z-50 flex flex-col items-end pointer-events-none"
     >
-        <!-- Header -->
         <div
-            class="p-4 border-b border-black/5 dark:border-white/10 bg-white/50 dark:bg-black/20 flex justify-between items-center"
+            id="chat-window"
+            class="pointer-events-auto transition-all duration-300 transform origin-bottom-right scale-0 opacity-0 mb-4 w-[350px] max-w-[calc(100vw-2rem)] h-[500px] max-h-[80vh] flex flex-col bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-2xl shadow-2xl overflow-hidden"
         >
-            <div class="flex items-center gap-3">
-                <div class="relative">
-                    <div
-                        class="w-2 h-2 absolute bottom-0 right-0 bg-green-500 rounded-full ring-2 ring-white dark:ring-slate-800"
-                    >
-                    </div>
-                    <div
-                        class="w-8 h-8 rounded-full bg-linear-to-tr from-violet-500 to-fuchsia-500 flex items-center justify-center text-white text-xs font-bold"
-                    >
-                        AI
-                    </div>
-                </div>
-                <div>
-                    <h3
-                        class="font-bold text-sm text-slate-900 dark:text-white"
-                    >
-                        Martín AI
-                    </h3>
-                    <p class="text-[10px] text-slate-500 dark:text-slate-400">
-                        Powered by llms.txt
-                    </p>
-                </div>
-            </div>
-            <button
-                id="close-chat"
-                class="text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-white transition-colors"
+            <div
+                class="p-4 border-b border-black/5 dark:border-white/10 bg-white/50 dark:bg-black/20 flex justify-between items-center"
             >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    ><line x1="18" y1="6" x2="6" y2="18"></line><line
-                        x1="6"
-                        y1="6"
-                        x2="18"
-                        y2="18"></line></svg
-                >
-            </button>
-        </div>
-
-        <!-- Messages Area -->
-        <div
-            id="messages-container"
-            class="flex-1 overflow-y-auto p-4 space-y-4 scroll-smooth"
-        >
-            <div class="flex gap-3">
-                <div
-                    class="w-8 h-8 rounded-full bg-linear-to-tr from-violet-500 to-fuchsia-500 shrink-0 flex items-center justify-center text-white text-xs font-bold"
-                >
-                    AI
+                <div class="flex items-center gap-3">
+                    <div class="relative">
+                        <div
+                            class="w-2 h-2 absolute bottom-0 right-0 bg-green-500 rounded-full ring-2 ring-white dark:ring-slate-800"
+                        >
+                        </div>
+                        <div
+                            class="w-8 h-8 rounded-full bg-linear-to-tr from-violet-500 to-fuchsia-500 flex items-center justify-center text-white text-xs font-bold"
+                        >
+                            AI
+                        </div>
+                    </div>
+                    <div>
+                        <h3
+                            class="font-bold text-sm text-slate-900 dark:text-white"
+                        >
+                            Martín AI
+                        </h3>
+                        <p
+                            class="text-[10px] text-slate-500 dark:text-slate-400"
+                        >
+                            Powered by llms.txt
+                        </p>
+                    </div>
                 </div>
-                <div
-                    class="bg-white dark:bg-slate-800 p-3 rounded-2xl rounded-tl-none border border-black/5 dark:border-white/10 shadow-sm max-w-[85%]"
-                >
-                    <p class="text-sm text-slate-600 dark:text-slate-300">
-                        ¡Hola! 👋 Soy una versión IA de Martín. He leído su
-                        portafolio y puedo responder dudas. ¿Te interesa saber
-                        sobre PCFIX o mi experiencia con Astro?
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Input Area -->
-        <div
-            class="p-4 border-t border-black/5 dark:border-white/10 bg-white/50 dark:bg-black/20"
-        >
-            <form id="chat-form" class="relative">
-                <input
-                    type="text"
-                    id="chat-input"
-                    placeholder="Escribe tu mensaje..."
-                    class="w-full bg-white dark:bg-slate-800 border border-black/10 dark:border-white/10 rounded-xl pl-4 pr-12 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white placeholder-slate-400"
-                />
                 <button
-                    type="submit"
-                    class="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 bg-violet-500 hover:bg-violet-600 text-white rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    id="close-chat"
+                    class="text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-white transition-colors"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
+                        width="20"
+                        height="20"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
                         stroke-width="2"
                         stroke-linecap="round"
                         stroke-linejoin="round"
-                        ><line x1="22" y1="2" x2="11" y2="13"></line><polygon
-                            points="22 2 15 22 11 13 2 9 22 2"></polygon></svg
+                        ><line x1="18" y1="6" x2="6" y2="18"></line><line
+                            x1="6"
+                            y1="6"
+                            x2="18"
+                            y2="18"></line></svg
                     >
                 </button>
-            </form>
+            </div>
+
+            <div
+                id="messages-container"
+                class="flex-1 overflow-y-auto p-4 space-y-4 scroll-smooth"
+            >
+                <div class="flex gap-3">
+                    <div
+                        class="w-8 h-8 rounded-full bg-linear-to-tr from-violet-500 to-fuchsia-500 shrink-0 flex items-center justify-center text-white text-xs font-bold"
+                    >
+                        AI
+                    </div>
+                    <div
+                        class="bg-white dark:bg-slate-800 p-3 rounded-2xl rounded-tl-none border border-black/5 dark:border-white/10 shadow-sm max-w-[85%]"
+                    >
+                        <p class="text-sm text-slate-600 dark:text-slate-300">
+                            ¡Hola! 👋 Soy una versión IA de Martín. He leído su
+                            portafolio y puedo responder dudas. ¿Te interesa
+                            saber sobre PCFIX o mi experiencia con Astro?
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="p-4 border-t border-black/5 dark:border-white/10 bg-white/50 dark:bg-black/20"
+            >
+                <form id="chat-form" class="relative">
+                    <input
+                        type="text"
+                        id="chat-input"
+                        placeholder="Escribe tu mensaje..."
+                        class="w-full bg-white dark:bg-slate-800 border border-black/10 dark:border-white/10 rounded-xl pl-4 pr-12 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white placeholder-slate-400"
+                    />
+                    <button
+                        type="submit"
+                        class="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 bg-violet-500 hover:bg-violet-600 text-white rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            ><line x1="22" y1="2" x2="11" y2="13"
+                            ></line><polygon points="22 2 15 22 11 13 2 9 22 2"
+                            ></polygon></svg
+                        >
+                    </button>
+                </form>
+            </div>
         </div>
+
+        <button
+            id="chat-toggle"
+            class="pointer-events-auto group relative flex items-center justify-center w-16 h-16 bg-linear-to-tr from-violet-600 to-fuchsia-600 text-white rounded-full shadow-2xl hover:scale-110 transition-all duration-300 z-50 ring-4 ring-white/20 dark:ring-black/20"
+            aria-label="Abrir chat con Martín AI"
+        >
+            <span
+                class="absolute inline-flex h-full w-full rounded-full bg-fuchsia-500 opacity-20 animate-ping duration-2000 -z-10"
+            ></span>
+
+            <span class="absolute top-1 right-1 flex h-4 w-4">
+                <span
+                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
+                ></span>
+                <span
+                    class="relative inline-flex rounded-full h-4 w-4 bg-green-500 border-2 border-white dark:border-slate-900"
+                ></span>
+            </span>
+
+            <svg
+                id="icon-message"
+                class="absolute transition-all duration-300 transform group-hover:scale-0 w-8 h-8"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><path
+                    d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+                ></path></svg
+            >
+            <svg
+                id="icon-close"
+                class="absolute transition-all duration-300 transform scale-0 group-hover:scale-100 w-8 h-8"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><line x1="18" y1="6" x2="6" y2="18"></line><line
+                    x1="6"
+                    y1="6"
+                    x2="18"
+                    y2="18"></line></svg
+            >
+
+            <span
+                class="absolute right-full mr-4 top-1/2 -translate-y-1/2 bg-white dark:bg-slate-800 text-slate-800 dark:text-white text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 shadow-lg whitespace-nowrap pointer-events-none"
+            >
+                ¿Preguntas sobre mi Stack?
+            </span>
+        </button>
     </div>
 
-    <!-- Toggle Button -->
-    <button
-        id="chat-toggle"
-        class="pointer-events-auto group relative flex items-center justify-center w-16 h-16 bg-linear-to-tr from-violet-600 to-fuchsia-600 text-white rounded-full shadow-2xl hover:scale-110 transition-all duration-300 z-50 ring-4 ring-white/20 dark:ring-black/20"
-        aria-label="Abrir chat con Martín AI"
-    >
-        <!-- Pulse Effect for Attention -->
-        <span
-            class="absolute inline-flex h-full w-full rounded-full bg-fuchsia-500 opacity-20 animate-ping duration-2000 -z-10"
-        ></span>
+    <script>
+        import { marked } from "marked";
 
-        <!-- Online Status Indicator -->
-        <span class="absolute top-1 right-1 flex h-4 w-4">
-            <span
-                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
-            ></span>
-            <span
-                class="relative inline-flex rounded-full h-4 w-4 bg-green-500 border-2 border-white dark:border-slate-900"
-            ></span>
-        </span>
+        const widget = document.getElementById("chat-widget");
+        const toggleBtn = document.getElementById("chat-toggle");
+        const windowEl = document.getElementById("chat-window");
+        const closeBtn = document.getElementById("close-chat");
+        const form = document.getElementById("chat-form") as HTMLFormElement;
+        const input = document.getElementById("chat-input") as HTMLInputElement;
+        const messagesContainer = document.getElementById("messages-container");
+        const messageIcon = document.getElementById("icon-message");
+        const closeIcon = document.getElementById("icon-close");
 
-        <!-- Message Icon -->
-        <svg
-            id="icon-message"
-            class="absolute transition-all duration-300 transform group-hover:scale-0 w-8 h-8"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            ><path
-                d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
-            ></path></svg
-        >
-        <!-- Close Icon -->
-        <svg
-            id="icon-close"
-            class="absolute transition-all duration-300 transform scale-0 group-hover:scale-100 w-8 h-8"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            ><line x1="18" y1="6" x2="6" y2="18"></line><line
-                x1="6"
-                y1="6"
-                x2="18"
-                y2="18"></line></svg
-        >
+        let isOpen = false;
+        let messages = [];
 
-        <!-- Tooltip -->
-        <span
-            class="absolute right-full mr-4 top-1/2 -translate-y-1/2 bg-white dark:bg-slate-800 text-slate-800 dark:text-white text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 shadow-lg whitespace-nowrap pointer-events-none"
-        >
-            ¿Preguntas sobre mi Stack?
-        </span>
-    </button>
-</div>
-
-<script>
-    import { marked } from "marked";
-
-    const widget = document.getElementById("chat-widget");
-    const toggleBtn = document.getElementById("chat-toggle");
-    const windowEl = document.getElementById("chat-window");
-    const closeBtn = document.getElementById("close-chat");
-    const form = document.getElementById("chat-form") as HTMLFormElement;
-    const input = document.getElementById("chat-input") as HTMLInputElement;
-    const messagesContainer = document.getElementById("messages-container");
-    const messageIcon = document.getElementById("icon-message");
-    const closeIcon = document.getElementById("icon-close");
-
-    let isOpen = false;
-    let messages = [];
-
-    function toggleChat() {
-        isOpen = !isOpen;
-        if (isOpen) {
-            windowEl?.classList.remove("scale-0", "opacity-0");
-            messageIcon?.classList.add("scale-0");
-            closeIcon?.classList.remove("scale-0");
-            setTimeout(() => input?.focus(), 300);
-        } else {
-            windowEl?.classList.add("scale-0", "opacity-0");
-            messageIcon?.classList.remove("scale-0");
-            closeIcon?.classList.add("scale-0");
+        function toggleChat() {
+            isOpen = !isOpen;
+            if (isOpen) {
+                windowEl?.classList.remove("scale-0", "opacity-0");
+                messageIcon?.classList.add("scale-0");
+                closeIcon?.classList.remove("scale-0");
+                setTimeout(() => input?.focus(), 300);
+            } else {
+                windowEl?.classList.add("scale-0", "opacity-0");
+                messageIcon?.classList.remove("scale-0");
+                closeIcon?.classList.add("scale-0");
+            }
         }
-    }
 
-    function addMessage(role: "user" | "assistant", text: string) {
-        const div = document.createElement("div");
-        div.className = `flex gap-3 ${role === "user" ? "justify-end" : ""}`;
+        function addMessage(role: "user" | "assistant", text: string) {
+            const div = document.createElement("div");
+            div.className = `flex gap-3 ${role === "user" ? "justify-end" : ""}`;
 
-        const avatar =
-            role === "assistant"
-                ? `<div class="w-8 h-8 rounded-full bg-linear-to-tr from-violet-500 to-fuchsia-500 flex-shrink-0 flex items-center justify-center text-white text-xs font-bold">AI</div>`
-                : "";
+            const avatar =
+                role === "assistant"
+                    ? `<div class="w-8 h-8 rounded-full bg-linear-to-tr from-violet-500 to-fuchsia-500 flex-shrink-0 flex items-center justify-center text-white text-xs font-bold">AI</div>`
+                    : "";
 
-        // Parse markdown for assistant messages
-        const content = role === "assistant" ? marked.parse(text) : text;
+            const content = role === "assistant" ? marked.parse(text) : text;
 
-        const bubble = `
+            const bubble = `
       <div class="${
           role === "user"
               ? "bg-violet-600 text-white"
@@ -237,16 +233,16 @@
       </div>
     `;
 
-        div.innerHTML = role === "assistant" ? avatar + bubble : bubble;
-        messagesContainer?.appendChild(div);
-        messagesContainer!.scrollTop = messagesContainer!.scrollHeight;
-    }
+            div.innerHTML = role === "assistant" ? avatar + bubble : bubble;
+            messagesContainer?.appendChild(div);
+            messagesContainer!.scrollTop = messagesContainer!.scrollHeight;
+        }
 
-    function showTypingIndicator() {
-        const div = document.createElement("div");
-        div.id = "typing-indicator";
-        div.className = "flex gap-3";
-        div.innerHTML = `
+        function showTypingIndicator() {
+            const div = document.createElement("div");
+            div.id = "typing-indicator";
+            div.className = "flex gap-3";
+            div.innerHTML = `
       <div class="w-8 h-8 rounded-full bg-linear-to-tr from-violet-500 to-fuchsia-500 flex-shrink-0 flex items-center justify-center text-white text-xs font-bold">AI</div>
       <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl rounded-tl-none border border-black/5 dark:border-white/10 shadow-sm flex gap-1 items-center h-[46px]">
         <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce"></span>
@@ -254,123 +250,121 @@
         <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce delay-200"></span>
       </div>
     `;
-        messagesContainer?.appendChild(div);
-        messagesContainer!.scrollTop = messagesContainer!.scrollHeight;
-    }
+            messagesContainer?.appendChild(div);
+            messagesContainer!.scrollTop = messagesContainer!.scrollHeight;
+        }
 
-    function removeTypingIndicator() {
-        const indicator = document.getElementById("typing-indicator");
-        indicator?.remove();
-    }
+        function removeTypingIndicator() {
+            const indicator = document.getElementById("typing-indicator");
+            indicator?.remove();
+        }
 
-    toggleBtn?.addEventListener("click", toggleChat);
-    closeBtn?.addEventListener("click", toggleChat);
+        toggleBtn?.addEventListener("click", toggleChat);
+        closeBtn?.addEventListener("click", toggleChat);
 
-    form?.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const text = input.value.trim();
-        if (!text) return;
+        form?.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const text = input.value.trim();
+            if (!text) return;
 
-        // Add user message
-        addMessage("user", text);
-        input.value = "";
+            addMessage("user", text);
+            input.value = "";
 
-        // Update history
-        messages.push({ role: "user", content: text });
+            messages.push({ role: "user", content: text });
 
-        // Show typing
-        showTypingIndicator();
+            showTypingIndicator();
 
-        try {
-            const response = await fetch("/api/chat", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ messages }),
-            });
+            try {
+                const response = await fetch("/api/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ messages }),
+                });
 
-            const data = await response.json();
+                const data = await response.json();
 
-            removeTypingIndicator();
+                removeTypingIndicator();
 
-            if (data.error) {
-                let errorMessage = "Unknown error";
-                if (typeof data.error === "string") {
-                    errorMessage = data.error;
-                } else if (data.error.message) {
-                    errorMessage = data.error.message;
+                if (data.error) {
+                    let errorMessage = "Unknown error";
+                    if (typeof data.error === "string") {
+                        errorMessage = data.error;
+                    } else if (data.error.message) {
+                        errorMessage = data.error.message;
+                    } else {
+                        errorMessage = JSON.stringify(data.error);
+                    }
+                    addMessage("assistant", "⚠️ Error: " + errorMessage);
+                } else if (data.choices && data.choices[0]) {
+                    const reply = data.choices[0].message.content;
+                    addMessage("assistant", reply);
+                    messages.push({ role: "assistant", content: reply });
                 } else {
-                    errorMessage = JSON.stringify(data.error);
+                    addMessage(
+                        "assistant",
+                        "Lo siento, hubo un error de conexión.",
+                    );
                 }
-                addMessage("assistant", "⚠️ Error: " + errorMessage);
-            } else if (data.choices && data.choices[0]) {
-                const reply = data.choices[0].message.content;
-                addMessage("assistant", reply);
-                messages.push({ role: "assistant", content: reply });
-            } else {
+            } catch (err) {
+                removeTypingIndicator();
                 addMessage(
                     "assistant",
-                    "Lo siento, hubo un error de conexión.",
+                    "Lo siento, no pude conectar con el servidor.",
                 );
+                console.error(err);
             }
-        } catch (err) {
-            removeTypingIndicator();
-            addMessage(
-                "assistant",
-                "Lo siento, no pude conectar con el servidor.",
-            );
-            console.error(err);
+        });
+
+        // Open chat after delay for demo effect (optional)
+        // setTimeout(() => {
+        //   if (!isOpen) toggleChat();
+        // }, 5000);
+    </script>
+
+    <style is:global>
+        /* Estilos para el contenido Markdown del chat */
+        .prose p {
+            margin-bottom: 0.5em;
         }
-    });
-
-    // Open chat after delay for demo effect (optional)
-    // setTimeout(() => {
-    //   if (!isOpen) toggleChat();
-    // }, 5000);
-</script>
-
-<style is:global>
-    /* Estilos para el contenido Markdown del chat */
-    .prose p {
-        margin-bottom: 0.5em;
-    }
-    .prose p:last-child {
-        margin-bottom: 0;
-    }
-    .prose strong {
-        font-weight: 600;
-        color: inherit;
-    }
-    .prose ul,
-    .prose ol {
-        margin-left: 1.25em;
-        margin-bottom: 0.5em;
-        list-style-type: disc;
-    }
-    .prose li {
-        margin-bottom: 0.25em;
-    }
-    .prose code {
-        background-color: rgba(0, 0, 0, 0.1);
-        padding: 0.1em 0.3em;
-        border-radius: 0.25em;
-        font-family: monospace;
-        font-size: 0.9em;
-    }
-    .dark .prose code {
-        background-color: rgba(255, 255, 255, 0.1);
-    }
-    .prose pre {
-        background-color: #1e293b;
-        color: #e2e8f0;
-        padding: 0.75em;
-        border-radius: 0.5em;
-        overflow-x: auto;
-        margin-bottom: 0.5em;
-        font-size: 0.85em;
-    }
-    .prose pre code {
-        background-color: transparent;
-        padding: 0;
-        color: inherit;
-    }
-</style>
+        .prose p:last-child {
+            margin-bottom: 0;
+        }
+        .prose strong {
+            font-weight: 600;
+            color: inherit;
+        }
+        .prose ul,
+        .prose ol {
+            margin-left: 1.25em;
+            margin-bottom: 0.5em;
+            list-style-type: disc;
+        }
+        .prose li {
+            margin-bottom: 0.25em;
+        }
+        .prose code {
+            background-color: rgba(0, 0, 0, 0.1);
+            padding: 0.1em 0.3em;
+            border-radius: 0.25em;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        .dark .prose code {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .prose pre {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            padding: 0.75em;
+            border-radius: 0.5em;
+            overflow-x: auto;
+            margin-bottom: 0.5em;
+            font-size: 0.85em;
+        }
+        .prose pre code {
+            background-color: transparent;
+            padding: 0;
+            color: inherit;
+        }
+    </style>
+</div>
