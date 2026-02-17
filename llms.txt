@@ -6,9 +6,71 @@
 
 This website serves as a professional portfolio and technical demonstration. It includes sections for:
 - **About Me:** Professional background and education.
-- **Stack:** Overview of technical skills (Core, Frontend, Backend, DevOps).
+- **Stack:**
+    - **Frontend:** Astro, React, TypeScript, TailwindCSS.
+    - **Backend:** Node.js, Express, Java (Servlets/JSP), .NET 8 (WebAPI).
+    - **Desktop:** .NET WinForms, Python (Automation/OCR).
+    - **Data:** MySQL, PostgreSQL, SQL Server, Prisma.
+    - **DevOps/Tools:** Docker, Git, NPM Workspaces.
 - **Projects:** Highlighted works like PCFIX, EstacionAR, and ImpulsaMe.
 - **Contact:** Links to email, LinkedIn, and GitHub.
+
+
+## Other Projects (Context for AI)
+
+> This section allows the AI to answer questions about Martin's other repositories.
+
+### [PCFIX-Baru](https://github.com/martin-ratti/PCFIX-Baru)
+- **Description:** E-Commerce Monorepo designed for scale. Orchestrates a robust API and a hybrid Frontend.
+- **Tech Stack:** Astro Server Islands, React, Node.js API, Docker, NPM Workspaces.
+- **Key Features:** Instant purchase experience, admin management system, CI/CD with GitHub Actions, End-to-End testing with Playwright.
+
+---
+
+### [TicketApp (Venta de Entradas)](https://github.com/valenpeppi/FrontEnd-Venta-de-Entradas)
+- **Description:** Event ticket sales platform (Marketplace). Connects organizers with attendees.
+- **Tech Stack:** Frontend: React + TypeScript (Context API). Backend: Node.js + Express + MySQL + Prisma.
+- **Key Features:** Stripe payment integration, PDF ticket generation, Admin panel, AI Chat assistant, Role-based access (Client, Organizer, Admin).
+
+---
+
+### [ProyectoIDE-BuyJugador](https://github.com/agussantinelli/ProyectoIDE-BuyJugador)
+- **Description:** Inventory and sales management system for a gaming/electronics store. Multi-client architecture.
+- **Tech Stack:** .NET 8, Blazor WebAssembly (Web), WinForms (Desktop), ASP.NET Core WebAPI, SQL Server.
+- **Key Features:** Shared logic via ApiClient, JWT Authentication, Reporting with ScottPlot (PDF/PNG), Clean Architecture.
+
+---
+
+### [EstacionAR](https://github.com/agussantinelli/EstacionAR)
+- **Description:** High-level Parking Management and Reservation System.
+- **Tech Stack:** Mobile: React Native + Expo. Backend: Node.js + Express + Prisma + PostgreSQL.
+- **Key Features:** Geocoding services, User/Owner/Admin roles, Vehicle management, "Cochera" (Parking Spot) reservations.
+
+---
+
+### [MetinForge](https://github.com/martin-ratti/MetinForge)
+- **Description:** Desktop application for Metin2 "farmers" to track repetitive tasks and assets.
+- **Key Features:** Alchemy (Draconis) management, Fishing module analytics, Event/Tombola tracking, Floating Timer, Mass account import (.xlsx/.csv).
+
+---
+
+### [Extractor-OCR-Python](https://github.com/martin-ratti/Extractor-OCR-Python)
+- **Description:** Professional desktop OCR tool that extracts text only from highlighted areas (Yellow, Green, Pink, Violet).
+- **Tech Stack:** Python, Tesseract OCR, Clean Architecture.
+- **Key Features:** Drag & drop interface, batch processing, intelligent color detection.
+
+---
+
+### [GitIgnore-Genius](https://github.com/martin-ratti/GitIgnore-Genius)
+- **Description:** Desktop app to generate robust .gitignore files automatically by analyzing project structure.
+- **Key Features:** Language/Framework detection, Smart generation, Drag & drop.
+
+---
+
+### [ProyectoJava-Crowdfunding](https://github.com/martin-ratti/ProyectoJava-Crowdfunding)
+- **Description:** Crowdfunding web platform (ImpulsaMe).
+- **Tech Stack:** Java Servlets, JSP, JSTL, MySQL (DAO pattern).
+- **Key Features:** Project lifecycle (Pending -> Active), Stripe Donations, RBAC Security (AuthFilter), MVC Architecture.
 
 The site is designed with a "performance first" approach using Astro 5, ensuring fast load times. It features a responsive Glassmorphism design with dark mode and internationalization (English/Spanish).
 
