@@ -1,0 +1,24 @@
+# Martín Ratti - Portfolio
+
+> Personal portfolio of Martín Ratti, showcasing Full Stack development skills with a focus on performance and modern UI design. Built with Astro, TypeScript, and React.
+
+## Project Details
+
+This website serves as a professional portfolio and technical demonstration. It includes sections for:
+- **About Me:** Professional background and education.
+- **Stack:** Overview of technical skills (Core, Frontend, Backend, DevOps).
+- **Projects:** Highlighted works like PCFIX, EstacionAR, and ImpulsaMe.
+- **Contact:** Links to email, LinkedIn, and GitHub.
+
+The site is designed with a "performance first" approach using Astro 5, ensuring fast load times. It features a responsive Glassmorphism design with dark mode and internationalization (English/Spanish).
+
+## Documentation
+
+- [README](https://github.com/martin-ratti/Portfolio/blob/main/README.md): Official project README with installation and detailed stack info.
+- [Astro Documentation](https://docs.astro.build/): Reference for the core framework used.
+- [Tailwind CSS](https://tailwindcss.com/docs): Styles reference.
+
+## Optional
+
+- [LinkedIn Profile](https://www.linkedin.com/in/martin-ratti-dev/): Professional profile.
+- [GitHub Profile](https://github.com/martin-ratti): Source code repositories.
