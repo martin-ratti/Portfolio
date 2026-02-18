@@ -23,13 +23,11 @@ export const POST: APIRoute = async ({ request }) => {
         const body = await request.json();
         const { messages } = body;
 
-        // Read llms.txt content
         const llmsTxtPath = path.resolve(process.cwd(), 'llms.txt');
         let context = '';
         try {
             context = await fs.readFile(llmsTxtPath, 'utf-8');
         } catch (e) {
-            console.error('Error reading llms.txt:', e);
             context = 'Context unavailable due to internal error.';
         }
 
@@ -76,7 +74,6 @@ ${context}
 
         for (const model of models) {
             try {
-                console.log(`Trying model: ${model} `);
                 const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
                     method: "POST",
                     headers: {
@@ -97,11 +94,9 @@ ${context}
                     successDat = data;
                     break;
                 } else {
-                    console.error(`Error with model ${model}: `, JSON.stringify(data.error || data));
                     lastError = data.error || { message: "Unknown error" };
                 }
             } catch (err) {
-                console.error(`Network error with model ${model}: `, err);
                 lastError = { message: "Network error" };
             }
         }
@@ -122,7 +117,6 @@ ${context}
         });
 
     } catch (error) {
-        console.error('Error in chat API:', error);
         return new Response(JSON.stringify({ error: 'Internal Server Error' }), {
             status: 500,
             headers: { 'Content-Type': 'application/json' }

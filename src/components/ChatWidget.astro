@@ -184,6 +184,11 @@
     <script>
         import { marked } from "marked";
 
+        interface Message {
+            role: "user" | "assistant";
+            content: string;
+        }
+
         const widget = document.getElementById("chat-widget");
         const toggleBtn = document.getElementById("chat-toggle");
         const windowEl = document.getElementById("chat-window");
@@ -195,7 +200,7 @@
         const closeIcon = document.getElementById("icon-close");
 
         let isOpen = false;
-        let messages = [];
+        let messages: Message[] = [];
 
         function toggleChat() {
             isOpen = !isOpen;
@@ -235,7 +240,9 @@
 
             div.innerHTML = role === "assistant" ? avatar + bubble : bubble;
             messagesContainer?.appendChild(div);
-            messagesContainer!.scrollTop = messagesContainer!.scrollHeight;
+            if (messagesContainer) {
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
         }
 
         function showTypingIndicator() {
@@ -251,7 +258,9 @@
       </div>
     `;
             messagesContainer?.appendChild(div);
-            messagesContainer!.scrollTop = messagesContainer!.scrollHeight;
+            if (messagesContainer) {
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
         }
 
         function removeTypingIndicator() {
@@ -314,11 +323,6 @@
                 console.error(err);
             }
         });
-
-        // Open chat after delay for demo effect (optional)
-        // setTimeout(() => {
-        //   if (!isOpen) toggleChat();
-        // }, 5000);
     </script>
 
     <style is:global>

@@ -72,18 +72,15 @@ const skillCategories = [
 </section>
 
 <script>
-    // @ts-nocheck
     const buttons = document.querySelectorAll(".skill-btn");
-    let activeSkill = null;
+    let activeSkill: string | null = null;
 
     buttons.forEach((btn) => {
         btn.addEventListener("click", (e) => {
-            e.stopPropagation(); // Prevent document click from firing immediately
+            e.stopPropagation();
             const skill = btn.getAttribute("data-skill");
 
-            // Toggle Logic
             if (activeSkill === skill) {
-                // Deselect
                 activeSkill = null;
                 buttons.forEach((b) => {
                     b.classList.remove(
@@ -96,7 +93,6 @@ const skillCategories = [
                     b.classList.remove("opacity-50");
                 });
             } else {
-                // Select
                 activeSkill = skill;
                 buttons.forEach((b) => {
                     if (b.getAttribute("data-skill") === skill) {
@@ -114,20 +110,18 @@ const skillCategories = [
                             "ring-violet-500",
                             "scale-105",
                         );
-                        b.classList.add("opacity-50"); // Dim others
+                        b.classList.add("opacity-50");
                         b.classList.remove("opacity-100");
                     }
                 });
             }
 
-            // Dispatch event
             window.dispatchEvent(
                 new CustomEvent("filter-projects", {
                     detail: { skill: activeSkill },
                 }),
             );
 
-            // Scroll only on selection
             if (activeSkill) {
                 const projectsSection = document.getElementById("proyectos");
                 if (projectsSection) {
@@ -137,9 +131,11 @@ const skillCategories = [
         });
     });
 
-    // Click outside to deselect
     document.addEventListener("click", (e) => {
-        if (!e.target.closest(".skill-btn") && activeSkill) {
+        if (
+            !e.target ||
+            (!(e.target as HTMLElement).closest(".skill-btn") && activeSkill)
+        ) {
             activeSkill = null;
             buttons.forEach((b) => {
                 b.classList.remove(
