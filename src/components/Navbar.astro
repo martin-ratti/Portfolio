@@ -31,7 +31,7 @@ const navItems = [
                     <li>
                         <a
                             href={item.url}
-                            class="text-xs md:text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-violet-600 dark:hover:text-white transition whitespace-nowrap"
+                            class="nav-link text-xs md:text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition whitespace-nowrap"
                         >
                             {item.name}
                         </a>
@@ -146,5 +146,67 @@ const navItems = [
         document
             .getElementById("theme-toggle")
             ?.addEventListener("click", handleToggleClick);
+
+        // Scroll Spy Logic
+        const navLinks = document.querySelectorAll(".nav-link");
+        const sections = document.querySelectorAll("section[id]");
+
+        if (navLinks.length === 0 || sections.length === 0) return;
+
+        // Estilos para estado activo e inactivo
+        const activeClasses = [
+            "text-violet-600",
+            "dark:text-violet-400",
+            "font-bold",
+        ];
+        const inactiveClasses = [
+            "text-slate-500",
+            "dark:text-slate-400",
+            "font-medium",
+        ];
+        const hoverClasses = ["hover:text-slate-900", "dark:hover:text-white"];
+
+        const observerOptions = {
+            root: null,
+            rootMargin: "-20% 0px -50% 0px", // Detectar cuando está en el tercio central
+            threshold: 0,
+        };
+
+        const observerCallback = (entries: IntersectionObserverEntry[]) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const activeId = entry.target.getAttribute("id");
+
+                    navLinks.forEach((link) => {
+                        const href = link.getAttribute("href");
+                        // Solo procesar si el href es un ancla a id interno
+                        if (href && href.startsWith("#")) {
+                            if (href === `#${activeId}`) {
+                                link.classList.remove(
+                                    ...inactiveClasses,
+                                    ...hoverClasses,
+                                );
+                                link.classList.add(...activeClasses);
+                            } else {
+                                link.classList.remove(...activeClasses);
+                                link.classList.add(
+                                    ...inactiveClasses,
+                                    ...hoverClasses,
+                                );
+                            }
+                        }
+                    });
+                }
+            });
+        };
+
+        const observer = new IntersectionObserver(
+            observerCallback,
+            observerOptions,
+        );
+
+        sections.forEach((section) => {
+            observer.observe(section);
+        });
     });
 </script>
