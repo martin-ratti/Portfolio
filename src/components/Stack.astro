@@ -129,13 +129,7 @@ const skillCategories = [
                     }),
                 );
 
-                if (activeSkill) {
-                    const projectsSection =
-                        document.getElementById("proyectos");
-                    if (projectsSection) {
-                        projectsSection.scrollIntoView({ behavior: "smooth" });
-                    }
-                }
+                /* El scroll ahora lo maneja Projects.astro centrándose en el primer match */
             });
         });
 

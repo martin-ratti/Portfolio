@@ -5,8 +5,8 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 const navItems = [
-    { name: t("nav.projects"), url: "#proyectos" },
     { name: t("nav.about"), url: "#sobre-mi" },
+    { name: t("nav.projects"), url: "#proyectos" },
     { name: t("nav.contact"), url: "#contacto" },
 ];
 ---
@@ -62,6 +62,7 @@ const navItems = [
             </a>
 
             <a
+                id="lang-toggle"
                 href={lang === "en" ? "/" : "/en"}
                 class="text-[10px] md:text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-violet-600 dark:hover:text-white transition uppercase border border-slate-300 dark:border-slate-700 px-1.5 py-0.5 md:px-2 md:py-1 rounded"
             >
@@ -179,7 +180,6 @@ const navItems = [
 
                     navLinks.forEach((link) => {
                         const href = link.getAttribute("href");
-                        // Solo procesar si el href es un ancla a id interno
                         if (href && href.startsWith("#")) {
                             if (href === `#${activeId}`) {
                                 link.classList.remove(
@@ -187,6 +187,13 @@ const navItems = [
                                     ...hoverClasses,
                                 );
                                 link.classList.add(...activeClasses);
+
+                                // Opcional: Actualizar el hash en la URL mientras scrollea
+                                // para que el cambio de idioma capture la sección actual
+                                if (window.location.hash !== href) {
+                                    history.replaceState(null, "", href);
+                                    updateLangHref();
+                                }
                             } else {
                                 link.classList.remove(...activeClasses);
                                 link.classList.add(
@@ -208,5 +215,46 @@ const navItems = [
         sections.forEach((section) => {
             observer.observe(section);
         });
+
+        // Click Handler for Centered Scroll
+        navLinks.forEach((link) => {
+            link.addEventListener("click", (e) => {
+                const href = link.getAttribute("href");
+                if (href && href.startsWith("#")) {
+                    e.preventDefault();
+                    const targetId = href.substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: "smooth",
+                            block: "center",
+                        });
+                        // Actualizar URL y el link de idioma inmediatamente
+                        history.pushState(null, "", href);
+                        updateLangHref();
+                    }
+                }
+            });
+        });
+
+        // Language toggle persistence
+        const langToggle = document.getElementById("lang-toggle");
+
+        function updateLangHref() {
+            if (!langToggle) return;
+            const hash = window.location.hash;
+            const currentHref = langToggle.getAttribute("href") || "";
+            const baseHref = currentHref.split("#")[0];
+            if (hash) {
+                langToggle.setAttribute("href", baseHref + hash);
+            } else {
+                langToggle.setAttribute("href", baseHref);
+            }
+        }
+
+        if (langToggle) {
+            updateLangHref();
+            window.addEventListener("hashchange", updateLangHref);
+        }
     });
 </script>

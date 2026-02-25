@@ -47,6 +47,15 @@ export const ui = {
         'chat.error.connection': 'Lo siento, hubo un error de conexión.',
         'chat.error.server': 'Lo siento, no pude conectar con el servidor.',
         'chat.error.prefix': '⚠️ Error:',
+
+        // Contact Form
+        'contact.form.name': 'Tu Nombre',
+        'contact.form.email': 'Tu Correo Electrónico',
+        'contact.form.message': 'Mensaje',
+        'contact.form.send': 'Enviar Mensaje',
+        'contact.form.sending': 'Enviando...',
+        'contact.form.success': 'Mensaje enviado. ¡Gracias!',
+        'contact.form.error': 'Error al enviar el mensaje. Inténtalo de nuevo.',
     },
     en: {
         'nav.projects': 'Projects',
@@ -89,5 +98,14 @@ export const ui = {
         'chat.error.connection': 'Sorry, there was a connection error.',
         'chat.error.server': 'Sorry, I could not connect to the server.',
         'chat.error.prefix': '⚠️ Error:',
+
+        // Contact Form
+        'contact.form.name': 'Your Name',
+        'contact.form.email': 'Your Email',
+        'contact.form.message': 'Message',
+        'contact.form.send': 'Send Message',
+        'contact.form.sending': 'Sending...',
+        'contact.form.success': 'Message sent. Thank you!',
+        'contact.form.error': 'Error sending message. Please try again.',
     },
 } as const;
