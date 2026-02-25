@@ -222,7 +222,6 @@ const t = useTranslations(lang);
                 messageIcon?.classList.add("scale-0");
                 closeIcon?.classList.remove("scale-0");
 
-                // Activar focus trap
                 if (windowEl && toggleBtn) {
                     setupFocusTrap(windowEl, toggleBtn);
                 }
@@ -293,7 +292,6 @@ const t = useTranslations(lang);
                 errPrefix = widget.dataset.errorPrefix || "⚠️ Error:";
             }
 
-            // Evitar duplicación de eventos al navegar
             toggleBtn?.removeEventListener("click", toggleChat);
             closeBtn?.removeEventListener("click", toggleChat);
             form?.removeEventListener("submit", handleChatSubmit);

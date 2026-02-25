@@ -183,13 +183,18 @@ const t = useTranslations(lang);
                         </svg>
                     </button>
 
-                    <div id="form-result" class="hidden animate-fade-in">
+                    <div
+                        id="form-result"
+                        class="hidden animate-fade-in"
+                        data-success={t("contact.form.success")}
+                        data-error={t("contact.form.error")}
+                    >
                         <div
                             class="flex items-center gap-3 p-4 rounded-xl border backdrop-blur-sm transition-all shadow-lg shadow-violet-500/5"
                         >
                             <div
                                 id="result-icon"
-                                class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-lg"
+                                class="shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-lg"
                             >
                             </div>
                             <p id="result-message" class="text-sm font-medium">
@@ -223,7 +228,6 @@ const t = useTranslations(lang);
             ).value;
             if (!emailValue) return;
 
-            // UI Feedback: Sending
             submitBtn.disabled = true;
             submitBtn.classList.add("opacity-70", "cursor-not-allowed");
             submitText.innerText = "...";
@@ -264,24 +268,22 @@ const t = useTranslations(lang);
                         resultContainer.className =
                             "flex items-center gap-3 p-4 rounded-xl border backdrop-blur-sm transition-all shadow-lg shadow-green-500/10 bg-green-500/10 border-green-500/20 text-green-600 dark:text-green-400";
                         resultIcon.className =
-                            "flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-lg bg-green-500/20";
+                            "shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-lg bg-green-500/20";
                         resultIcon.innerText = "✅";
                         resultMessage.innerText =
-                            jsonResponse.message ||
-                            "Message sent successfully!";
+                            result.dataset.success || "Success";
                         form.reset();
                     } else {
                         resultContainer.className =
                             "flex items-center gap-3 p-4 rounded-xl border backdrop-blur-sm transition-all shadow-lg shadow-red-500/10 bg-red-500/10 border-red-500/20 text-red-500 dark:text-red-400";
                         resultIcon.className =
-                            "flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-lg bg-red-500/20";
+                            "shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-lg bg-red-500/20";
                         resultIcon.innerText = "⚠️";
                         resultMessage.innerText =
-                            jsonResponse.message || "Error submitting form.";
+                            result.dataset.error || "Error";
                     }
                 })
                 .catch((error) => {
-                    console.error(error);
                     result.classList.remove("hidden");
                     const resultMessage =
                         document.getElementById("result-message");
@@ -292,10 +294,10 @@ const t = useTranslations(lang);
                         resultContainer.className =
                             "flex items-center gap-3 p-4 rounded-xl border backdrop-blur-sm transition-all shadow-lg shadow-red-500/10 bg-red-500/10 border-red-500/20 text-red-500 dark:text-red-400";
                         resultIcon.className =
-                            "flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-lg bg-red-500/20";
+                            "shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-lg bg-red-500/20";
                         resultIcon.innerText = "⚠️";
                         resultMessage.innerText =
-                            "Error alert: Something went wrong.";
+                            result.dataset.error || "Error";
                     }
 
                     submitBtn.disabled = false;

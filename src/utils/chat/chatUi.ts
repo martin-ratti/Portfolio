@@ -1,6 +1,5 @@
 import { marked } from "marked";
 
-// Manejo del Foco
 let focusTrapElement: HTMLElement | null = null;
 let firstFocusableElement: HTMLElement | null = null;
 let lastFocusableElement: HTMLElement | null = null;
@@ -10,7 +9,6 @@ export function setupFocusTrap(container: HTMLElement, toggleBtn: HTMLElement) {
     focusTrapElement = container;
     toggleButtonElement = toggleBtn;
 
-    // Buscar elementos focusables (botón cerrar, botones en mensajes, input, botón enviar)
     const focusableElements = container.querySelectorAll(
         'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
     );
@@ -27,7 +25,6 @@ export function releaseFocusTrap() {
     if (focusTrapElement) {
         focusTrapElement.removeEventListener('keydown', handleFocusTrap);
     }
-    // Devolver el foco al botón que abrió el chat
     if (toggleButtonElement) {
         toggleButtonElement.focus();
     }
@@ -35,7 +32,6 @@ export function releaseFocusTrap() {
 
 function handleFocusTrap(e: KeyboardEvent) {
     if (e.key === 'Tab') {
-        // Actualizar última busqueda por si se agregan mensajes focusables
         if (focusTrapElement) {
             const focusableElements = focusTrapElement.querySelectorAll(
                 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
@@ -60,7 +56,6 @@ function handleFocusTrap(e: KeyboardEvent) {
     }
 }
 
-// Interfaz DOM
 export function addMessageToDOM(
     container: HTMLElement | null,
     role: "user" | "assistant",
@@ -75,7 +70,15 @@ export function addMessageToDOM(
         ? `<div class="w-8 h-8 rounded-full bg-linear-to-tr from-violet-500 to-fuchsia-500 shrink-0 flex items-center justify-center text-white text-xs font-bold">AI</div>`
         : "";
 
-    const content = role === "assistant" ? marked.parse(text) : text;
+    const content = role === "assistant"
+        ? marked.parse(text)
+        : text.replace(/[&<>"']/g, (m) => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;'
+        }[m] || m));
 
     const bubble = `
         <div class="${role === "user"

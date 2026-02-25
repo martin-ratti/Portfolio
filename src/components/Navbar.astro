@@ -169,7 +169,7 @@ const navItems = [
 
         const observerOptions = {
             root: null,
-            rootMargin: "-20% 0px -50% 0px", // Detectar cuando está en el tercio central
+            rootMargin: "-20% 0px -50% 0px",
             threshold: 0,
         };
 
@@ -188,8 +188,6 @@ const navItems = [
                                 );
                                 link.classList.add(...activeClasses);
 
-                                // Opcional: Actualizar el hash en la URL mientras scrollea
-                                // para que el cambio de idioma capture la sección actual
                                 if (window.location.hash !== href) {
                                     history.replaceState(null, "", href);
                                     updateLangHref();

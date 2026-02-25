@@ -34,7 +34,6 @@ export async function sendChatMessage(messages: ChatMessage[], currentLang: stri
             return { error: "Formato de respuesta inválido del servidor." };
         }
     } catch (err) {
-        console.error(err);
-        return { error: "Network error" }; // Se traducirá en la UI
+        return { error: "Network error" };
     }
 }
