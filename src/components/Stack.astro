@@ -36,10 +36,15 @@ const skillCategories = [
 <section class="py-20 px-4 relative">
     <div class="max-w-6xl mx-auto">
         <h2
-            class="text-3xl font-bold mb-12 text-center text-slate-900 dark:text-white"
+            class="text-3xl font-bold mb-4 text-center text-slate-900 dark:text-white"
         >
             {t("stack.title")}
         </h2>
+        <p
+            class="text-slate-500 dark:text-slate-400 text-center mb-12 text-sm max-w-md mx-auto"
+        >
+            {t("stack.instruction")}
+        </p>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             {
@@ -56,11 +61,18 @@ const skillCategories = [
                         <div class="flex flex-wrap gap-3">
                             {category.skills.map((skill) => (
                                 <button
-                                    class={`skill-btn px-4 py-2 rounded-lg text-sm font-medium border transition-all cursor-pointer hover:scale-105 active:scale-95 ${category.colorClass}`}
-                                    data-skill={skill}
-                                    aria-label={`Filtrar proyectos por ${skill}`}
+                                    class={`skill-btn px-4 py-2 rounded-lg text-sm font-medium border transition-all cursor-pointer hover:scale-105 active:scale-95 flex items-center gap-2 ${category.colorClass}`}
+                                    data-skill={skill.name}
+                                    aria-label={`Filtrar proyectos por ${skill.name}`}
                                 >
-                                    {skill}
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="currentColor"
+                                        class="w-4 h-4"
+                                    >
+                                        <path d={skill.icon} />
+                                    </svg>
+                                    {skill.name}
                                 </button>
                             ))}
                         </div>
