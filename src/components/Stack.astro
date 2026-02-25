@@ -72,17 +72,82 @@ const skillCategories = [
 </section>
 
 <script>
-    const buttons = document.querySelectorAll(".skill-btn");
     let activeSkill: string | null = null;
+    let clickOutsideHandler: ((e: MouseEvent) => void) | null = null;
 
-    buttons.forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            const skill = btn.getAttribute("data-skill");
+    function initStackFilter() {
+        const buttons = document.querySelectorAll(".skill-btn");
 
-            if (activeSkill === skill) {
+        buttons.forEach((btn) => {
+            // Remueve previos por si se re-ejecuta
+            const clone = btn.cloneNode(true);
+            btn.parentNode?.replaceChild(clone, btn);
+
+            clone.addEventListener("click", (e) => {
+                e.stopPropagation();
+                const skill = (clone as HTMLElement).getAttribute("data-skill");
+
+                if (activeSkill === skill) {
+                    activeSkill = null;
+                    document.querySelectorAll(".skill-btn").forEach((b) => {
+                        b.classList.remove(
+                            "ring-2",
+                            "ring-offset-2",
+                            "ring-violet-500",
+                            "scale-105",
+                        );
+                        b.classList.add("opacity-100");
+                        b.classList.remove("opacity-50");
+                    });
+                } else {
+                    activeSkill = skill;
+                    document.querySelectorAll(".skill-btn").forEach((b) => {
+                        if (b.getAttribute("data-skill") === skill) {
+                            b.classList.add(
+                                "ring-2",
+                                "ring-offset-2",
+                                "ring-violet-500",
+                                "scale-105",
+                            );
+                            b.classList.remove("opacity-50", "opacity-100");
+                        } else {
+                            b.classList.remove(
+                                "ring-2",
+                                "ring-offset-2",
+                                "ring-violet-500",
+                                "scale-105",
+                            );
+                            b.classList.add("opacity-50");
+                            b.classList.remove("opacity-100");
+                        }
+                    });
+                }
+
+                window.dispatchEvent(
+                    new CustomEvent("filter-projects", {
+                        detail: { skill: activeSkill },
+                    }),
+                );
+
+                if (activeSkill) {
+                    const projectsSection =
+                        document.getElementById("proyectos");
+                    if (projectsSection) {
+                        projectsSection.scrollIntoView({ behavior: "smooth" });
+                    }
+                }
+            });
+        });
+
+        if (clickOutsideHandler) {
+            document.removeEventListener("click", clickOutsideHandler);
+        }
+
+        clickOutsideHandler = (e: MouseEvent) => {
+            const target = e.target as HTMLElement;
+            if (!target || (!target.closest(".skill-btn") && activeSkill)) {
                 activeSkill = null;
-                buttons.forEach((b) => {
+                document.querySelectorAll(".skill-btn").forEach((b) => {
                     b.classList.remove(
                         "ring-2",
                         "ring-offset-2",
@@ -92,66 +157,16 @@ const skillCategories = [
                     b.classList.add("opacity-100");
                     b.classList.remove("opacity-50");
                 });
-            } else {
-                activeSkill = skill;
-                buttons.forEach((b) => {
-                    if (b.getAttribute("data-skill") === skill) {
-                        b.classList.add(
-                            "ring-2",
-                            "ring-offset-2",
-                            "ring-violet-500",
-                            "scale-105",
-                        );
-                        b.classList.remove("opacity-50", "opacity-100");
-                    } else {
-                        b.classList.remove(
-                            "ring-2",
-                            "ring-offset-2",
-                            "ring-violet-500",
-                            "scale-105",
-                        );
-                        b.classList.add("opacity-50");
-                        b.classList.remove("opacity-100");
-                    }
-                });
-            }
-
-            window.dispatchEvent(
-                new CustomEvent("filter-projects", {
-                    detail: { skill: activeSkill },
-                }),
-            );
-
-            if (activeSkill) {
-                const projectsSection = document.getElementById("proyectos");
-                if (projectsSection) {
-                    projectsSection.scrollIntoView({ behavior: "smooth" });
-                }
-            }
-        });
-    });
-
-    document.addEventListener("click", (e) => {
-        if (
-            !e.target ||
-            (!(e.target as HTMLElement).closest(".skill-btn") && activeSkill)
-        ) {
-            activeSkill = null;
-            buttons.forEach((b) => {
-                b.classList.remove(
-                    "ring-2",
-                    "ring-offset-2",
-                    "ring-violet-500",
-                    "scale-105",
+                window.dispatchEvent(
+                    new CustomEvent("filter-projects", {
+                        detail: { skill: null },
+                    }),
                 );
-                b.classList.add("opacity-100");
-                b.classList.remove("opacity-50");
-            });
-            window.dispatchEvent(
-                new CustomEvent("filter-projects", {
-                    detail: { skill: null },
-                }),
-            );
-        }
-    });
+            }
+        };
+
+        document.addEventListener("click", clickOutsideHandler);
+    }
+
+    document.addEventListener("astro:page-load", initStackFilter);
 </script>

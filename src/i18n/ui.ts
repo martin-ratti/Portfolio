@@ -37,6 +37,16 @@ export const ui = {
         'footer.rights': 'Todos los derechos reservados.',
         'footer.developed': 'Desarrollado con',
         'footer.and': 'y',
+
+        // Chatbot Textos
+        'chat.tooltip': '¿Preguntas sobre mi Stack?',
+        'chat.name': 'Martín AI',
+        'chat.powered': 'Impulsado por llms.txt',
+        'chat.greeting': '¡Hola! 👋 Soy una versión IA de Martín. He leído su portafolio y puedo responder dudas. ¿Te interesa saber sobre PCFIX o mi experiencia con Astro?',
+        'chat.placeholder': 'Escribe tu mensaje...',
+        'chat.error.connection': 'Lo siento, hubo un error de conexión.',
+        'chat.error.server': 'Lo siento, no pude conectar con el servidor.',
+        'chat.error.prefix': '⚠️ Error:',
     },
     en: {
         'nav.projects': 'Projects',
@@ -69,5 +79,15 @@ export const ui = {
         'footer.rights': 'All rights reserved.',
         'footer.developed': 'Developed with',
         'footer.and': 'and',
+
+        // Chatbot Textos
+        'chat.tooltip': 'Questions about my Stack?',
+        'chat.name': 'Martín AI',
+        'chat.powered': 'Powered by llms.txt',
+        'chat.greeting': "Hi! 👋 I'm Martín's AI version. I've read his portfolio and can answer questions. Are you interested in PCFIX or my Astro experience?",
+        'chat.placeholder': 'Type your message...',
+        'chat.error.connection': 'Sorry, there was a connection error.',
+        'chat.error.server': 'Sorry, I could not connect to the server.',
+        'chat.error.prefix': '⚠️ Error:',
     },
 } as const;

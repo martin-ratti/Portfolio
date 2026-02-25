@@ -1,10 +1,17 @@
 ---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
 
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <div
     id="chat-widget"
     class="fixed bottom-4 right-4 z-50 flex flex-col items-end pointer-events-none"
+    data-lang={lang}
+    data-error-server={t("chat.error.server")}
+    data-error-connection={t("chat.error.connection")}
+    data-error-prefix={t("chat.error.prefix")}
 >
     <div
         id="chat-widget"
@@ -33,12 +40,12 @@
                         <h3
                             class="font-bold text-sm text-slate-900 dark:text-white"
                         >
-                            Martín AI
+                            {t("chat.name")}
                         </h3>
                         <p
                             class="text-[10px] text-slate-500 dark:text-slate-400"
                         >
-                            Powered by llms.txt
+                            {t("chat.powered")}
                         </p>
                     </div>
                 </div>
@@ -79,9 +86,7 @@
                         class="bg-white dark:bg-slate-800 p-3 rounded-2xl rounded-tl-none border border-black/5 dark:border-white/10 shadow-sm max-w-[85%]"
                     >
                         <p class="text-sm text-slate-600 dark:text-slate-300">
-                            ¡Hola! 👋 Soy una versión IA de Martín. He leído su
-                            portafolio y puedo responder dudas. ¿Te interesa
-                            saber sobre PCFIX o mi experiencia con Astro?
+                            {t("chat.greeting")}
                         </p>
                     </div>
                 </div>
@@ -94,7 +99,7 @@
                     <input
                         type="text"
                         id="chat-input"
-                        placeholder="Escribe tu mensaje..."
+                        placeholder={t("chat.placeholder")}
                         class="w-full bg-white dark:bg-slate-800 border border-black/10 dark:border-white/10 rounded-xl pl-4 pr-12 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-white placeholder-slate-400"
                     />
                     <button
@@ -176,31 +181,39 @@
             <span
                 class="absolute right-full mr-4 top-1/2 -translate-y-1/2 bg-white dark:bg-slate-800 text-slate-800 dark:text-white text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 shadow-lg whitespace-nowrap pointer-events-none"
             >
-                ¿Preguntas sobre mi Stack?
+                {t("chat.tooltip")}
             </span>
         </button>
     </div>
 
     <script>
-        import { marked } from "marked";
-
-        interface Message {
-            role: "user" | "assistant";
-            content: string;
-        }
-
-        const widget = document.getElementById("chat-widget");
-        const toggleBtn = document.getElementById("chat-toggle");
-        const windowEl = document.getElementById("chat-window");
-        const closeBtn = document.getElementById("close-chat");
-        const form = document.getElementById("chat-form") as HTMLFormElement;
-        const input = document.getElementById("chat-input") as HTMLInputElement;
-        const messagesContainer = document.getElementById("messages-container");
-        const messageIcon = document.getElementById("icon-message");
-        const closeIcon = document.getElementById("icon-close");
+        import { sendChatMessage } from "../utils/chat/chatApi";
+        import {
+            addMessageToDOM,
+            showTypingIndicator,
+            hideTypingIndicator,
+            setupFocusTrap,
+            releaseFocusTrap,
+        } from "../utils/chat/chatUi";
+        import type { ChatMessage } from "../utils/chat/chatApi";
 
         let isOpen = false;
-        let messages: Message[] = [];
+        let messages: ChatMessage[] = [];
+
+        let widget: HTMLElement | null = null;
+        let toggleBtn: HTMLElement | null = null;
+        let windowEl: HTMLElement | null = null;
+        let closeBtn: HTMLElement | null = null;
+        let form: HTMLFormElement | null = null;
+        let input: HTMLInputElement | null = null;
+        let messagesContainer: HTMLElement | null = null;
+        let messageIcon: HTMLElement | null = null;
+        let closeIcon: HTMLElement | null = null;
+
+        let currentLang = "es";
+        let errServer = "Lo siento, no pude conectar con el servidor.";
+        let errConnection = "Lo siento, hubo un error de conexión.";
+        let errPrefix = "⚠️ Error:";
 
         function toggleChat() {
             isOpen = !isOpen;
@@ -208,121 +221,89 @@
                 windowEl?.classList.remove("scale-0", "opacity-0");
                 messageIcon?.classList.add("scale-0");
                 closeIcon?.classList.remove("scale-0");
+
+                // Activar focus trap
+                if (windowEl && toggleBtn) {
+                    setupFocusTrap(windowEl, toggleBtn);
+                }
+
                 setTimeout(() => input?.focus(), 300);
             } else {
                 windowEl?.classList.add("scale-0", "opacity-0");
                 messageIcon?.classList.remove("scale-0");
                 closeIcon?.classList.add("scale-0");
+
+                releaseFocusTrap();
             }
         }
 
-        function addMessage(role: "user" | "assistant", text: string) {
-            const div = document.createElement("div");
-            div.className = `flex gap-3 ${role === "user" ? "justify-end" : ""}`;
-
-            const avatar =
-                role === "assistant"
-                    ? `<div class="w-8 h-8 rounded-full bg-linear-to-tr from-violet-500 to-fuchsia-500 flex-shrink-0 flex items-center justify-center text-white text-xs font-bold">AI</div>`
-                    : "";
-
-            const content = role === "assistant" ? marked.parse(text) : text;
-
-            const bubble = `
-      <div class="${
-          role === "user"
-              ? "bg-violet-600 text-white"
-              : "bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-black/5 dark:border-white/10"
-      } 
-        p-3 rounded-2xl ${role === "user" ? "rounded-tr-none" : "rounded-tl-none"} shadow-sm max-w-[85%] text-sm prose cursor-text select-text">
-        ${content}
-      </div>
-    `;
-
-            div.innerHTML = role === "assistant" ? avatar + bubble : bubble;
-            messagesContainer?.appendChild(div);
-            if (messagesContainer) {
-                messagesContainer.scrollTop = messagesContainer.scrollHeight;
-            }
-        }
-
-        function showTypingIndicator() {
-            const div = document.createElement("div");
-            div.id = "typing-indicator";
-            div.className = "flex gap-3";
-            div.innerHTML = `
-      <div class="w-8 h-8 rounded-full bg-linear-to-tr from-violet-500 to-fuchsia-500 flex-shrink-0 flex items-center justify-center text-white text-xs font-bold">AI</div>
-      <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl rounded-tl-none border border-black/5 dark:border-white/10 shadow-sm flex gap-1 items-center h-[46px]">
-        <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce"></span>
-        <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce delay-100"></span>
-        <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce delay-200"></span>
-      </div>
-    `;
-            messagesContainer?.appendChild(div);
-            if (messagesContainer) {
-                messagesContainer.scrollTop = messagesContainer.scrollHeight;
-            }
-        }
-
-        function removeTypingIndicator() {
-            const indicator = document.getElementById("typing-indicator");
-            indicator?.remove();
-        }
-
-        toggleBtn?.addEventListener("click", toggleChat);
-        closeBtn?.addEventListener("click", toggleChat);
-
-        form?.addEventListener("submit", async (e) => {
+        async function handleChatSubmit(e: SubmitEvent) {
             e.preventDefault();
+            if (!input || !messagesContainer) return;
+
             const text = input.value.trim();
             if (!text) return;
 
-            addMessage("user", text);
+            addMessageToDOM(messagesContainer, "user", text);
             input.value = "";
-
             messages.push({ role: "user", content: text });
 
-            showTypingIndicator();
+            showTypingIndicator(messagesContainer);
 
-            try {
-                const response = await fetch("/api/chat", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ messages }),
-                });
+            const response = await sendChatMessage(messages, currentLang);
+            hideTypingIndicator();
 
-                const data = await response.json();
-
-                removeTypingIndicator();
-
-                if (data.error) {
-                    let errorMessage = "Unknown error";
-                    if (typeof data.error === "string") {
-                        errorMessage = data.error;
-                    } else if (data.error.message) {
-                        errorMessage = data.error.message;
-                    } else {
-                        errorMessage = JSON.stringify(data.error);
-                    }
-                    addMessage("assistant", "⚠️ Error: " + errorMessage);
-                } else if (data.choices && data.choices[0]) {
-                    const reply = data.choices[0].message.content;
-                    addMessage("assistant", reply);
-                    messages.push({ role: "assistant", content: reply });
+            if (response.error) {
+                if (response.error === "Network error") {
+                    addMessageToDOM(messagesContainer, "assistant", errServer);
                 } else {
-                    addMessage(
+                    addMessageToDOM(
+                        messagesContainer,
                         "assistant",
-                        "Lo siento, hubo un error de conexión.",
+                        `${errPrefix} ${response.error}`,
                     );
                 }
-            } catch (err) {
-                removeTypingIndicator();
-                addMessage(
-                    "assistant",
-                    "Lo siento, no pude conectar con el servidor.",
-                );
-                console.error(err);
+            } else if (response.reply) {
+                addMessageToDOM(messagesContainer, "assistant", response.reply);
+                messages.push({ role: "assistant", content: response.reply });
+            } else {
+                addMessageToDOM(messagesContainer, "assistant", errConnection);
             }
-        });
+        }
+
+        function initChatWidget() {
+            widget = document.getElementById("chat-widget");
+            toggleBtn = document.getElementById("chat-toggle");
+            windowEl = document.getElementById("chat-window");
+            closeBtn = document.getElementById("close-chat");
+            form = document.getElementById("chat-form") as HTMLFormElement;
+            input = document.getElementById("chat-input") as HTMLInputElement;
+            messagesContainer = document.getElementById("messages-container");
+            messageIcon = document.getElementById("icon-message");
+            closeIcon = document.getElementById("icon-close");
+
+            if (widget) {
+                currentLang = widget.dataset.lang || "es";
+                errServer =
+                    widget.dataset.errorServer ||
+                    "Lo siento, no pude conectar con el servidor.";
+                errConnection =
+                    widget.dataset.errorConnection ||
+                    "Lo siento, hubo un error de conexión.";
+                errPrefix = widget.dataset.errorPrefix || "⚠️ Error:";
+            }
+
+            // Evitar duplicación de eventos al navegar
+            toggleBtn?.removeEventListener("click", toggleChat);
+            closeBtn?.removeEventListener("click", toggleChat);
+            form?.removeEventListener("submit", handleChatSubmit);
+
+            toggleBtn?.addEventListener("click", toggleChat);
+            closeBtn?.addEventListener("click", toggleChat);
+            form?.addEventListener("submit", handleChatSubmit);
+        }
+
+        document.addEventListener("astro:page-load", initChatWidget);
     </script>
 
     <style is:global>

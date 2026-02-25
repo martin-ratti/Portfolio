@@ -21,7 +21,11 @@ export const POST: APIRoute = async ({ request }) => {
 
     try {
         const body = await request.json();
-        const { messages } = body;
+        const { messages, currentLang } = body;
+
+        const langInstrucion = currentLang === 'en'
+            ? 'The user is navigating the site in English. YOU MUST answer exclusively in English.'
+            : 'El usuario está navegando el sitio en Español. DEBES responder exclusivamente en Español.';
 
         const llmsTxtPath = path.resolve(process.cwd(), 'llms.txt');
         let context = '';
@@ -34,9 +38,9 @@ export const POST: APIRoute = async ({ request }) => {
         const systemPrompt = `You are Martín AI, a virtual assistant for Martín Ratti's portfolio.
 Your goal is to chat about Martín's skills and projects in a professional yet approachable way.
 
-- **LANGUAGE - CRITICAL:** 
-    - **ALWAYS reply in the SAME language as the user.** (If the user speaks Spanish, you MUST speak Spanish. If English, speak English).
-    - **Default to Spanish** if the language is unclear or mixed, as Martín is from Argentina.
+- **LANGUAGE - STRICTLY FORCED:** 
+    - **${langInstrucion}**
+    - You must completely ignore any previous rule about defaulting to Spanish if the user language is different from the explicitly stated here.
 
 - **STRICT SCOPE:** You are ONLY allowed to discuss Martín Ratti, his specific projects (PCFIX, TicketApp, EstacionAR, etc.), and his documented tech stack (Astro, React, .NET, Java, Python).
     - If the user asks about ANYTHING else (world events, cooking, philosophy, hypothetical scenarios, or other technologies like Go/Rust), **politely refuse to answer**.
