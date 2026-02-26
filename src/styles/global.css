@@ -4,18 +4,10 @@
 
 @layer base {
     html {
-        font-family: 'Outfit', system-ui, sans-serif;
+        font-family: 'Inter', system-ui, sans-serif;
         scroll-behavior: smooth;
     }
 
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        font-family: 'Sora', sans-serif;
-    }
 
     body {
         @apply bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300;
