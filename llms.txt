@@ -12,7 +12,7 @@ This website serves as a professional portfolio and technical demonstration. It 
     - **Desktop:** .NET WinForms, Python (Automation/OCR).
     - **Data:** MySQL, PostgreSQL, SQL Server, Prisma.
     - **DevOps/Tools:** Docker, Git, NPM Workspaces.
-- **Projects:** Highlighted works like PCFIX, EstacionAR, and ImpulsaMe.
+- **Projects:** Highlighted works like Zenith POS, PCFIX, and EstacionAR.
 - **Contact:** Links to email, LinkedIn, and GitHub.
 
 
@@ -24,6 +24,13 @@ This website serves as a professional portfolio and technical demonstration. It 
 - **Description:** E-Commerce Monorepo designed for scale. Orchestrates a robust API and a hybrid Frontend.
 - **Tech Stack:** Astro Server Islands, React, Node.js API, Docker, NPM Workspaces.
 - **Key Features:** Instant purchase experience, admin management system, CI/CD with GitHub Actions, End-to-End testing with Playwright.
+
+---
+
+### [Zenith POS (Landing & Desktop App)](https://github.com/martin-ratti/Landing-Zenith)
+- **Description:** Comprehensive Point of Sale ecosystem. Consists of a high-performance Windows desktop application and a modern, SEO-optimized landing page.
+- **Tech Stack:** Desktop: C# (.NET Framework 4.0), WinForms, SQLite, Dapper. Landing: Astro 6, Tailwind CSS 4, TypeScript.
+- **Key Features:** Clean Architecture (Onion), White-label customization (branding), Hardware ID security (Machine Binding), 100% Offline operation, ESC/POS printing support.
 
 ---
 

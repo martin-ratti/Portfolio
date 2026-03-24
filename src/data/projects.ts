@@ -17,7 +17,7 @@ export const projects: Project[] = [
             es: "Sistema de Punto de Venta integral con arquitectura modular (Clean Architecture). Incluye una aplicación nativa para Windows (C#) y una landing page moderna (Astro). Soporta personalización White-label, seguridad por Hardware ID y funcionamiento 100% offline.",
             en: "Comprehensive Point of Sale system with modular architecture (Clean Architecture). Includes a native Windows app (C#) and a modern landing page (Astro). Supports White-label customization, Hardware ID security, and 100% offline operation."
         },
-        tags: ["C#", ".NET", "SQLite", "Astro", "Tailwind CSS", "WinForms", "Clean Architecture"],
+        tags: ["C#", ".NET", "SQLite", "Astro", "Tailwind CSS", "WinForms", "Clean Architecture", "Dapper"],
         link: "https://martin-ratti.github.io/Landing-Zenith/",
         repo: "https://github.com/martin-ratti/Landing-Zenith",
         featured: true
