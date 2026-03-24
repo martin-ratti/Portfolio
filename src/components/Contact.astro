@@ -117,49 +117,64 @@ const t = useTranslations(lang);
                         style="display: none;"
                     />
 
-                    <div class="flex flex-col gap-1.5">
-                        <label
-                            for="name"
-                            class="text-sm font-medium text-slate-700 dark:text-slate-300 inline-block text-left"
-                            >{t("contact.form.name")}</label
-                        >
+                    <!-- Campo Nombre con Floating Label -->
+                    <div class="relative group">
                         <input
                             type="text"
                             id="name"
                             name="name"
                             required
-                            class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg px-4 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-colors"
+                            placeholder=" "
+                            class="peer w-full bg-white dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded-xl px-4 pt-6 pb-2 text-slate-900 dark:text-white focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all duration-300 placeholder-transparent"
                         />
+                        <label
+                            for="name"
+                            class="absolute left-4 top-4 text-slate-500 dark:text-slate-400 transition-all duration-300 pointer-events-none
+                                   peer-focus:top-1.5 peer-focus:text-xs peer-focus:text-violet-500
+                                   peer-[:not(:placeholder-shown)]:top-1.5 peer-[:not(:placeholder-shown)]:text-xs"
+                        >
+                            {t("contact.form.name")}
+                        </label>
                     </div>
 
-                    <div class="flex flex-col gap-1.5">
-                        <label
-                            for="email"
-                            class="text-sm font-medium text-slate-700 dark:text-slate-300 inline-block text-left"
-                            >{t("contact.form.email")}</label
-                        >
+                    <!-- Campo Email con Floating Label -->
+                    <div class="relative group">
                         <input
                             type="email"
                             id="email"
                             name="email"
                             required
-                            class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg px-4 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-colors"
+                            placeholder=" "
+                            class="peer w-full bg-white dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded-xl px-4 pt-6 pb-2 text-slate-900 dark:text-white focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all duration-300 placeholder-transparent"
                         />
+                        <label
+                            for="email"
+                            class="absolute left-4 top-4 text-slate-500 dark:text-slate-400 transition-all duration-300 pointer-events-none
+                                   peer-focus:top-1.5 peer-focus:text-xs peer-focus:text-violet-500
+                                   peer-[:not(:placeholder-shown)]:top-1.5 peer-[:not(:placeholder-shown)]:text-xs"
+                        >
+                            {t("contact.form.email")}
+                        </label>
                     </div>
 
-                    <div class="flex flex-col gap-1.5">
-                        <label
-                            for="message"
-                            class="text-sm font-medium text-slate-700 dark:text-slate-300 inline-block text-left"
-                            >{t("contact.form.message")}</label
-                        >
+                    <!-- Campo Mensaje con Floating Label y Auto-resize -->
+                    <div class="relative group">
                         <textarea
                             id="message"
                             name="message"
                             rows="4"
                             required
-                            class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg px-4 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-colors resize-y"
+                            placeholder=" "
+                            class="peer w-full bg-white dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded-xl px-4 pt-6 pb-2 text-slate-900 dark:text-white focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all duration-300 placeholder-transparent resize-none overflow-hidden"
                         ></textarea>
+                        <label
+                            for="message"
+                            class="absolute left-4 top-4 text-slate-500 dark:text-slate-400 transition-all duration-300 pointer-events-none
+                                   peer-focus:top-1.5 peer-focus:text-xs peer-focus:text-violet-500
+                                   peer-[:not(:placeholder-shown)]:top-1.5 peer-[:not(:placeholder-shown)]:text-xs"
+                        >
+                            {t("contact.form.message")}
+                        </label>
                     </div>
 
                     <button
@@ -245,6 +260,21 @@ const t = useTranslations(lang);
 
         if (!form || !result || !submitBtn || !submitText) return;
 
+        // Auto-resize para el textarea (Expansión 1)
+        const messageTextarea = document.getElementById("message") as HTMLTextAreaElement;
+        if (messageTextarea) {
+            messageTextarea.addEventListener("input", function() {
+                this.style.height = "auto";
+                this.style.height = (this.scrollHeight) + "px";
+            });
+            
+            // Ajustar altura inicial si hay contenido (por ejemplo, al volver atrás)
+            if (messageTextarea.value) {
+                messageTextarea.style.height = "auto";
+                messageTextarea.style.height = (messageTextarea.scrollHeight) + "px";
+            }
+        }
+
         const originalText = submitText.innerText;
 
         form.addEventListener("submit", function (e) {
@@ -304,6 +334,9 @@ const t = useTranslations(lang);
                                 successState.classList.remove("flex");
                                 form.classList.remove("hidden");
                                 form.reset();
+                                if (messageTextarea) {
+                                    messageTextarea.style.height = "auto";
+                                }
                             }, { once: true });
                         }
                     } else {
