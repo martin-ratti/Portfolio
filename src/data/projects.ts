@@ -12,6 +12,17 @@ export interface Project {
 
 export const projects: Project[] = [
     {
+        title: "Zenith POS - Landing & Desktop App",
+        description: {
+            es: "Sistema de Punto de Venta integral con arquitectura modular (Clean Architecture). Incluye una aplicación nativa para Windows (C#) y una landing page moderna (Astro). Soporta personalización White-label, seguridad por Hardware ID y funcionamiento 100% offline.",
+            en: "Comprehensive Point of Sale system with modular architecture (Clean Architecture). Includes a native Windows app (C#) and a modern landing page (Astro). Supports White-label customization, Hardware ID security, and 100% offline operation."
+        },
+        tags: ["C#", ".NET", "SQLite", "Astro", "Tailwind CSS", "WinForms", "Clean Architecture"],
+        link: "https://martin-ratti.github.io/Landing-Zenith/",
+        repo: "https://github.com/martin-ratti/Landing-Zenith",
+        featured: true
+    },
+    {
         title: "PCFIX - E-Commerce Monorepo",
         description: {
             es: "Plataforma de comercio electrónico de alto rendimiento con arquitectura monorepo. Incluye tienda online, sistema de usuarios, panel administrativo y business intelligence.",
@@ -23,14 +34,14 @@ export const projects: Project[] = [
         featured: true
     },
     {
-        title: "EstacionAR - Smart Parking",
+        title: "EstacionAR - Smart Parking (Work in Progress)",
         description: {
             es: "Plataforma mobile-first para gestión y reserva de estacionamientos. Arquitectura escalable monorepo con geolocalización y pagos integrados.",
             en: "Mobile-first platform for parking management and reliable reservations. Scalable monorepo architecture with geolocation and integrated payments."
         },
         tags: ["React Native", "TypeScript", "Node.js", "PostgreSQL", "Docker", "Turborepo", "Prisma", "Express", "Jest", "Vitest", "Postman"],
         repo: "https://github.com/agussantinelli/EstacionAR",
-        featured: true
+        featured: false
     },
     {
         title: "ImpulsaMe - Crowdfunding Java",

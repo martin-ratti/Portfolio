@@ -49,6 +49,8 @@ export const skills: Skills = {
         { name: "Jest", icon: "simple-icons:jest" },
         { name: "Vitest", icon: "simple-icons:vitest" },
         { name: "Playwright", icon: "simple-icons:playwright" },
-        { name: "Postman", icon: "simple-icons:postman" }
+        { name: "Postman", icon: "simple-icons:postman" },
+        { name: "SQLite", icon: "simple-icons:sqlite" },
+        { name: "Dapper", icon: "mdi:database-cog" }
     ]
 };
