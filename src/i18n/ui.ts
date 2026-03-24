@@ -49,6 +49,9 @@ export const ui = {
         'chat.error.connection': 'Lo siento, hubo un error de conexión.',
         'chat.error.server': 'Lo siento, no pude conectar con el servidor.',
         'chat.error.prefix': 'Error:',
+        'chat.suggestion1': 'Háblame de tu experiencia con Astro',
+        'chat.suggestion2': '¿Qué arquitectura usaste en PCFIX?',
+        'chat.suggestion3': '¿Cuál es tu stack tecnológico?',
 
         // Contact Form
         'contact.form.name': 'Tu Nombre',
@@ -105,6 +108,9 @@ export const ui = {
         'chat.error.connection': 'Sorry, there was a connection error.',
         'chat.error.server': 'Sorry, I could not connect to the server.',
         'chat.error.prefix': 'Error:',
+        'chat.suggestion1': 'Tell me about your Astro experience',
+        'chat.suggestion2': 'What architecture did you use in PCFIX?',
+        'chat.suggestion3': 'What is your tech stack?',
 
         // Contact Form
         'contact.form.name': 'Your Name',

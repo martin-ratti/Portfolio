@@ -20,7 +20,7 @@ const t = useTranslations(lang);
     >
         <div
             id="chat-window"
-            class="pointer-events-auto transition-all duration-300 transform origin-bottom-right scale-0 opacity-0 mb-4 w-[350px] max-w-[calc(100vw-2rem)] h-[500px] max-h-[80vh] flex flex-col bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-2xl shadow-2xl overflow-hidden"
+            class="pointer-events-auto transition-all duration-300 transform origin-bottom-right scale-0 opacity-0 mb-4 w-[350px] max-w-[calc(100vw-2rem)] h-[600px] max-h-[80vh] flex flex-col bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-2xl shadow-2xl overflow-hidden"
         >
             <div
                 class="p-4 border-b border-black/5 dark:border-white/10 bg-white/50 dark:bg-black/20 flex justify-between items-center"
@@ -97,6 +97,27 @@ const t = useTranslations(lang);
             <div
                 class="p-4 border-t border-black/5 dark:border-white/10 bg-white/50 dark:bg-black/20"
             >
+                <!-- Prompt Chips Container -->
+                <div 
+                    id="chips-container" 
+                    class="flex flex-nowrap gap-2 overflow-x-auto pb-2 mb-1 transition-opacity duration-300 items-center snap-x snap-mandatory custom-scrollbar"
+                >
+                    <button class="chat-chip group flex items-center gap-2 whitespace-nowrap px-4 py-2 rounded-full text-xs font-medium bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 hover:border-violet-500 dark:hover:border-violet-400 hover:bg-violet-50 dark:hover:bg-violet-500/10 hover:shadow-md transition-all cursor-pointer text-slate-700 dark:text-slate-200 shadow-sm" data-message={t("chat.suggestion1")}>
+                        <Icon name="simple-icons:astro" class="w-3.5 h-3.5 text-violet-500" />
+                        <span>{t("chat.suggestion1")}</span>
+                    </button>
+                    <button class="chat-chip group flex items-center gap-2 whitespace-nowrap px-4 py-2 rounded-full text-xs font-medium bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 hover:border-violet-500 dark:hover:border-violet-400 hover:bg-violet-50 dark:hover:bg-violet-500/10 hover:shadow-md transition-all cursor-pointer text-slate-700 dark:text-slate-200 shadow-sm" data-message={t("chat.suggestion2")}>
+                        <Icon name="mdi:layers-outline" class="w-3.5 h-3.5 text-fuchsia-500" />
+                        <span>{t("chat.suggestion2")}</span>
+                    </button>
+                    <button class="chat-chip group flex items-center gap-2 whitespace-nowrap px-4 py-2 rounded-full text-xs font-medium bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 hover:border-violet-500 dark:hover:border-violet-400 hover:bg-violet-50 dark:hover:bg-violet-500/10 hover:shadow-md transition-all cursor-pointer text-slate-700 dark:text-slate-200 shadow-sm" data-message={t("chat.suggestion3")}>
+                        <Icon name="mdi:code-tags" class="w-3.5 h-3.5 text-blue-500" />
+                        <span>{t("chat.suggestion3")}</span>
+                    </button>
+                    <!-- Espaciador final para el scroll -->
+                    <div class="w-4 shrink-0"></div>
+                </div>
+
                 <form id="chat-form" class="relative">
                     <input
                         type="text"
@@ -181,7 +202,8 @@ const t = useTranslations(lang);
             >
 
             <span
-                class="absolute right-full mr-4 top-1/2 -translate-y-1/2 bg-white dark:bg-slate-800 text-slate-800 dark:text-white text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 shadow-lg whitespace-nowrap pointer-events-none"
+                id="chat-tooltip"
+                class="absolute right-full mr-4 top-1/2 -translate-y-1/2 bg-white dark:bg-slate-800 text-slate-800 dark:text-white text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 -translate-x-2 transition-all duration-300 shadow-lg whitespace-nowrap pointer-events-none border border-black/5 dark:border-white/10"
             >
                 {t("chat.tooltip")}
             </span>
@@ -211,6 +233,11 @@ const t = useTranslations(lang);
         let messagesContainer: HTMLElement | null = null;
         let messageIcon: HTMLElement | null = null;
         let closeIcon: HTMLElement | null = null;
+        let tooltip: HTMLElement | null = null;
+        let chipsContainer: HTMLElement | null = null;
+
+        let tooltipTimer: ReturnType<typeof setTimeout> | null = null;
+        let hideTooltipTimer: ReturnType<typeof setTimeout> | null = null;
 
         let currentLang = "es";
         let errServer = "Lo siento, no pude conectar con el servidor.";
@@ -218,9 +245,25 @@ const t = useTranslations(lang);
         let errPrefix = 'Error:';
         const errorIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block mr-1 text-red-500"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>';
 
+        function showTooltip() {
+            if (!tooltip || isOpen) return;
+            tooltip.classList.remove("opacity-0", "-translate-x-2");
+            tooltip.classList.add("opacity-100", "translate-x-0", "animate-bounce-subtle");
+        }
+
+        function hideTooltip() {
+            if (!tooltip) return;
+            tooltip.classList.add("opacity-0", "-translate-x-2");
+            tooltip.classList.remove("opacity-100", "translate-x-0", "animate-bounce-subtle");
+        }
+
         function toggleChat() {
             isOpen = !isOpen;
             if (isOpen) {
+                hideTooltip();
+                if (tooltipTimer) clearTimeout(tooltipTimer);
+                if (hideTooltipTimer) clearTimeout(hideTooltipTimer);
+
                 windowEl?.classList.remove("scale-0", "opacity-0");
                 messageIcon?.classList.add("scale-0");
                 closeIcon?.classList.remove("scale-0");
@@ -239,15 +282,11 @@ const t = useTranslations(lang);
             }
         }
 
-        async function handleChatSubmit(e: SubmitEvent) {
-            e.preventDefault();
-            if (!input || !messagesContainer) return;
-
-            const text = input.value.trim();
-            if (!text) return;
+        async function sendMessage(text: string) {
+            if (!messagesContainer) return;
 
             addMessageToDOM(messagesContainer, "user", text);
-            input.value = "";
+            if (input) input.value = "";
             messages.push({ role: "user", content: text });
 
             showTypingIndicator(messagesContainer);
@@ -273,6 +312,32 @@ const t = useTranslations(lang);
             }
         }
 
+        async function handleChatSubmit(e: SubmitEvent) {
+            e.preventDefault();
+            if (!input) return;
+
+            const text = input.value.trim();
+            if (!text) return;
+
+            sendMessage(text);
+        }
+
+        function handleChipClick(e: Event) {
+            const btn = (e.currentTarget as HTMLElement).closest('.chat-chip') as HTMLButtonElement;
+            const message = btn.dataset.message;
+            if (message) {
+                sendMessage(message);
+                
+                // Animación de salida para los chips
+                if (chipsContainer) {
+                    chipsContainer.classList.add('opacity-0', 'pointer-events-none');
+                    setTimeout(() => {
+                        chipsContainer?.classList.add('hidden');
+                    }, 300);
+                }
+            }
+        }
+
         function initChatWidget() {
             widget = document.getElementById("chat-widget");
             toggleBtn = document.getElementById("chat-toggle");
@@ -283,6 +348,8 @@ const t = useTranslations(lang);
             messagesContainer = document.getElementById("messages-container");
             messageIcon = document.getElementById("icon-message");
             closeIcon = document.getElementById("icon-close");
+            tooltip = document.getElementById("chat-tooltip");
+            chipsContainer = document.getElementById("chips-container");
 
             if (widget) {
                 currentLang = widget.dataset.lang || "es";
@@ -302,6 +369,23 @@ const t = useTranslations(lang);
             toggleBtn?.addEventListener("click", toggleChat);
             closeBtn?.addEventListener("click", toggleChat);
             form?.addEventListener("submit", handleChatSubmit);
+
+            // Chips click events
+            document.querySelectorAll(".chat-chip").forEach(chip => {
+                chip.addEventListener("click", handleChipClick);
+            });
+
+            // Hover effects for manual visibility
+            toggleBtn?.addEventListener("mouseenter", showTooltip);
+            toggleBtn?.addEventListener("mouseleave", hideTooltip);
+
+            // Proactive Tooltip Timer
+            tooltipTimer = setTimeout(() => {
+                showTooltip();
+                
+                // Auto hide after 5 seconds
+                hideTooltipTimer = setTimeout(hideTooltip, 5000);
+            }, 6000); // 6 seconds after load
         }
 
         document.addEventListener("astro:page-load", initChatWidget);
@@ -310,33 +394,51 @@ const t = useTranslations(lang);
     <style is:global>
         /* Estilos para el contenido Markdown del chat */
         .prose p {
-            margin-bottom: 0.5em;
+            margin-bottom: 0.75em;
+            line-height: 1.6;
         }
         .prose p:last-child {
             margin-bottom: 0;
         }
         .prose strong {
-            font-weight: 600;
+            font-weight: 700;
             color: inherit;
+        }
+        .prose a {
+            color: #d946ef; /* fuchsia-500 */
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            border-bottom: 1px solid transparent;
+        }
+        .prose a:hover {
+            color: #8b5cf6; /* violet-500 */
+            text-decoration: underline;
+        }
+        .dark .prose a {
+            color: #d946ef;
         }
         .prose ul,
         .prose ol {
             margin-left: 1.25em;
-            margin-bottom: 0.5em;
+            margin-bottom: 0.75em;
             list-style-type: disc;
         }
         .prose li {
-            margin-bottom: 0.25em;
+            margin-bottom: 0.35em;
         }
         .prose code {
-            background-color: rgba(0, 0, 0, 0.1);
-            padding: 0.1em 0.3em;
-            border-radius: 0.25em;
-            font-family: monospace;
+            background-color: rgba(139, 92, 246, 0.1);
+            color: #8b5cf6;
+            padding: 0.2em 0.4em;
+            border-radius: 0.375em;
+            font-family: inherit;
+            font-weight: 600;
             font-size: 0.9em;
         }
         .dark .prose code {
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(217, 70, 239, 0.15);
+            color: #f472b6;
         }
         .prose pre {
             background-color: #1e293b;
@@ -344,13 +446,50 @@ const t = useTranslations(lang);
             padding: 0.75em;
             border-radius: 0.5em;
             overflow-x: auto;
-            margin-bottom: 0.5em;
+            margin-bottom: 0.75em;
             font-size: 0.85em;
         }
         .prose pre code {
             background-color: transparent;
             padding: 0;
             color: inherit;
+            font-weight: 400;
+        }
+
+        /* Chips Styles */
+        /* Scrollbar styles moved to .custom-scrollbar */
+        /* Custom Scrollbar for Chips */
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(139, 92, 246, 0.3);
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(139, 92, 246, 0.5);
+        }
+
+        .chat-chip {
+            snap-align: start;
+        }
+        .mask-fade-right {
+            mask-image: linear-gradient(to right, black 90%, transparent 100%);
+        }
+
+        @keyframes bounce-subtle {
+            0%, 100% { transform: translateY(-50%) translateX(0); }
+            50% { transform: translateY(-50%) translateX(-5px); }
+        }
+        .animate-bounce-subtle {
+            animation: bounce-subtle 2s infinite;
         }
     </style>
 </div>
