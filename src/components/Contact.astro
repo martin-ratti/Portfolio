@@ -312,7 +312,7 @@ const t = useTranslations(lang);
                             "flex items-center gap-3 p-4 rounded-xl border backdrop-blur-sm shadow-lg shadow-red-500/10 bg-red-500/10 border-red-500/20 text-red-500 dark:text-red-400";
                         resultIcon.className =
                             "shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-lg bg-red-500/20";
-                        resultIcon.innerText = "⚠️";
+                        resultIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>`;
                         resultMessage.innerText =
                             result.dataset.error || "Error";
                     }
@@ -329,7 +329,7 @@ const t = useTranslations(lang);
                             "flex items-center gap-3 p-4 rounded-xl border backdrop-blur-sm shadow-lg shadow-red-500/10 bg-red-500/10 border-red-500/20 text-red-500 dark:text-red-400";
                         resultIcon.className =
                             "shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-lg bg-red-500/20";
-                        resultIcon.innerText = "⚠️";
+                        resultIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>`;
                         resultMessage.innerText =
                             result.dataset.error || "Error";
                     }
