@@ -1,6 +1,7 @@
 ---
 import { skills } from "../data/skills";
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { Icon } from "astro-icon/components";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -65,13 +66,7 @@ const skillCategories = [
                                     data-skill={skill.name}
                                     aria-label={`Filtrar proyectos por ${skill.name}`}
                                 >
-                                    <svg
-                                        viewBox="0 0 24 24"
-                                        fill="currentColor"
-                                        class="w-4 h-4"
-                                    >
-                                        <path d={skill.icon} />
-                                    </svg>
+                                    <Icon name={skill.icon} class="w-4 h-4" />
                                     {skill.name}
                                 </button>
                             ))}

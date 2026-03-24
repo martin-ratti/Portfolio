@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import vercel from '@astrojs/vercel';
+import icon from 'astro-icon';
 
 // https://astro.build/config
 export default defineConfig({
@@ -13,7 +14,7 @@ export default defineConfig({
     }
   },
   site: 'https://martinratti.com.ar',
-  integrations: [sitemap()],
+  integrations: [sitemap(), icon()],
   output: 'server',
   adapter: vercel()
 });
