@@ -56,7 +56,10 @@ export const ui = {
         'contact.form.message': 'Mensaje',
         'contact.form.send': 'Enviar Mensaje',
         'contact.form.sending': 'Enviando...',
-        'contact.form.success': 'Mensaje enviado. ¡Gracias!',
+        'contact.form.success': '¡Mensaje enviado con éxito!',
+        'contact.form.success2': 'He recibido tu mensaje y te responderé a tu correo en menos de 24 horas.',
+        'contact.form.reset': 'Enviar otro mensaje',
+        'contact.form.back': 'Volver a Proyectos',
         'contact.form.error': 'Error al enviar el mensaje. Inténtalo de nuevo.',
     },
     en: {
@@ -109,7 +112,10 @@ export const ui = {
         'contact.form.message': 'Message',
         'contact.form.send': 'Send Message',
         'contact.form.sending': 'Sending...',
-        'contact.form.success': 'Message sent. Thank you!',
+        'contact.form.success': 'Message sent successfully!',
+        'contact.form.success2': 'I have received your message and will respond to your email within 24 hours.',
+        'contact.form.reset': 'Send another message',
+        'contact.form.back': 'Back to Projects',
         'contact.form.error': 'Error sending message. Please try again.',
     },
 } as const;

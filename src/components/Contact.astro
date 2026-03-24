@@ -99,17 +99,17 @@ const t = useTranslations(lang);
 
             <!-- Columna Derecha: Formulario de Contacto -->
             <div class="w-full">
+            <div id="form-container" class="w-full relative">
                 <form
                     id="contact-form"
                     method="POST"
-                    class="flex flex-col gap-4 bg-slate-50/50 dark:bg-slate-800/50 p-6 md:p-8 rounded-2xl border border-slate-200 dark:border-slate-700"
+                    class="flex flex-col gap-4 bg-slate-50/50 dark:bg-slate-800/50 p-6 md:p-8 rounded-2xl border border-slate-200 dark:border-slate-700 transition-all duration-500"
                 >
                     <input
                         type="hidden"
                         name="access_key"
                         value="e3ffd7ce-28bb-40ba-a80d-dddc59051a14"
                     />
-                    <!-- Componentes de Seguridad Web3Forms -->
                     <input
                         type="checkbox"
                         name="botcheck"
@@ -202,6 +202,33 @@ const t = useTranslations(lang);
                         </div>
                     </div>
                 </form>
+
+                <div id="success-state" class="hidden flex-col items-center justify-center text-center p-6 md:p-12 animate-fade-in bg-slate-50/30 dark:bg-slate-800/20 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 min-h-[490px]">
+                    <div class="relative mb-8 flex items-center justify-center">
+                        <svg class="w-24 h-24" viewBox="0 0 52 52">
+                            <circle class="animate-circle text-green-500 dark:text-green-400" cx="26" cy="26" r="25" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="160" stroke-dashoffset="160" />
+                            <path class="animate-check text-green-500 dark:text-green-400" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="48" stroke-dashoffset="48" />
+                        </svg>
+                        <div class="absolute inset-0 bg-green-500/10 rounded-full blur-2xl animate-pulse"></div>
+                    </div>
+                    
+                    <h3 class="text-3xl font-bold text-slate-900 dark:text-white mb-4">
+                        {t("contact.form.success")}
+                    </h3>
+                    <p class="text-lg text-slate-600 dark:text-slate-300 max-w-sm mb-10 leading-relaxed">
+                        {t("contact.form.success2")}
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                        <button id="reset-form" class="px-8 py-3 bg-violet-600 hover:bg-violet-700 text-white font-medium rounded-xl transition-all shadow-lg shadow-violet-500/25 hover:scale-105 active:scale-95">
+                             {t("contact.form.reset")}
+                        </button>
+                        <a href="#proyectos" class="px-8 py-3 glass-card border border-slate-200 dark:border-slate-700 font-medium rounded-xl hover:bg-white dark:hover:bg-slate-800 transition text-slate-700 dark:text-slate-300 hover:scale-105 active:scale-95">
+                             {t("contact.form.back")}
+                        </a>
+                    </div>
+                </div>
+            </div>
             </div>
         </div>
     </div>
@@ -265,17 +292,24 @@ const t = useTranslations(lang);
                         return;
 
                     if (response.status == 200) {
-                        resultContainer.className =
-                            "flex items-center gap-3 p-4 rounded-xl border backdrop-blur-sm transition-all shadow-lg shadow-green-500/10 bg-green-500/10 border-green-500/20 text-green-600 dark:text-green-400";
-                        resultIcon.className =
-                            "shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-lg bg-green-500/20";
-                        resultIcon.innerText = "✅";
-                        resultMessage.innerText =
-                            result.dataset.success || "Success";
-                        form.reset();
+                        const successState = document.getElementById("success-state");
+                        if (successState) {
+                            form.classList.add("hidden");
+                            successState.classList.remove("hidden");
+                            successState.classList.add("flex");
+                            
+                            const resetBtn = document.getElementById("reset-form");
+                            resetBtn?.addEventListener("click", () => {
+                                successState.classList.add("hidden");
+                                successState.classList.remove("flex");
+                                form.classList.remove("hidden");
+                                form.reset();
+                            }, { once: true });
+                        }
                     } else {
+                        result.classList.remove("hidden");
                         resultContainer.className =
-                            "flex items-center gap-3 p-4 rounded-xl border backdrop-blur-sm transition-all shadow-lg shadow-red-500/10 bg-red-500/10 border-red-500/20 text-red-500 dark:text-red-400";
+                            "flex items-center gap-3 p-4 rounded-xl border backdrop-blur-sm shadow-lg shadow-red-500/10 bg-red-500/10 border-red-500/20 text-red-500 dark:text-red-400";
                         resultIcon.className =
                             "shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-lg bg-red-500/20";
                         resultIcon.innerText = "⚠️";
@@ -292,7 +326,7 @@ const t = useTranslations(lang);
 
                     if (resultMessage && resultIcon && resultContainer) {
                         resultContainer.className =
-                            "flex items-center gap-3 p-4 rounded-xl border backdrop-blur-sm transition-all shadow-lg shadow-red-500/10 bg-red-500/10 border-red-500/20 text-red-500 dark:text-red-400";
+                            "flex items-center gap-3 p-4 rounded-xl border backdrop-blur-sm shadow-lg shadow-red-500/10 bg-red-500/10 border-red-500/20 text-red-500 dark:text-red-400";
                         resultIcon.className =
                             "shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-lg bg-red-500/20";
                         resultIcon.innerText = "⚠️";

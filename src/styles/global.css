@@ -97,7 +97,6 @@
 }
 
 @keyframes float {
-
     0%,
     100% {
         transform: translateY(0);
@@ -105,5 +104,48 @@
 
     50% {
         transform: translateY(-20px);
+    }
+}
+
+@keyframes checkmark {
+    0% {
+        stroke-dashoffset: 48;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes draw-circle {
+    0% {
+        stroke-dashoffset: 160;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+.animate-check {
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: checkmark 0.5s ease-in-out forwards 0.5s;
+}
+
+.animate-circle {
+    stroke-dasharray: 160;
+    stroke-dashoffset: 160;
+    animation: draw-circle 0.8s ease-in-out forwards;
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
     }
 }
