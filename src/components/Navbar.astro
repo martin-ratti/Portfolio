@@ -14,122 +14,137 @@ const navItems = [
 <nav
     class="fixed top-4 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none"
 >
-    <div
-        class="glass-card rounded-full px-3 py-2 md:px-6 md:py-3 flex items-center gap-2 md:gap-8 shadow-lg shadow-violet-900/10 pointer-events-auto max-w-[95vw] overflow-x-auto no-scrollbar"
-    >
-        <a
-            href={lang === "en" ? "/en" : "/"}
-            class="font-bold text-transparent bg-clip-text bg-linear-to-r from-violet-400 to-cyan-400 hover:opacity-80 transition shrink-0"
-            >MR</a
+    <div class="relative pointer-events-auto max-w-[95vw]">
+        <!-- Fades para scroll horizontal en móvil -->
+        <div
+            id="nav-fade-left"
+            class="absolute left-0 top-0 bottom-0 w-12 bg-linear-to-r from-slate-900/40 dark:from-black/60 to-transparent z-10 opacity-0 transition-opacity pointer-events-none rounded-l-full"
         >
+        </div>
+        <div
+            id="nav-fade-right"
+            class="absolute right-0 top-0 bottom-0 w-12 bg-linear-to-l from-slate-900/40 dark:from-black/60 to-transparent z-10 opacity-0 transition-opacity pointer-events-none rounded-r-full"
+        >
+        </div>
 
-        <div class="h-4 w-px bg-slate-700/50 hidden md:block"></div>
-
-        <ul class="flex gap-3 md:gap-6 shrink-0">
-            {
-                navItems.map((item) => (
-                    <li>
-                        <a
-                            href={item.url}
-                            class="nav-link text-xs md:text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition whitespace-nowrap"
-                        >
-                            {item.name}
-                        </a>
-                    </li>
-                ))
-            }
-        </ul>
-
-        <div class="h-4 w-px bg-slate-700/50 hidden md:block"></div>
-
-        <div class="flex gap-1 md:gap-4 items-center shrink-0">
+        <div
+            id="nav-container"
+            class="glass-card rounded-full px-3 py-2 md:px-6 md:py-3 flex items-center gap-2 md:gap-8 shadow-lg shadow-violet-900/10 overflow-x-auto no-scrollbar relative"
+        >
             <a
-                href="https://github.com/martin-ratti"
-                target="_blank"
-                class="text-slate-400 hover:text-white transition hidden sm:block delay-75"
-                aria-label="GitHub"
+                href={lang === "en" ? "/en" : "/"}
+                class="font-bold text-transparent bg-clip-text bg-linear-to-r from-violet-400 to-cyan-400 hover:opacity-80 transition shrink-0"
+                >MR</a
             >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    ><path
-                        d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
-                    ></path></svg
-                >
-            </a>
 
-            <a
-                id="lang-toggle"
-                href={lang === "en" ? "/" : "/en"}
-                class="text-[10px] md:text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-violet-600 dark:hover:text-white transition uppercase border border-slate-300 dark:border-slate-700 px-1.5 py-0.5 md:px-2 md:py-1 rounded"
-            >
-                {lang === "es" ? "EN" : "ES"}
-            </a>
+            <div class="h-4 w-px bg-slate-700/50 hidden md:block"></div>
 
-            <button
-                id="theme-toggle"
-                class="p-1.5 md:p-3 text-slate-500 dark:text-slate-400 hover:text-violet-600 dark:hover:text-white transition rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
-                aria-label="Toggle Theme"
-            >
-                <svg
-                    id="sun-icon"
-                    class="hidden dark:block w-5 h-5 md:w-5 md:h-5"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    ><circle cx="12" cy="12" r="5"></circle><line
-                        x1="12"
-                        y1="1"
-                        x2="12"
-                        y2="3"></line><line x1="12" y1="21" x2="12" y2="23"
-                    ></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"
-                    ></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"
-                    ></line><line x1="1" y1="12" x2="3" y2="12"></line><line
-                        x1="21"
-                        y1="12"
-                        x2="23"
-                        y2="12"></line><line
-                        x1="4.22"
-                        y1="19.78"
-                        x2="5.64"
-                        y2="18.36"></line><line
-                        x1="18.36"
-                        y1="5.64"
-                        x2="19.78"
-                        y2="4.22"></line></svg
-                >
-                <svg
-                    id="moon-icon"
-                    class="block dark:hidden w-5 h-5 md:w-5 md:h-5"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    ><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
-                    ></path></svg
-                >
-            </button>
+            <ul class="flex gap-3 md:gap-6 shrink-0">
+                {
+                    navItems.map((item) => (
+                        <li>
+                            <a
+                                href={item.url}
+                                class="nav-link text-xs md:text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition whitespace-nowrap"
+                            >
+                                {item.name}
+                            </a>
+                        </li>
+                    ))
+                }
+            </ul>
 
-            <button
-                onclick="alert('¡El CV estará disponible próximamente!')"
-                class="hidden sm:block text-xs font-medium text-violet-300 hover:text-white border border-violet-500/30 bg-violet-500/10 px-3 py-1.5 rounded-full transition"
-            >
-                {t("nav.cv")}
-            </button>
+            <div class="h-4 w-px bg-slate-700/50 hidden md:block"></div>
+
+            <div class="flex gap-1 md:gap-4 items-center shrink-0">
+                <a
+                    href="https://github.com/martin-ratti"
+                    target="_blank"
+                    class="text-slate-400 hover:text-white transition hidden sm:block delay-75"
+                    aria-label="GitHub"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        ><path
+                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                        ></path></svg
+                    >
+                </a>
+
+                <a
+                    id="lang-toggle"
+                    href={lang === "en" ? "/" : "/en"}
+                    class="text-[10px] md:text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-violet-600 dark:hover:text-white transition uppercase border border-slate-300 dark:border-slate-700 px-1.5 py-0.5 md:px-2 md:py-1 rounded"
+                >
+                    {lang === "es" ? "EN" : "ES"}
+                </a>
+
+                <button
+                    id="theme-toggle"
+                    class="p-1.5 md:p-3 text-slate-500 dark:text-slate-400 hover:text-violet-600 dark:hover:text-white transition rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
+                    aria-label="Toggle Theme"
+                >
+                    <svg
+                        id="sun-icon"
+                        class="hidden dark:block w-5 h-5 md:w-5 md:h-5"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        ><circle cx="12" cy="12" r="5"></circle><line
+                            x1="12"
+                            y1="1"
+                            x2="12"
+                            y2="3"></line><line x1="12" y1="21" x2="12" y2="23"
+                        ></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"
+                        ></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"
+                        ></line><line x1="1" y1="12" x2="3" y2="12"></line><line
+                            x1="21"
+                            y1="12"
+                            x2="23"
+                            y2="12"></line><line
+                            x1="4.22"
+                            y1="19.78"
+                            x2="5.64"
+                            y2="18.36"></line><line
+                            x1="18.36"
+                            y1="5.64"
+                            x2="19.78"
+                            y2="4.22"></line></svg
+                    >
+                    <svg
+                        id="moon-icon"
+                        class="block dark:hidden w-5 h-5 md:w-5 md:h-5"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        ><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+                        ></path></svg
+                    >
+                </button>
+
+                <button
+                    onclick="alert('¡El CV estará disponible próximamente!')"
+                    class="hidden sm:block text-xs font-medium text-violet-300 hover:text-white border border-violet-500/30 bg-violet-500/10 px-3 py-1.5 rounded-full transition"
+                >
+                    {t("nav.cv")}
+                </button>
+            </div>
         </div>
     </div>
 </nav>
@@ -147,6 +162,27 @@ const navItems = [
         document
             .getElementById("theme-toggle")
             ?.addEventListener("click", handleToggleClick);
+
+        // Scroll Indicators Logic
+        const navContainer = document.getElementById("nav-container");
+        const fadeLeft = document.getElementById("nav-fade-left");
+        const fadeRight = document.getElementById("nav-fade-right");
+
+        if (navContainer && fadeLeft && fadeRight) {
+            const updateFades = () => {
+                const scrollLeft = navContainer.scrollLeft;
+                const scrollWidth = navContainer.scrollWidth;
+                const clientWidth = navContainer.clientWidth;
+
+                fadeLeft.style.opacity = scrollLeft > 10 ? "1" : "0";
+                fadeRight.style.opacity =
+                    scrollLeft + clientWidth < scrollWidth - 10 ? "1" : "0";
+            };
+
+            navContainer.addEventListener("scroll", updateFades);
+            updateFades(); // Inicial
+            window.addEventListener("resize", updateFades);
+        }
 
         // Scroll Spy Logic
         const navLinks = document.querySelectorAll(".nav-link");
