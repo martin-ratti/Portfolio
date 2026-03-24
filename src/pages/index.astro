@@ -7,9 +7,16 @@ import Contact from "../components/Contact.astro";
 import Footer from "../components/Footer.astro";
 import Navbar from "../components/Navbar.astro";
 import AboutMe from "../components/AboutMe.astro";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
-<Layout title="Martín Ratti | Portfolio de Desarrollo Full Stack">
+<Layout 
+	title="Martín Ratti | Portfolio de Desarrollo Full Stack"
+	description={t('seo.description')}
+>
 	<Navbar />
 
 	<main>

@@ -8,13 +8,22 @@ interface Props {
 	description?: string;
 }
 
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
 const {
 	title,
-	description = "Portafolio profesional de Desarrollo Full Stack",
+	description = t('seo.description'),
 } = Astro.props;
 
-import { getLangFromUrl } from "../i18n/utils";
-const lang = getLangFromUrl(Astro.url);
+const siteUrl = "https://martinratti.com.ar";
+// Lógica para rutas alternativas: limpia /en del inicio para obtener la ruta base
+const cleanPath = Astro.url.pathname.replace(/^\/en(\/|$)/, "$1") || "/";
+const alternates = {
+    es: new URL(cleanPath, siteUrl).href,
+    en: new URL("/en" + (cleanPath.startsWith("/") ? cleanPath : "/" + cleanPath), siteUrl).href,
+};
 ---
 
 <!doctype html>
@@ -36,6 +45,13 @@ const lang = getLangFromUrl(Astro.url);
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:image" content="/og-image.jpg" />
+
+		<!-- SEO Expansion 1: Bidirectional Semantic Connection (hreflang) -->
+		<link rel="canonical" href={lang === 'es' ? alternates.es : alternates.en} />
+		<link rel="alternate" hreflang="es" href={alternates.es} />
+		<link rel="alternate" hreflang="en" href={alternates.en} />
+		<link rel="alternate" hreflang="x-default" href={alternates.en} />
+
 		<meta property="twitter:card" content="summary_large_image" />
 		<meta property="twitter:url" content={Astro.url} />
 		<meta property="twitter:title" content={title} />
@@ -45,10 +61,10 @@ const lang = getLangFromUrl(Astro.url);
 		<title>{title}</title>
 	</head>
 	<body
-		class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-white selection:bg-fuchsia-500/30 relative transition-colors duration-300"
+		class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-white selection:bg-fuchsia-500/30 relative"
 	>
 		<div
-			class="fixed inset-0 -z-10 h-full w-full bg-slate-50 dark:bg-slate-950 transition-colors duration-300"
+			class="fixed inset-0 -z-10 h-full w-full bg-slate-50 dark:bg-slate-950"
 		>
 			<div
 				class="absolute top-0 z-[-2] h-screen w-screen bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.15),rgba(255,255,255,0))] dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"
@@ -93,22 +109,33 @@ const lang = getLangFromUrl(Astro.url);
 				const cards = document.querySelectorAll(".glass-card");
 				if (cards.length === 0) return;
 
+				// UI/UX Expansion 5: Optimización Pasiva con IntersectionObserver
+				const visibleCards = new Set();
+				
+				const observer = new IntersectionObserver((entries) => {
+					entries.forEach(entry => {
+						if (entry.isIntersecting) {
+							visibleCards.add(entry.target);
+						} else {
+							visibleCards.delete(entry.target);
+						}
+					});
+				}, { threshold: 0.1 });
+
+				cards.forEach(card => observer.observe(card));
+
 				document.addEventListener(
 					"mousemove",
 					(e) => {
+						if (visibleCards.size === 0) return;
+						
 						window.requestAnimationFrame(() => {
-							cards.forEach((card) => {
+							visibleCards.forEach((card: any) => {
 								const rect = card.getBoundingClientRect();
 								const x = e.clientX - rect.left;
 								const y = e.clientY - rect.top;
-								(card as HTMLElement).style.setProperty(
-									"--mouse-x",
-									`${x}px`,
-								);
-								(card as HTMLElement).style.setProperty(
-									"--mouse-y",
-									`${y}px`,
-								);
+								card.style.setProperty("--mouse-x", `${x}px`);
+								card.style.setProperty("--mouse-y", `${y}px`);
 							});
 						});
 					},
@@ -116,8 +143,19 @@ const lang = getLangFromUrl(Astro.url);
 				);
 			};
 
+			const initThemeTransitions = () => {
+				// UI/UX Expansion 4: Transición sin destellos
+				setTimeout(() => {
+					document.body.classList.add('theme-transitions-ready');
+				}, 100);
+			};
+
 			initSpotlight();
-			document.addEventListener("astro:after-swap", initSpotlight);
+			initThemeTransitions();
+			document.addEventListener("astro:after-swap", () => {
+				initSpotlight();
+				initThemeTransitions();
+			});
 		</script>
 		<ChatWidget />
 	</body>

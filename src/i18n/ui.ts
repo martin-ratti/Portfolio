@@ -64,6 +64,9 @@ export const ui = {
         'contact.form.reset': 'Enviar otro mensaje',
         'contact.form.back': 'Volver a Proyectos',
         'contact.form.error': 'Error al enviar el mensaje. Inténtalo de nuevo.',
+        'seo.description': 'Portafolio profesional de Martín Ratti, Desarrollador Full Stack. Especializado en React, Node.js y Astro.',
+        'nav.theme.dark': 'Cambiar a modo claro',
+        'nav.theme.light': 'Cambiar a modo oscuro',
     },
     en: {
         'nav.projects': 'Projects',
@@ -123,5 +126,8 @@ export const ui = {
         'contact.form.reset': 'Send another message',
         'contact.form.back': 'Back to Projects',
         'contact.form.error': 'Error sending message. Please try again.',
+        'seo.description': 'Professional portfolio of Martín Ratti, Full Stack Developer. Specialized in React, Node.js, and Astro.',
+        'nav.theme.dark': 'Change to light mode',
+        'nav.theme.light': 'Change to dark mode',
     },
 } as const;
