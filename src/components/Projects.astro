@@ -50,6 +50,27 @@ const otherProjects = projects.filter((p) => !p.featured);
     </div>
 </section>
 
+<style>
+    @keyframes success-flash {
+        0% {
+            box-shadow: 0 0 0 0 rgba(139, 92, 246, 0);
+            transform: scale(1.05);
+        }
+        30% {
+            box-shadow: 0 0 25px 10px rgba(139, 92, 246, 0.6);
+            transform: scale(1.08);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(139, 92, 246, 0);
+            transform: scale(1.05);
+        }
+    }
+
+    .animate-success-flash {
+        animation: success-flash 1.2s ease-out forwards;
+    }
+</style>
+
 <script>
     let isListenerAdded = false;
 
@@ -63,12 +84,14 @@ const otherProjects = projects.filter((p) => !p.featured);
 
             if (!selectedSkill) {
                 cards.forEach((card) => {
-                    (card as HTMLElement).style.opacity = "1";
-                    (card as HTMLElement).style.filter = "grayscale(0)";
-                    (card as HTMLElement).style.transform = "scale(1)";
-                    (card as HTMLElement).style.borderColor = "transparent";
-                    (card as HTMLElement).style.zIndex = "0";
-                    (card as HTMLElement).style.boxShadow = "none";
+                    const el = card as HTMLElement;
+                    el.style.opacity = "1";
+                    el.style.filter = "grayscale(0)";
+                    el.style.transform = "scale(1)";
+                    el.style.borderColor = "transparent";
+                    el.style.zIndex = "0";
+                    el.style.boxShadow = "none";
+                    el.classList.remove("animate-success-flash");
                 });
                 return;
             }
@@ -76,12 +99,14 @@ const otherProjects = projects.filter((p) => !p.featured);
             let firstMatch: HTMLElement | null = null;
 
             cards.forEach((card) => {
+                const el = card as HTMLElement;
                 const techs = JSON.parse(
-                    card.getAttribute("data-techs") || "[]",
+                    el.getAttribute("data-techs") || "[]",
                 );
 
+                el.classList.remove("animate-success-flash");
+
                 if (techs.includes(selectedSkill)) {
-                    const el = card as HTMLElement;
                     el.style.opacity = "1";
                     el.style.filter =
                         "grayscale(0) drop-shadow(0 0 15px rgba(139, 92, 246, 0.4))";
@@ -90,7 +115,6 @@ const otherProjects = projects.filter((p) => !p.featured);
                     el.style.zIndex = "10";
                     if (!firstMatch) firstMatch = el;
                 } else {
-                    const el = card as HTMLElement;
                     el.style.opacity = "0.1";
                     el.style.filter = "grayscale(100%) blur(2px)";
                     el.style.transform = "scale(0.95)";
@@ -101,13 +125,18 @@ const otherProjects = projects.filter((p) => !p.featured);
             });
 
             if (firstMatch) {
+                const matchEl = firstMatch as HTMLElement;
                 // Pequeño delay para dejar que las transiciones de CSS comiencen
-                // y asegurar que el scroll sea más "ajustado" a la posición final
                 setTimeout(() => {
-                    (firstMatch as HTMLElement).scrollIntoView({
+                    matchEl.scrollIntoView({
                         behavior: "smooth",
                         block: "center",
                     });
+                    
+                    // Disparamos el flash después de que el scroll haya avanzado (aprox 600ms)
+                    setTimeout(() => {
+                        matchEl.classList.add("animate-success-flash");
+                    }, 500);
                 }, 100);
             }
         });
