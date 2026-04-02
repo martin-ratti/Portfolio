@@ -64,6 +64,7 @@ const t = useTranslations(lang);
                         stroke-width="2"
                         stroke-linecap="round"
                         stroke-linejoin="round"
+                        aria-hidden="true"
                         ><line x1="18" y1="6" x2="6" y2="18"></line><line
                             x1="6"
                             y1="6"
@@ -88,7 +89,7 @@ const t = useTranslations(lang);
                     >
                         <p class="text-sm text-slate-600 dark:text-slate-300">
                             {t("chat.greeting")}
-                            <Icon name="mdi:hand-wave" class="w-4 h-4 text-amber-500 inline-block align-text-bottom ml-1" />
+                            <Icon name="mdi:hand-wave" class="w-4 h-4 text-amber-500 inline-block align-text-bottom ml-1" aria-hidden="true" />
                         </p>
                     </div>
                 </div>
@@ -103,15 +104,15 @@ const t = useTranslations(lang);
                     class="flex flex-nowrap gap-2 overflow-x-auto pb-2 mb-1 transition-opacity duration-300 items-center snap-x snap-mandatory custom-scrollbar"
                 >
                     <button class="chat-chip group flex items-center gap-2 whitespace-nowrap px-4 py-2 rounded-full text-xs font-medium bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 hover:border-violet-500 dark:hover:border-violet-400 hover:bg-violet-50 dark:hover:bg-violet-500/10 hover:shadow-md transition-all cursor-pointer text-slate-700 dark:text-slate-200 shadow-sm" data-message={t("chat.suggestion1")}>
-                        <Icon name="simple-icons:astro" class="w-3.5 h-3.5 text-violet-500" />
+                        <Icon name="simple-icons:astro" class="w-3.5 h-3.5 text-violet-500" aria-hidden="true" />
                         <span>{t("chat.suggestion1")}</span>
                     </button>
                     <button class="chat-chip group flex items-center gap-2 whitespace-nowrap px-4 py-2 rounded-full text-xs font-medium bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 hover:border-violet-500 dark:hover:border-violet-400 hover:bg-violet-50 dark:hover:bg-violet-500/10 hover:shadow-md transition-all cursor-pointer text-slate-700 dark:text-slate-200 shadow-sm" data-message={t("chat.suggestion2")}>
-                        <Icon name="mdi:layers-outline" class="w-3.5 h-3.5 text-fuchsia-500" />
+                        <Icon name="mdi:layers-outline" class="w-3.5 h-3.5 text-fuchsia-500" aria-hidden="true" />
                         <span>{t("chat.suggestion2")}</span>
                     </button>
                     <button class="chat-chip group flex items-center gap-2 whitespace-nowrap px-4 py-2 rounded-full text-xs font-medium bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 hover:border-violet-500 dark:hover:border-violet-400 hover:bg-violet-50 dark:hover:bg-violet-500/10 hover:shadow-md transition-all cursor-pointer text-slate-700 dark:text-slate-200 shadow-sm" data-message={t("chat.suggestion3")}>
-                        <Icon name="mdi:code-tags" class="w-3.5 h-3.5 text-blue-500" />
+                        <Icon name="mdi:code-tags" class="w-3.5 h-3.5 text-blue-500" aria-hidden="true" />
                         <span>{t("chat.suggestion3")}</span>
                     </button>
                     <!-- Espaciador final para el scroll -->
@@ -139,7 +140,8 @@ const t = useTranslations(lang);
                             stroke-width="2"
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            ><line x1="22" y1="2" x2="11" y2="13"
+                            aria-hidden="true"
+                        ><line x1="22" y1="2" x2="11" y2="13"
                             ></line><polygon points="22 2 15 22 11 13 2 9 22 2"
                             ></polygon></svg
                         >
@@ -155,9 +157,10 @@ const t = useTranslations(lang);
         >
             <span
                 class="absolute inline-flex h-full w-full rounded-full bg-fuchsia-500 opacity-20 animate-ping duration-2000 -z-10"
+                aria-hidden="true"
             ></span>
 
-            <span class="absolute top-1 right-1 flex h-4 w-4">
+            <span class="absolute top-1 right-1 flex h-4 w-4" aria-hidden="true">
                 <span
                     class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
                 ></span>
@@ -176,8 +179,7 @@ const t = useTranslations(lang);
                 fill="none"
                 stroke="currentColor"
                 stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                aria-hidden="true"
                 ><path
                     d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
                 ></path></svg
@@ -194,6 +196,7 @@ const t = useTranslations(lang);
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
+                aria-hidden="true"
                 ><line x1="18" y1="6" x2="6" y2="18"></line><line
                     x1="6"
                     y1="6"

@@ -58,11 +58,26 @@ const alternates = {
 		<meta property="twitter:description" content={description} />
 		<meta property="twitter:image" content="/og-image.jpg" />
 		<ClientRouter />
+		<script is:inline type="application/ld+json">
+			{
+			  "@context": "https://schema.org",
+			  "@type": "Person",
+			  "name": "Martín Ratti",
+			  "url": "https://martinratti.com.ar",
+			  "jobTitle": "Full Stack Developer",
+			  "sameAs": [
+				"https://github.com/martin-ratti",
+				"https://www.linkedin.com/in/martin-ratti-dev/"
+			  ],
+			  "description": "Desarrollador Full Stack especializado en React, Node.js y Astro."
+			}
+		</script>
 		<title>{title}</title>
 	</head>
 	<body
 		class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-white selection:bg-fuchsia-500/30 relative"
 	>
+		<a href="#main-content" class="skip-link">{t('nav.skip')}</a>
 		<div
 			class="fixed inset-0 -z-10 h-full w-full bg-slate-50 dark:bg-slate-950"
 		>

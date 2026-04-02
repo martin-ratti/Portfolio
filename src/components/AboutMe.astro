@@ -10,22 +10,7 @@ const t = useTranslations(lang);
     <h2
         class="text-3xl font-bold mb-12 text-center flex items-center justify-center gap-3"
     >
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="32"
-            height="32"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="text-violet-400"
-            ><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle
-                cx="12"
-                cy="7"
-                r="4"></circle></svg
-        >
+        <Icon name="mdi:account" class="w-8 h-8 text-violet-400" aria-hidden="true" />
         {t("about.title")}
     </h2>
 
@@ -59,21 +44,11 @@ const t = useTranslations(lang);
                     class="absolute inset-0 bg-linear-to-tr from-violet-500/10 to-transparent"
                 >
                 </div>
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="80"
-                    height="80"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="text-slate-300 dark:text-slate-600 transition-transform duration-700 group-hover/photo:scale-110"
-                >
-                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                </svg>
+                <Icon 
+                    name="mdi:account-circle-outline" 
+                    class="w-20 h-20 text-slate-300 dark:text-slate-600 transition-transform duration-700 group-hover/photo:scale-110" 
+                    aria-hidden="true" 
+                />
                 <div
                     class="absolute inset-x-0 bottom-0 p-4 bg-slate-900/80 backdrop-blur-md transform translate-y-full group-hover/photo:translate-y-0 transition-transform duration-500 flex items-center justify-center"
                 >
@@ -108,22 +83,22 @@ const t = useTranslations(lang);
             </h3>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div class="group/skill flex flex-col items-center justify-center p-6 rounded-2xl bg-white/40 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 hover:border-violet-500/50 hover:bg-violet-500/5 transition-all duration-300 hover:-translate-y-1">
-                    <Icon name="mdi:lightning-bolt" class="w-10 h-10 mb-3 text-amber-500 transform transition-transform duration-300 group-hover/skill:scale-125" />
+                    <Icon name="mdi:lightning-bolt" class="w-10 h-10 mb-3 text-amber-500 transform transition-transform duration-300 group-hover/skill:scale-125" aria-hidden="true" />
                     <span class="text-sm font-bold text-slate-700 dark:text-slate-200 tracking-wide">{t("about.skills.proactive")}</span>
                 </div>
                 
                 <div class="group/skill flex flex-col items-center justify-center p-6 rounded-2xl bg-white/40 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 hover:border-sky-500/50 hover:bg-sky-500/5 transition-all duration-300 hover:-translate-y-1">
-                    <Icon name="mdi:magnify" class="w-10 h-10 mb-3 text-sky-500 transform transition-transform duration-300 group-hover/skill:scale-125" />
+                    <Icon name="mdi:magnify" class="w-10 h-10 mb-3 text-sky-500 transform transition-transform duration-300 group-hover/skill:scale-125" aria-hidden="true" />
                     <span class="text-sm font-bold text-slate-700 dark:text-slate-200 tracking-wide">{t("about.skills.curious")}</span>
                 </div>
 
                 <div class="group/skill flex flex-col items-center justify-center p-6 rounded-2xl bg-white/40 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/50 hover:bg-emerald-500/5 transition-all duration-300 hover:-translate-y-1">
-                    <Icon name="mdi:lightbulb-on" class="w-10 h-10 mb-3 text-emerald-500 transform transition-transform duration-300 group-hover/skill:scale-125" />
+                    <Icon name="mdi:lightbulb-on" class="w-10 h-10 mb-3 text-emerald-500 transform transition-transform duration-300 group-hover/skill:scale-125" aria-hidden="true" />
                     <span class="text-sm font-bold text-slate-700 dark:text-slate-200 tracking-wide text-center">{t("about.skills.solution")}</span>
                 </div>
 
                 <div class="group/skill flex flex-col items-center justify-center p-6 rounded-2xl bg-white/40 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 hover:border-fuchsia-500/50 hover:bg-fuchsia-500/5 transition-all duration-300 hover:-translate-y-1">
-                    <Icon name="mdi:auto-fix" class="w-10 h-10 mb-3 text-fuchsia-500 transform transition-transform duration-300 group-hover/skill:scale-125" />
+                    <Icon name="mdi:auto-fix" class="w-10 h-10 mb-3 text-fuchsia-500 transform transition-transform duration-300 group-hover/skill:scale-125" aria-hidden="true" />
                     <span class="text-sm font-bold text-slate-700 dark:text-slate-200 tracking-wide">{t("about.skills.clean")}</span>
                 </div>
             </div>
