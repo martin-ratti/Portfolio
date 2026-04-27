@@ -15,6 +15,6 @@ export default defineConfig({
   },
   site: 'https://martinratti.com.ar',
   integrations: [sitemap(), icon()],
-  output: 'server',
+  output: 'static',
   adapter: vercel()
 });
