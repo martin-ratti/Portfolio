@@ -51,6 +51,23 @@ const otherProjects = projects.filter((p) => !p.featured);
 </section>
 
 <style>
+    .project-card.is-match {
+        opacity: 1;
+        filter: grayscale(0) drop-shadow(0 0 15px rgba(139, 92, 246, 0.4));
+        transform: scale(1.05);
+        border-color: rgba(139, 92, 246, 0.8);
+        z-index: 10;
+    }
+
+    .project-card.is-dimmed {
+        opacity: 0.1;
+        filter: grayscale(100%) blur(2px);
+        transform: scale(0.95);
+        border-color: transparent;
+        box-shadow: none;
+        z-index: 0;
+    }
+
     @keyframes success-flash {
         0% {
             box-shadow: 0 0 0 0 rgba(139, 92, 246, 0);
@@ -72,10 +89,12 @@ const otherProjects = projects.filter((p) => !p.featured);
 </style>
 
 <script>
-    let isListenerAdded = false;
+    let projectsFilterController: AbortController | null = null;
 
     function initProjectsFilter() {
-        if (isListenerAdded) return;
+        if (projectsFilterController) projectsFilterController.abort();
+        projectsFilterController = new AbortController();
+        const { signal } = projectsFilterController;
 
         window.addEventListener("filter-projects", (e: Event) => {
             const customEvent = e as CustomEvent;
@@ -84,14 +103,7 @@ const otherProjects = projects.filter((p) => !p.featured);
 
             if (!selectedSkill) {
                 cards.forEach((card) => {
-                    const el = card as HTMLElement;
-                    el.style.opacity = "1";
-                    el.style.filter = "grayscale(0)";
-                    el.style.transform = "scale(1)";
-                    el.style.borderColor = "transparent";
-                    el.style.zIndex = "0";
-                    el.style.boxShadow = "none";
-                    el.classList.remove("animate-success-flash");
+                    card.classList.remove("is-match", "is-dimmed", "animate-success-flash");
                 });
                 return;
             }
@@ -100,48 +112,32 @@ const otherProjects = projects.filter((p) => !p.featured);
 
             cards.forEach((card) => {
                 const el = card as HTMLElement;
-                const techs = JSON.parse(
-                    el.getAttribute("data-techs") || "[]",
-                );
-
+                const techs = JSON.parse(el.getAttribute("data-techs") || "[]");
                 el.classList.remove("animate-success-flash");
 
                 if (techs.includes(selectedSkill)) {
-                    el.style.opacity = "1";
-                    el.style.filter =
-                        "grayscale(0) drop-shadow(0 0 15px rgba(139, 92, 246, 0.4))";
-                    el.style.transform = "scale(1.05)";
-                    el.style.borderColor = "rgba(139, 92, 246, 0.8)";
-                    el.style.zIndex = "10";
+                    el.classList.add("is-match");
+                    el.classList.remove("is-dimmed");
                     if (!firstMatch) firstMatch = el;
                 } else {
-                    el.style.opacity = "0.1";
-                    el.style.filter = "grayscale(100%) blur(2px)";
-                    el.style.transform = "scale(0.95)";
-                    el.style.borderColor = "transparent";
-                    el.style.zIndex = "0";
-                    el.style.boxShadow = "none";
+                    el.classList.add("is-dimmed");
+                    el.classList.remove("is-match");
                 }
             });
 
             if (firstMatch) {
                 const matchEl = firstMatch as HTMLElement;
-                // Pequeño delay para dejar que las transiciones de CSS comiencen
                 setTimeout(() => {
                     matchEl.scrollIntoView({
                         behavior: "smooth",
                         block: "center",
                     });
-                    
-                    // Disparamos el flash después de que el scroll haya avanzado (aprox 600ms)
                     setTimeout(() => {
                         matchEl.classList.add("animate-success-flash");
                     }, 500);
                 }, 100);
             }
-        });
-
-        isListenerAdded = true;
+        }, { signal });
     }
 
     document.addEventListener("astro:page-load", initProjectsFilter);

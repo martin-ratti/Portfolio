@@ -92,54 +92,47 @@ const skillCategories = [
 
 <script>
     let activeSkill: string | null = null;
-    let clickOutsideHandler: ((e: MouseEvent) => void) | null = null;
+    let abortController: AbortController | null = null;
+
+    const ACTIVE_CLASSES = ["ring-2", "ring-offset-2", "ring-violet-500", "scale-105"];
+
+    function resetSkills() {
+        activeSkill = null;
+        document.querySelectorAll(".skill-btn").forEach((b) => {
+            b.classList.remove(...ACTIVE_CLASSES, "opacity-50");
+            b.classList.add("opacity-100");
+        });
+    }
+
+    function highlightSkill(skill: string) {
+        document.querySelectorAll(".skill-btn").forEach((b) => {
+            const match = b.getAttribute("data-skill") === skill;
+            if (match) {
+                b.classList.add(...ACTIVE_CLASSES);
+                b.classList.remove("opacity-50", "opacity-100");
+            } else {
+                b.classList.remove(...ACTIVE_CLASSES, "opacity-100");
+                b.classList.add("opacity-50");
+            }
+        });
+    }
 
     function initStackFilter() {
+        if (abortController) abortController.abort();
+        abortController = new AbortController();
+        const { signal } = abortController;
+
         const buttons = document.querySelectorAll(".skill-btn");
-
         buttons.forEach((btn) => {
-            // Remueve previos por si se re-ejecuta
-            const clone = btn.cloneNode(true);
-            btn.parentNode?.replaceChild(clone, btn);
-
-            clone.addEventListener("click", (e) => {
+            btn.addEventListener("click", (e) => {
                 e.stopPropagation();
-                const skill = (clone as HTMLElement).getAttribute("data-skill");
+                const skill = (btn as HTMLElement).getAttribute("data-skill");
 
                 if (activeSkill === skill) {
-                    activeSkill = null;
-                    document.querySelectorAll(".skill-btn").forEach((b) => {
-                        b.classList.remove(
-                            "ring-2",
-                            "ring-offset-2",
-                            "ring-violet-500",
-                            "scale-105",
-                        );
-                        b.classList.add("opacity-100");
-                        b.classList.remove("opacity-50");
-                    });
+                    resetSkills();
                 } else {
                     activeSkill = skill;
-                    document.querySelectorAll(".skill-btn").forEach((b) => {
-                        if (b.getAttribute("data-skill") === skill) {
-                            b.classList.add(
-                                "ring-2",
-                                "ring-offset-2",
-                                "ring-violet-500",
-                                "scale-105",
-                            );
-                            b.classList.remove("opacity-50", "opacity-100");
-                        } else {
-                            b.classList.remove(
-                                "ring-2",
-                                "ring-offset-2",
-                                "ring-violet-500",
-                                "scale-105",
-                            );
-                            b.classList.add("opacity-50");
-                            b.classList.remove("opacity-100");
-                        }
-                    });
+                    if (skill) highlightSkill(skill);
                 }
 
                 window.dispatchEvent(
@@ -147,38 +140,20 @@ const skillCategories = [
                         detail: { skill: activeSkill },
                     }),
                 );
-
-                /* El scroll ahora lo maneja Projects.astro centrándose en el primer match */
-            });
+            }, { signal });
         });
 
-        if (clickOutsideHandler) {
-            document.removeEventListener("click", clickOutsideHandler);
-        }
-
-        clickOutsideHandler = (e: MouseEvent) => {
+        document.addEventListener("click", (e: MouseEvent) => {
             const target = e.target as HTMLElement;
             if (!target || (!target.closest(".skill-btn") && activeSkill)) {
-                activeSkill = null;
-                document.querySelectorAll(".skill-btn").forEach((b) => {
-                    b.classList.remove(
-                        "ring-2",
-                        "ring-offset-2",
-                        "ring-violet-500",
-                        "scale-105",
-                    );
-                    b.classList.add("opacity-100");
-                    b.classList.remove("opacity-50");
-                });
+                resetSkills();
                 window.dispatchEvent(
                     new CustomEvent("filter-projects", {
                         detail: { skill: null },
                     }),
                 );
             }
-        };
-
-        document.addEventListener("click", clickOutsideHandler);
+        }, { signal });
     }
 
     document.addEventListener("astro:page-load", initStackFilter);
