@@ -8,7 +8,50 @@ const OPENROUTER_API_KEY = import.meta.env.OPENROUTER_API_KEY;
 const SITE_URL = import.meta.env.SITE || 'https://martinratti.com.ar';
 const SITE_NAME = 'Martin Ratti Portfolio';
 
-export const POST: APIRoute = async ({ request }) => {
+const ALLOWED_ORIGINS = new Set([
+    'https://martinratti.com.ar',
+    'https://www.martinratti.com.ar',
+    'https://martin-ratti-portfolio.vercel.app',
+    'http://localhost:4321',
+    'http://localhost:3000',
+]);
+
+const RATE_LIMIT_WINDOW_MS = 60_000;
+const RATE_LIMIT_MAX = 10;
+const ipHits = new Map<string, { count: number; resetAt: number }>();
+
+function checkRateLimit(ip: string): boolean {
+    const now = Date.now();
+    const entry = ipHits.get(ip);
+    if (!entry || entry.resetAt < now) {
+        ipHits.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+        return true;
+    }
+    if (entry.count >= RATE_LIMIT_MAX) return false;
+    entry.count++;
+    return true;
+}
+
+let cachedContext: string | null = null;
+async function getContext(): Promise<string> {
+    if (cachedContext !== null) return cachedContext;
+    try {
+        const llmsTxtPath = path.resolve(process.cwd(), 'llms.txt');
+        cachedContext = await fs.readFile(llmsTxtPath, 'utf-8');
+    } catch {
+        cachedContext = 'Context unavailable due to internal error.';
+    }
+    return cachedContext;
+}
+
+const models = [
+    "meta-llama/llama-3.2-3b-instruct:free",
+    "google/gemma-3-4b-it:free",
+    "stepfun/step-3.5-flash:free",
+    "liquid/lfm-2.5-1.2b-instruct:free"
+];
+
+export const POST: APIRoute = async ({ request, clientAddress }) => {
     if (!OPENROUTER_API_KEY) {
         return new Response(JSON.stringify({
             error: 'OpenRouter API Key not configured',
@@ -19,26 +62,45 @@ export const POST: APIRoute = async ({ request }) => {
         });
     }
 
+    const origin = request.headers.get('origin') || '';
+    if (origin && !ALLOWED_ORIGINS.has(origin)) {
+        return new Response(JSON.stringify({ error: 'Forbidden origin' }), {
+            status: 403,
+            headers: { 'Content-Type': 'application/json' }
+        });
+    }
+
+    const ip = clientAddress
+        || request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+        || 'unknown';
+    if (!checkRateLimit(ip)) {
+        return new Response(JSON.stringify({ error: 'Rate limit exceeded. Try again in a minute.' }), {
+            status: 429,
+            headers: { 'Content-Type': 'application/json', 'Retry-After': '60' }
+        });
+    }
+
     try {
         const body = await request.json();
         const { messages, currentLang } = body;
+
+        if (!Array.isArray(messages) || messages.length === 0) {
+            return new Response(JSON.stringify({ error: 'Invalid messages payload' }), {
+                status: 400,
+                headers: { 'Content-Type': 'application/json' }
+            });
+        }
 
         const langInstrucion = currentLang === 'en'
             ? 'The user is navigating the site in English. YOU MUST answer exclusively in English.'
             : 'El usuario está navegando el sitio en Español. DEBES responder exclusivamente en Español.';
 
-        const llmsTxtPath = path.resolve(process.cwd(), 'llms.txt');
-        let context = '';
-        try {
-            context = await fs.readFile(llmsTxtPath, 'utf-8');
-        } catch (e) {
-            context = 'Context unavailable due to internal error.';
-        }
+        const context = await getContext();
 
         const systemPrompt = `You are Martín AI, a virtual assistant for Martín Ratti's portfolio.
 Your goal is to chat about Martín's skills and projects in a professional yet approachable way.
 
-- **LANGUAGE - STRICTLY FORCED:** 
+- **LANGUAGE - STRICTLY FORCED:**
     - **${langInstrucion}**
     - You must completely ignore any previous rule about defaulting to Spanish if the user language is different from the explicitly stated here.
 
@@ -46,9 +108,9 @@ Your goal is to chat about Martín's skills and projects in a professional yet a
     - If the user asks about ANYTHING else (world events, cooking, philosophy, hypothetical scenarios, or other technologies like Go/Rust), **politely refuse to answer**.
     - **Refusal Guidance:** Simply state that you can only answer questions about Martín Ratti and his professional portfolio. Do not invent answers.
     - Do NOT entertain metaphors (e.g., "OCR cake").
-- **Accuracy - CRITICAL:** 
+- **Accuracy - CRITICAL:**
     - **FORBIDDEN:** Martín has NEVER used **Rust**, **Go (Golang)**, **Ruby**, or **PHP**. If asked, say he does not use them.
-    - NEVER invent technologies. 
+    - NEVER invent technologies.
     - **Project Integrity:** Do NOT mix technologies between projects. (e.g., Do NOT say "Extractor-OCR" uses Blazor). Check the context strictly.
     - **Scope:** You are a portfolio assistant. You only know about Martín's work.
 - **Stack Coverage:** When asked about skills, mention the full range: **Web** (Astro/React/Node), **Desktop** (.NET/Python), and **Backend/Data** (Java/.NET/SQL).
@@ -57,20 +119,14 @@ Your goal is to chat about Martín's skills and projects in a professional yet a
 Context about Martín:
 ${context}
 `;
-        const models = [
-            "meta-llama/llama-3.2-3b-instruct:free",
-            "google/gemma-3-4b-it:free",
-            "stepfun/step-3.5-flash:free",
-            "liquid/lfm-2.5-1.2b-instruct:free"
-        ];
 
-        let lastError = null;
-        let successDat = null;
+        let lastError: unknown = null;
+        let successData: unknown = null;
 
         const conversation = [...messages];
         if (conversation.length > 0) {
             if (!conversation[0].content.startsWith("You are Martín AI")) {
-                conversation[0].content = `${systemPrompt} \n\nUser Question: ${conversation[0].content} `;
+                conversation[0].content = `${systemPrompt}\n\nUser Question: ${conversation[0].content}`;
             }
         } else {
             conversation.push({ role: 'user', content: systemPrompt });
@@ -81,7 +137,7 @@ ${context}
                 const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
                     method: "POST",
                     headers: {
-                        "Authorization": `Bearer ${OPENROUTER_API_KEY} `,
+                        "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
                         "HTTP-Referer": SITE_URL,
                         "X-Title": SITE_NAME,
                         "Content-Type": "application/json"
@@ -95,7 +151,7 @@ ${context}
                 const data = await response.json();
 
                 if (response.ok && !data.error) {
-                    successDat = data;
+                    successData = data;
                     break;
                 } else {
                     lastError = data.error || { message: "Unknown error" };
@@ -105,8 +161,8 @@ ${context}
             }
         }
 
-        if (successDat) {
-            return new Response(JSON.stringify(successDat), {
+        if (successData) {
+            return new Response(JSON.stringify(successData), {
                 status: 200,
                 headers: { 'Content-Type': 'application/json' }
             });
