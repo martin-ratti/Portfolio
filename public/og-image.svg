@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Martín Ratti — Full Stack Developer">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="20%" r="60%">
+      <stop offset="0%" stop-color="#7c3aed" stop-opacity="0.55"/>
+      <stop offset="60%" stop-color="#7c3aed" stop-opacity="0.0"/>
+    </radialGradient>
+    <linearGradient id="text-gradient" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#a78bfa"/>
+      <stop offset="50%" stop-color="#e879f9"/>
+      <stop offset="100%" stop-color="#22d3ee"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#475569" stroke-opacity="0.18" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <g transform="translate(80, 110)">
+    <rect x="0" y="0" width="180" height="46" rx="23" fill="#10b981" fill-opacity="0.15" stroke="#10b981" stroke-opacity="0.5"/>
+    <circle cx="22" cy="23" r="6" fill="#10b981"/>
+    <text x="40" y="29" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="600" fill="#34d399">Disponible para trabajar</text>
+  </g>
+
+  <text x="80" y="280" font-family="Inter, system-ui, sans-serif" font-size="72" font-weight="700" fill="#f8fafc">Hola, soy</text>
+  <text x="80" y="380" font-family="Inter, system-ui, sans-serif" font-size="96" font-weight="800" fill="url(#text-gradient)">Martín Ratti</text>
+  <text x="80" y="450" font-family="Inter, system-ui, sans-serif" font-size="32" font-weight="500" fill="#cbd5e1">Full Stack Developer · Astro · React · Node.js · .NET</text>
+
+  <g transform="translate(80, 520)">
+    <rect x="0" y="0" width="220" height="44" rx="22" fill="#7c3aed"/>
+    <text x="110" y="28" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="700" fill="white">martinratti.com.ar</text>
+  </g>
+
+  <g transform="translate(960, 100)" opacity="0.9">
+    <circle cx="80" cy="80" r="80" fill="none" stroke="url(#text-gradient)" stroke-width="3"/>
+    <text x="80" y="98" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="64" font-weight="800" fill="url(#text-gradient)">MR</text>
+  </g>
+</svg>

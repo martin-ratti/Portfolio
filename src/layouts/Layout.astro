@@ -31,7 +31,11 @@ const alternates = {
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="theme-color" content="#7c3aed" media="(prefers-color-scheme: light)" />
+		<meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
+		<meta name="color-scheme" content="light dark" />
+		<meta name="author" content="Martín Ratti" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -41,10 +45,16 @@ const alternates = {
 			rel="stylesheet"
 		/>
 		<meta property="og:type" content="website" />
+		<meta property="og:locale" content={lang === 'es' ? 'es_AR' : 'en_US'} />
+		<meta property="og:locale:alternate" content={lang === 'es' ? 'en_US' : 'es_AR'} />
+		<meta property="og:site_name" content="Martín Ratti — Portfolio" />
 		<meta property="og:url" content={Astro.url} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
-		<meta property="og:image" content="/og-image.jpg" />
+		<meta property="og:image" content={new URL('/og-image.svg', siteUrl).href} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content="Martín Ratti — Full Stack Developer" />
 
 		<!-- SEO Expansion 1: Bidirectional Semantic Connection (hreflang) -->
 		<link rel="canonical" href={lang === 'es' ? alternates.es : alternates.en} />
@@ -56,22 +66,47 @@ const alternates = {
 		<meta property="twitter:url" content={Astro.url} />
 		<meta property="twitter:title" content={title} />
 		<meta property="twitter:description" content={description} />
-		<meta property="twitter:image" content="/og-image.jpg" />
+		<meta property="twitter:image" content={new URL('/og-image.svg', siteUrl).href} />
 		<ClientRouter />
-		<script is:inline type="application/ld+json">
-			{
-			  "@context": "https://schema.org",
-			  "@type": "Person",
-			  "name": "Martín Ratti",
-			  "url": "https://martinratti.com.ar",
-			  "jobTitle": "Full Stack Developer",
-			  "sameAs": [
+		<script is:inline type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "Person",
+			"name": "Martín Ratti",
+			"url": siteUrl,
+			"image": new URL('/og-image.svg', siteUrl).href,
+			"jobTitle": "Full Stack Developer",
+			"description": description,
+			"email": "mailto:martinratti10@gmail.com",
+			"sameAs": [
 				"https://github.com/martin-ratti",
 				"https://www.linkedin.com/in/martin-ratti-dev/"
-			  ],
-			  "description": "Desarrollador Full Stack especializado en React, Node.js y Astro."
+			],
+			"knowsAbout": [
+				"Astro", "React", "TypeScript", "Node.js", "Express",
+				".NET", "C#", "Java", "Python", "PostgreSQL", "SQL Server",
+				"Tailwind CSS", "Docker", "Prisma"
+			],
+			"alumniOf": {
+				"@type": "CollegeOrUniversity",
+				"name": "Universidad Tecnológica Nacional - Facultad Regional Rosario",
+				"url": "https://www.frro.utn.edu.ar/"
+			},
+			"address": {
+				"@type": "PostalAddress",
+				"addressCountry": "AR",
+				"addressLocality": "Rosario"
 			}
-		</script>
+		})} />
+		<script is:inline type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "WebSite",
+			"name": "Martín Ratti — Portfolio",
+			"url": siteUrl,
+			"inLanguage": [lang === 'es' ? 'es-AR' : 'en-US'],
+			"author": { "@type": "Person", "name": "Martín Ratti" }
+		})} />
+		<script defer src="/_vercel/insights/script.js"></script>
+		<script defer src="/_vercel/speed-insights/script.js"></script>
 		<title>{title}</title>
 	</head>
 	<body
@@ -120,13 +155,22 @@ const alternates = {
 		<slot />
 
 		<script>
+			let spotlightController: AbortController | null = null;
+
 			const initSpotlight = () => {
+				if (spotlightController) spotlightController.abort();
+
+				const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+				if (reduceMotion) return;
+
 				const cards = document.querySelectorAll(".glass-card");
 				if (cards.length === 0) return;
 
-				// UI/UX Expansion 5: Optimización Pasiva con IntersectionObserver
-				const visibleCards = new Set();
-				
+				spotlightController = new AbortController();
+				const { signal } = spotlightController;
+
+				const visibleCards = new Set<Element>();
+
 				const observer = new IntersectionObserver((entries) => {
 					entries.forEach(entry => {
 						if (entry.isIntersecting) {
@@ -143,7 +187,7 @@ const alternates = {
 					"mousemove",
 					(e) => {
 						if (visibleCards.size === 0) return;
-						
+
 						window.requestAnimationFrame(() => {
 							visibleCards.forEach((card: any) => {
 								const rect = card.getBoundingClientRect();
@@ -154,7 +198,7 @@ const alternates = {
 							});
 						});
 					},
-					{ passive: true },
+					{ passive: true, signal },
 				);
 			};
 
