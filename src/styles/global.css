@@ -88,6 +88,14 @@
             transform: none;
         }
 
+        .glass-card::before {
+            display: none;
+        }
+
+        html {
+            scroll-behavior: auto;
+        }
+
         *,
         *::before,
         *::after {

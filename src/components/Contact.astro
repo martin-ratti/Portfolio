@@ -204,6 +204,9 @@ const t = useTranslations(lang);
 
                     <div
                         id="form-result"
+                        role="status"
+                        aria-live="polite"
+                        aria-atomic="true"
                         class="hidden animate-fade-in"
                         data-success={t("contact.form.success")}
                         data-error={t("contact.form.error")}

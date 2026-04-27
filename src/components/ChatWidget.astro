@@ -14,12 +14,10 @@ const t = useTranslations(lang);
     data-error-connection={t("chat.error.connection")}
     data-error-prefix={t("chat.error.prefix")}
 >
-    <div
-        id="chat-widget"
-        class="fixed bottom-4 right-4 z-50 flex flex-col items-end pointer-events-none"
-    >
         <div
             id="chat-window"
+            inert
+            aria-hidden="true"
             class="pointer-events-auto transition-all duration-300 transform origin-bottom-right scale-0 opacity-0 mb-4 w-[350px] max-w-[calc(100vw-2rem)] h-[600px] max-h-[80vh] flex flex-col bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-2xl shadow-2xl overflow-hidden"
         >
             <div
@@ -211,7 +209,6 @@ const t = useTranslations(lang);
                 {t("chat.tooltip")}
             </span>
         </button>
-    </div>
 
     <script>
         import { sendChatMessage } from "../utils/chat/chatApi";
@@ -268,6 +265,8 @@ const t = useTranslations(lang);
                 if (hideTooltipTimer) clearTimeout(hideTooltipTimer);
 
                 windowEl?.classList.remove("scale-0", "opacity-0");
+                windowEl?.removeAttribute("inert");
+                windowEl?.setAttribute("aria-hidden", "false");
                 messageIcon?.classList.add("scale-0");
                 closeIcon?.classList.remove("scale-0");
 
@@ -278,6 +277,8 @@ const t = useTranslations(lang);
                 setTimeout(() => input?.focus(), 300);
             } else {
                 windowEl?.classList.add("scale-0", "opacity-0");
+                windowEl?.setAttribute("inert", "");
+                windowEl?.setAttribute("aria-hidden", "true");
                 messageIcon?.classList.remove("scale-0");
                 closeIcon?.classList.add("scale-0");
 

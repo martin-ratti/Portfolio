@@ -96,8 +96,11 @@ const navItems = [
                 </button>
 
                 <button
-                    onclick="alert('¡El CV estará disponible próximamente!')"
-                    class="hidden sm:block text-xs font-medium text-violet-300 hover:text-white border border-violet-500/30 bg-violet-500/10 px-3 py-1.5 rounded-full transition"
+                    type="button"
+                    disabled
+                    aria-disabled="true"
+                    title={lang === 'es' ? 'CV próximamente' : 'CV coming soon'}
+                    class="hidden sm:block text-xs font-medium text-violet-300 border border-violet-500/30 bg-violet-500/10 px-3 py-1.5 rounded-full transition opacity-70 cursor-not-allowed"
                 >
                     {t("nav.cv")}
                 </button>
