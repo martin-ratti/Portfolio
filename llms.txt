@@ -12,6 +12,7 @@ This website serves as a professional portfolio and technical demonstration. It 
     - **Desktop:** .NET WinForms, Python (Automation/OCR).
     - **Data:** MySQL, PostgreSQL, SQL Server, Prisma.
     - **DevOps/Tools:** Docker, Git, NPM Workspaces.
+    - **Methodologies:** Agile, Scrum, Kanban, Clean Architecture.
 - **Projects:** Highlighted works like Zenith POS, PCFIX, and EstacionAR.
 - **Contact:** Links to email, LinkedIn, and GitHub.
 
@@ -89,5 +90,6 @@ The site is designed with a "performance first" approach using Astro 5, ensuring
 
 ## Optional
 
+- [CV / Resume](file:///CV_Martin_Ratti.pdf): Currículum Vítae / Professional Resume (PDF).
 - [LinkedIn Profile](https://www.linkedin.com/in/martin-ratti-dev/): Professional profile.
 - [GitHub Profile](https://github.com/martin-ratti): Source code repositories.

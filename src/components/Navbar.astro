@@ -7,6 +7,7 @@ const t = useTranslations(lang);
 
 const navItems = [
     { name: t("nav.about"), url: "#sobre-mi" },
+    { name: t("nav.stack"), url: "#stack" },
     { name: t("nav.projects"), url: "#proyectos" },
     { name: t("nav.contact"), url: "#contacto" },
 ];
@@ -95,12 +96,15 @@ const navItems = [
                     />
                 </button>
 
-                <button
-                    onclick="alert('¡El CV estará disponible próximamente!')"
-                    class="hidden sm:block text-xs font-medium text-violet-300 hover:text-white border border-violet-500/30 bg-violet-500/10 px-3 py-1.5 rounded-full transition"
+                <a
+                    href="/CV_Martin_Ratti.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="hidden sm:block text-xs font-medium text-violet-600 dark:text-violet-300 hover:text-violet-700 dark:hover:text-white border border-violet-500/30 bg-violet-500/10 px-3 py-1.5 rounded-full transition"
+                    aria-label={lang === "es" ? "Ver CV de Martín Ratti (abre en nueva pestaña)" : "View Martín Ratti's Resume (opens in new tab)"}
                 >
                     {t("nav.cv")}
-                </button>
+                </a>
             </div>
         </div>
     </div>
@@ -229,7 +233,7 @@ const navItems = [
                     if (targetElement) {
                         targetElement.scrollIntoView({
                             behavior: "smooth",
-                            block: "center",
+                            block: "start",
                         });
                         // Actualizar URL y el link de idioma inmediatamente
                         history.pushState(null, "", href);
