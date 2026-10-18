@@ -1,0 +1,21 @@
+---
+import ProjectDetail from "../../../components/ProjectDetail.astro";
+import { projects } from "../../../data/projects";
+
+export const prerender = true;
+
+export function getStaticPaths() {
+    return projects.map((project) => ({
+        params: { slug: project.slug },
+    }));
+}
+
+const { slug } = Astro.params;
+const project = projects.find((p) => p.slug === slug);
+
+if (!project) {
+    return Astro.redirect("/en#proyectos");
+}
+---
+
+<ProjectDetail project={project} lang="en" />

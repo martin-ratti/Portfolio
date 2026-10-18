@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="50%" stop-color="#1e1b4b" />
+      <stop offset="100%" stop-color="#090d16" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f97316" />
+      <stop offset="100%" stop-color="#8b5cf6" />
+    </linearGradient>
+    <linearGradient id="glassCard" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.08" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.02" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="15" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="1200" height="675" rx="16" fill="url(#bgGrad)" stroke="#334155" stroke-width="1.5" />
+  
+  <!-- Subtle Ambient Glow -->
+  <circle cx="960" cy="135" r="300" fill="#f97316" opacity="0.12" filter="url(#glow)" />
+  <circle cx="240" cy="540" r="240" fill="#8b5cf6" opacity="0.10" filter="url(#glow)" />
+
+  <!-- Window Header / Browser Chrome -->
+  <rect x="0" y="0" width="1200" height="44" rx="16" fill="#0b0f19" fill-opacity="0.9" />
+  <rect x="0" y="24" width="1200" height="20" fill="#0b0f19" fill-opacity="0.9" />
+  <line x1="0" y1="44" x2="1200" y2="44" stroke="#334155" stroke-width="1" />
+
+  <!-- Mac / Window Dots -->
+  <circle cx="24" cy="22" r="5" fill="#ef4444" opacity="0.8" />
+  <circle cx="40" cy="22" r="5" fill="#f59e0b" opacity="0.8" />
+  <circle cx="56" cy="22" r="5" fill="#10b981" opacity="0.8" />
+
+  <!-- Address bar / Title Pill -->
+  <rect x="80" y="10" width="960" height="24" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1" />
+  <text x="600" y="26" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#94a3b8">
+    Animall Forrajería - POS & Retail Cash System
+  </text>
+
+  <!-- Status Badge in Chrome -->
+  <rect x="1060" y="12" width="120" height="20" rx="10" fill="#f97316" fill-opacity="0.2" stroke="#f97316" stroke-opacity="0.4" stroke-width="1" />
+  <circle cx="1072" cy="22" r="3.5" fill="#f97316" />
+  <text x="1084" y="26" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#e2e8f0">
+    Legacy
+  </text>
+
+  <!-- Main Body Content Canvas -->
+  <g transform="translate(24, 60)">
+    
+  <rect x="0" y="0" width="1152" height="570" rx="12" fill="url(#glassCard)" stroke="#334155" stroke-width="1" />
+  <g transform="translate(50, 40)">
+    <text x="0" y="40" fill="#fb923c" font-family="sans-serif" font-size="18" font-weight="bold">SISTEMA COMERCIAL VETERINARIO & FORRAJERÍA</text>
+    <text x="0" y="80" fill="#ffffff" font-family="sans-serif" font-size="30" font-weight="bold">Gestión de Mostrador, Clientes y Proveedores</text>
+
+    <rect x="0" y="120" width="1052" height="390" rx="10" fill="#0f172a" stroke="#334155" />
+    <g transform="translate(30, 30)">
+      <rect x="0" y="0" width="990" height="50" rx="6" fill="#1e293b" />
+      <text x="20" y="32" fill="#f8fafc" font-family="sans-serif" font-size="14" font-weight="bold">Caja Diaria #1 • Operador: Activo • Cierre de Turno</text>
+
+      <g transform="translate(0, 70)">
+        <rect x="0" y="0" width="480" height="230" rx="8" fill="#1e293b" />
+        <text x="20" y="30" fill="#fb923c" font-family="sans-serif" font-size="14" font-weight="bold">Ventas por Rubro</text>
+        <text x="20" y="65" fill="#e2e8f0" font-family="sans-serif" font-size="13">Alimento Balanceado Canino (45%)</text>
+        <text x="20" y="95" fill="#e2e8f0" font-family="sans-serif" font-size="13">Farmacia Veterinaria (28%)</text>
+        <text x="20" y="125" fill="#e2e8f0" font-family="sans-serif" font-size="13">Accesorios y Correas (15%)</text>
+        <text x="20" y="155" fill="#e2e8f0" font-family="sans-serif" font-size="13">Semillas y Forrajes (12%)</text>
+
+        <rect x="510" y="0" width="480" height="230" rx="8" fill="#1e293b" />
+        <text x="530" y="30" fill="#38bdf8" font-family="sans-serif" font-size="14" font-weight="bold">Arqueo de Fondos</text>
+        <text x="530" y="65" fill="#e2e8f0" font-family="sans-serif" font-size="13">Efectivo en Caja: $ 124.500</text>
+        <text x="530" y="95" fill="#e2e8f0" font-family="sans-serif" font-size="13">Cobros con Tarjeta / Débito: $ 280.900</text>
+        <text x="530" y="125" fill="#e2e8f0" font-family="sans-serif" font-size="13">Transferencias Bancarias: $ 95.000</text>
+      </g>
+    </g>
+  </g>
+
+  </g>
+</svg>

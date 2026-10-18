@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="50%" stop-color="#1e1b4b" />
+      <stop offset="100%" stop-color="#090d16" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a855f7" />
+      <stop offset="100%" stop-color="#8b5cf6" />
+    </linearGradient>
+    <linearGradient id="glassCard" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.08" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.02" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="15" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="1200" height="675" rx="16" fill="url(#bgGrad)" stroke="#334155" stroke-width="1.5" />
+  
+  <!-- Subtle Ambient Glow -->
+  <circle cx="960" cy="135" r="300" fill="#a855f7" opacity="0.12" filter="url(#glow)" />
+  <circle cx="240" cy="540" r="240" fill="#8b5cf6" opacity="0.10" filter="url(#glow)" />
+
+  <!-- Window Header / Browser Chrome -->
+  <rect x="0" y="0" width="1200" height="44" rx="16" fill="#0b0f19" fill-opacity="0.9" />
+  <rect x="0" y="24" width="1200" height="20" fill="#0b0f19" fill-opacity="0.9" />
+  <line x1="0" y1="44" x2="1200" y2="44" stroke="#334155" stroke-width="1" />
+
+  <!-- Mac / Window Dots -->
+  <circle cx="24" cy="22" r="5" fill="#ef4444" opacity="0.8" />
+  <circle cx="40" cy="22" r="5" fill="#f59e0b" opacity="0.8" />
+  <circle cx="56" cy="22" r="5" fill="#10b981" opacity="0.8" />
+
+  <!-- Address bar / Title Pill -->
+  <rect x="80" y="10" width="960" height="24" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1" />
+  <text x="600" y="26" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#94a3b8">
+    ImpulsaMe - Crowdfunding Platform (Java & MySQL)
+  </text>
+
+  <!-- Status Badge in Chrome -->
+  <rect x="1060" y="12" width="120" height="20" rx="10" fill="#a855f7" fill-opacity="0.2" stroke="#a855f7" stroke-opacity="0.4" stroke-width="1" />
+  <circle cx="1072" cy="22" r="3.5" fill="#a855f7" />
+  <text x="1084" y="26" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#e2e8f0">
+    Complete
+  </text>
+
+  <!-- Main Body Content Canvas -->
+  <g transform="translate(24, 60)">
+    
+  <rect x="0" y="0" width="1152" height="570" rx="12" fill="url(#glassCard)" stroke="#334155" stroke-width="1" />
+  <g transform="translate(60, 40)">
+    <text x="0" y="40" fill="#c084fc" font-family="sans-serif" font-size="16" font-weight="bold">PLATAFORMA DE FINANCIAMIENTO COLECTIVO</text>
+    <text x="0" y="80" fill="#ffffff" font-family="sans-serif" font-size="32" font-weight="bold">ImpulsaMe: Conectando Ideas con Capital</text>
+    <text x="0" y="115" fill="#94a3b8" font-family="sans-serif" font-size="15">Arquitectura pura MVC en Java con Servlets, JSP, control de roles (RBAC) y pagos con Stripe.</text>
+
+    <!-- Campaign Card Display -->
+    <rect x="0" y="150" width="1032" height="340" rx="12" fill="#0f172a" stroke="#334155" />
+    <rect x="30" y="180" width="400" height="280" rx="8" fill="#1e293b" />
+    <text x="230" y="320" text-anchor="middle" fill="#c084fc" font-family="sans-serif" font-size="18" font-weight="bold">Proyecto EcoRobot</text>
+
+    <g transform="translate(470, 180)">
+      <text x="0" y="35" fill="#ffffff" font-family="sans-serif" font-size="22" font-weight="bold">Robot Autónomo de Reciclaje Urbano</text>
+      <text x="0" y="65" fill="#94a3b8" font-family="sans-serif" font-size="14">Iniciativa para automatizar la separación de plásticos en comunidades.</text>
+      
+      <!-- Progress Bar -->
+      <rect x="0" y="110" width="520" height="16" rx="8" fill="#1e293b" />
+      <rect x="0" y="110" width="380" height="16" rx="8" fill="#a855f7" />
+      <text x="0" y="155" fill="#c084fc" font-family="sans-serif" font-size="24" font-weight="bold">$ 1.900.000 recaudados</text>
+      <text x="350" y="155" fill="#94a3b8" font-family="sans-serif" font-size="14">Meta de $ 2.500.000 (76%)</text>
+
+      <rect x="0" y="190" width="220" height="46" rx="8" fill="#a855f7" />
+      <text x="110" y="219" text-anchor="middle" fill="#ffffff" font-family="sans-serif" font-size="15" font-weight="bold">Aportar al Proyecto</text>
+    </g>
+  </g>
+
+  </g>
+</svg>

@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="50%" stop-color="#1e1b4b" />
+      <stop offset="100%" stop-color="#090d16" />
+    </linearGradient>
+    <linearGradient id="glassCard" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.08" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.02" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="675" rx="16" fill="url(#bgGrad)" stroke="#334155" stroke-width="1.5" />
+  <rect x="0" y="0" width="1200" height="44" rx="16" fill="#0b0f19" fill-opacity="0.9" />
+  <rect x="0" y="24" width="1200" height="20" fill="#0b0f19" fill-opacity="0.9" />
+  <line x1="0" y1="44" x2="1200" y2="44" stroke="#334155" stroke-width="1" />
+
+  <circle cx="24" cy="22" r="5" fill="#ef4444" opacity="0.8" />
+  <circle cx="40" cy="22" r="5" fill="#f59e0b" opacity="0.8" />
+  <circle cx="56" cy="22" r="5" fill="#10b981" opacity="0.8" />
+
+  <rect x="80" y="10" width="960" height="24" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1" />
+  <text x="600" y="26" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#94a3b8">
+    PCFIX - Admin Dashboard & Analytics
+  </text>
+
+  <rect x="1060" y="12" width="120" height="20" rx="10" fill="#3b82f6" fill-opacity="0.2" stroke="#3b82f6" stroke-opacity="0.4" stroke-width="1" />
+  <circle cx="1072" cy="22" r="3.5" fill="#3b82f6" />
+  <text x="1084" y="26" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#e2e8f0">
+    Admin Portal
+  </text>
+
+  <g transform="translate(24, 60)">
+    
+  <rect x="0" y="0" width="1152" height="570" rx="12" fill="url(#glassCard)" stroke="#334155" />
+  <g transform="translate(40, 30)">
+    <text x="0" y="30" fill="#f8fafc" font-family="sans-serif" font-size="22" font-weight="bold">Panel de Control & Despacho de Pedidos</text>
+    
+    <!-- Stats Row -->
+    <g transform="translate(0, 60)">
+      <rect x="0" y="0" width="250" height="90" rx="8" fill="#1e293b" stroke="#334155" />
+      <text x="20" y="32" fill="#94a3b8" font-family="sans-serif" font-size="12">INGRESOS DEL MES</text>
+      <text x="20" y="66" fill="#3b82f6" font-family="sans-serif" font-size="22" font-weight="bold">$ 18.420.500</text>
+
+      <rect x="270" y="0" width="250" height="90" rx="8" fill="#1e293b" stroke="#334155" />
+      <text x="290" y="32" fill="#94a3b8" font-family="sans-serif" font-size="12">PEDIDOS ACTIVOS</text>
+      <text x="290" y="66" fill="#10b981" font-family="sans-serif" font-size="22" font-weight="bold">64 en tránsito</text>
+
+      <rect x="540" y="0" width="250" height="90" rx="8" fill="#1e293b" stroke="#334155" />
+      <text x="560" y="32" fill="#94a3b8" font-family="sans-serif" font-size="12">STOCK CRÍTICO</text>
+      <text x="560" y="66" fill="#f59e0b" font-family="sans-serif" font-size="22" font-weight="bold">3 artículos</text>
+
+      <rect x="810" y="0" width="260" height="90" rx="8" fill="#1e293b" stroke="#334155" />
+      <text x="830" y="32" fill="#94a3b8" font-family="sans-serif" font-size="12">CONVERSIÓN E-COMMERCE</text>
+      <text x="830" y="66" fill="#a855f7" font-family="sans-serif" font-size="22" font-weight="bold">4.2% (+0.8%)</text>
+    </g>
+
+    <!-- Orders Table -->
+    <g transform="translate(0, 180)">
+      <rect x="0" y="0" width="1070" height="300" rx="8" fill="#0f172a" stroke="#334155" />
+      <text x="24" y="35" fill="#f8fafc" font-family="sans-serif" font-size="15" font-weight="bold">Últimos Pedidos Confirmados</text>
+      <line x1="24" y1="50" x2="1046" y2="50" stroke="#334155" />
+
+      <text x="24" y="80" fill="#94a3b8" font-family="sans-serif" font-size="12">ID</text>
+      <text x="120" y="80" fill="#94a3b8" font-family="sans-serif" font-size="12">CLIENTE</text>
+      <text x="340" y="80" fill="#94a3b8" font-family="sans-serif" font-size="12">PRODUCTOS</text>
+      <text x="680" y="80" fill="#94a3b8" font-family="sans-serif" font-size="12">TOTAL</text>
+      <text x="840" y="80" fill="#94a3b8" font-family="sans-serif" font-size="12">ESTADO</text>
+
+      <text x="24" y="120" fill="#38bdf8" font-family="monospace" font-size="13">#ORD-9821</text>
+      <text x="120" y="120" fill="#e2e8f0" font-family="sans-serif" font-size="13">Lucas Fernández</text>
+      <text x="340" y="120" fill="#94a3b8" font-family="sans-serif" font-size="13">RTX 4070 SUPER 12GB + Fuente 750W</text>
+      <text x="680" y="120" fill="#10b981" font-family="sans-serif" font-size="13" font-weight="bold">$ 984.000</text>
+      <rect x="840" y="105" width="100" height="24" rx="12" fill="#10b981" fill-opacity="0.2" />
+      <text x="890" y="121" text-anchor="middle" fill="#6ee7b7" font-family="sans-serif" font-size="11" font-weight="bold">Preparado</text>
+
+      <text x="24" y="165" fill="#38bdf8" font-family="monospace" font-size="13">#ORD-9820</text>
+      <text x="120" y="165" fill="#e2e8f0" font-family="sans-serif" font-size="13">Agustina Morales</text>
+      <text x="340" y="165" fill="#94a3b8" font-family="sans-serif" font-size="13">Ryzen 7 7800X3D + Mother B650</text>
+      <text x="680" y="165" fill="#10b981" font-family="sans-serif" font-size="13" font-weight="bold">$ 815.000</text>
+      <rect x="840" y="150" width="100" height="24" rx="12" fill="#3b82f6" fill-opacity="0.2" />
+      <text x="890" y="166" text-anchor="middle" fill="#93c5fd" font-family="sans-serif" font-size="11" font-weight="bold">Enviado</text>
+
+      <text x="24" y="210" fill="#38bdf8" font-family="monospace" font-size="13">#ORD-9819</text>
+      <text x="120" y="210" fill="#e2e8f0" font-family="sans-serif" font-size="13">Mariano Di Pietro</text>
+      <text x="340" y="210" fill="#94a3b8" font-family="sans-serif" font-size="13">Kit RAM Corsair 32GB DDR5 6000MHz</text>
+      <text x="680" y="210" fill="#10b981" font-family="sans-serif" font-size="13" font-weight="bold">$ 185.000</text>
+      <rect x="840" y="195" width="100" height="24" rx="12" fill="#10b981" fill-opacity="0.2" />
+      <text x="890" y="211" text-anchor="middle" fill="#6ee7b7" font-family="sans-serif" font-size="11" font-weight="bold">Entregado</text>
+    </g>
+  </g>
+
+  </g>
+</svg>

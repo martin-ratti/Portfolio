@@ -4,13 +4,20 @@ import { Icon } from "astro-icon/components";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+const isEn = lang === "en";
+const homePrefix = isEn ? "/en" : "";
 
 const navItems = [
-    { name: t("nav.about"), url: "#sobre-mi" },
-    { name: t("nav.stack"), url: "#stack" },
-    { name: t("nav.projects"), url: "#proyectos" },
-    { name: t("nav.contact"), url: "#contacto" },
+    { name: t("nav.about"), url: `${homePrefix}#sobre-mi` },
+    { name: t("nav.stack"), url: `${homePrefix}#stack` },
+    { name: t("nav.projects"), url: `${homePrefix}#proyectos` },
+    { name: t("nav.contact"), url: `${homePrefix}#contacto` },
 ];
+
+const pathname = Astro.url.pathname;
+const targetLangUrl = isEn
+    ? (pathname.replace(/^\/en(\/|$)/, "$1") || "/")
+    : ("/en" + (pathname.startsWith("/") ? pathname : "/" + pathname));
 ---
 
 <nav
@@ -70,7 +77,7 @@ const navItems = [
 
                 <a
                     id="lang-toggle"
-                    href={lang === "en" ? "/" : "/en"}
+                    href={targetLangUrl}
                     class="text-[10px] md:text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-violet-600 dark:hover:text-white transition uppercase border border-slate-300 dark:border-slate-700 px-1.5 py-0.5 md:px-2 md:py-1 rounded"
                 >
                     {lang === "es" ? "EN" : "ES"}

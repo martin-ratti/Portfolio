@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="50%" stop-color="#1e1b4b" />
+      <stop offset="100%" stop-color="#090d16" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8b5cf6" />
+      <stop offset="100%" stop-color="#8b5cf6" />
+    </linearGradient>
+    <linearGradient id="glassCard" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.08" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.02" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="15" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="1200" height="675" rx="16" fill="url(#bgGrad)" stroke="#334155" stroke-width="1.5" />
+  
+  <!-- Subtle Ambient Glow -->
+  <circle cx="960" cy="135" r="300" fill="#8b5cf6" opacity="0.12" filter="url(#glow)" />
+  <circle cx="240" cy="540" r="240" fill="#8b5cf6" opacity="0.10" filter="url(#glow)" />
+
+  <!-- Window Header / Browser Chrome -->
+  <rect x="0" y="0" width="1200" height="44" rx="16" fill="#0b0f19" fill-opacity="0.9" />
+  <rect x="0" y="24" width="1200" height="20" fill="#0b0f19" fill-opacity="0.9" />
+  <line x1="0" y1="44" x2="1200" y2="44" stroke="#334155" stroke-width="1" />
+
+  <!-- Mac / Window Dots -->
+  <circle cx="24" cy="22" r="5" fill="#ef4444" opacity="0.8" />
+  <circle cx="40" cy="22" r="5" fill="#f59e0b" opacity="0.8" />
+  <circle cx="56" cy="22" r="5" fill="#10b981" opacity="0.8" />
+
+  <!-- Address bar / Title Pill -->
+  <rect x="80" y="10" width="960" height="24" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1" />
+  <text x="600" y="26" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#94a3b8">
+    Zenith POS - Architecture & Desktop Terminal
+  </text>
+
+  <!-- Status Badge in Chrome -->
+  <rect x="1060" y="12" width="120" height="20" rx="10" fill="#8b5cf6" fill-opacity="0.2" stroke="#8b5cf6" stroke-opacity="0.4" stroke-width="1" />
+  <circle cx="1072" cy="22" r="3.5" fill="#8b5cf6" />
+  <text x="1084" y="26" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#e2e8f0">
+    v1.0 Live
+  </text>
+
+  <!-- Main Body Content Canvas -->
+  <g transform="translate(24, 60)">
+    
+  <!-- Top Stat Cards -->
+  <rect x="0" y="0" width="360" height="120" rx="12" fill="url(#glassCard)" stroke="#334155" stroke-width="1" />
+  <text x="24" y="36" fill="#94a3b8" font-family="sans-serif" font-size="13">ESTADO DEL SISTEMA</text>
+  <text x="24" y="72" fill="#ffffff" font-family="sans-serif" font-size="22" font-weight="bold">100% Offline Ready</text>
+  <text x="24" y="98" fill="#10b981" font-family="sans-serif" font-size="12">Hardware ID Bound • SQLite Local</text>
+
+  <rect x="384" y="0" width="360" height="120" rx="12" fill="url(#glassCard)" stroke="#334155" stroke-width="1" />
+  <text x="408" y="36" fill="#94a3b8" font-family="sans-serif" font-size="13">VENTAS DEL DÍA</text>
+  <text x="408" y="72" fill="#8b5cf6" font-family="sans-serif" font-size="22" font-weight="bold">$ 482,950.00</text>
+  <text x="408" y="98" fill="#a78bfa" font-family="sans-serif" font-size="12">142 tickets emitidos (ESC/POS)</text>
+
+  <rect x="768" y="0" width="384" height="120" rx="12" fill="url(#glassCard)" stroke="#334155" stroke-width="1" />
+  <text x="792" y="36" fill="#94a3b8" font-family="sans-serif" font-size="13">ARQUITECTURA</text>
+  <text x="792" y="72" fill="#38bdf8" font-family="sans-serif" font-size="22" font-weight="bold">Clean Architecture</text>
+  <text x="792" y="98" fill="#7dd3fc" font-family="sans-serif" font-size="12">C# .NET • Dapper • White-Label</text>
+
+  <!-- POS Terminal Main View Split -->
+  <g transform="translate(0, 140)">
+    <!-- Products Catalog / POS Grid -->
+    <rect x="0" y="0" width="744" height="430" rx="12" fill="url(#glassCard)" stroke="#334155" stroke-width="1" />
+    <text x="24" y="36" fill="#f8fafc" font-family="sans-serif" font-size="16" font-weight="600">Terminal de Venta Rápida (POS)</text>
+    <rect x="24" y="55" width="696" height="38" rx="8" fill="#0f172a" stroke="#475569" stroke-width="1" />
+    <text x="40" y="79" fill="#64748b" font-family="sans-serif" font-size="13">🔍 Escanear código de barras o buscar producto (F2)...</text>
+    
+    <!-- Product Grid Items -->
+    <g transform="translate(24, 110)">
+      <rect x="0" y="0" width="160" height="90" rx="8" fill="#1e293b" stroke="#475569" />
+      <text x="12" y="30" fill="#f1f5f9" font-family="sans-serif" font-size="13" font-weight="bold">Lector Láser 2D</text>
+      <text x="12" y="52" fill="#8b5cf6" font-family="sans-serif" font-size="14" font-weight="600">$ 45.000</text>
+      <text x="12" y="74" fill="#64748b" font-family="sans-serif" font-size="11">Stock: 18 un.</text>
+
+      <rect x="176" y="0" width="160" height="90" rx="8" fill="#1e293b" stroke="#475569" />
+      <text x="188" y="30" fill="#f1f5f9" font-family="sans-serif" font-size="13" font-weight="bold">Impresora Térmica</text>
+      <text x="188" y="52" fill="#8b5cf6" font-family="sans-serif" font-size="14" font-weight="600">$ 89.900</text>
+      <text x="188" y="74" fill="#64748b" font-family="sans-serif" font-size="11">Stock: 8 un.</text>
+
+      <rect x="352" y="0" width="160" height="90" rx="8" fill="#1e293b" stroke="#475569" />
+      <text x="364" y="30" fill="#f1f5f9" font-family="sans-serif" font-size="13" font-weight="bold">Rollo Térmico 80mm</text>
+      <text x="364" y="52" fill="#8b5cf6" font-family="sans-serif" font-size="14" font-weight="600">$ 1.250</text>
+      <text x="364" y="74" fill="#64748b" font-family="sans-serif" font-size="11">Stock: 240 un.</text>
+
+      <rect x="528" y="0" width="160" height="90" rx="8" fill="#1e293b" stroke="#475569" />
+      <text x="540" y="30" fill="#f1f5f9" font-family="sans-serif" font-size="13" font-weight="bold">Cajón Portamonedas</text>
+      <text x="540" y="52" fill="#8b5cf6" font-family="sans-serif" font-size="14" font-weight="600">$ 62.000</text>
+      <text x="540" y="74" fill="#64748b" font-family="sans-serif" font-size="11">Stock: 5 un.</text>
+    </g>
+
+    <!-- Ticket Summary Side -->
+    <rect x="768" y="0" width="384" height="430" rx="12" fill="url(#glassCard)" stroke="#334155" stroke-width="1" />
+    <text x="792" y="36" fill="#f8fafc" font-family="sans-serif" font-size="16" font-weight="600">Ticket en Curso #00481</text>
+    <line x1="792" y1="55" x2="1128" y2="55" stroke="#334155" stroke-dasharray="4 4" />
+    
+    <text x="792" y="85" fill="#cbd5e1" font-family="sans-serif" font-size="13">1x Impresora Térmica 80mm</text>
+    <text x="1100" y="85" text-anchor="end" fill="#cbd5e1" font-family="sans-serif" font-size="13">$89.900</text>
+
+    <text x="792" y="115" fill="#cbd5e1" font-family="sans-serif" font-size="13">4x Rollo Térmico 80mm</text>
+    <text x="1100" y="115" text-anchor="end" fill="#cbd5e1" font-family="sans-serif" font-size="13">$5.000</text>
+
+    <text x="792" y="145" fill="#cbd5e1" font-family="sans-serif" font-size="13">1x Lector Láser 2D USB</text>
+    <text x="1100" y="145" text-anchor="end" fill="#cbd5e1" font-family="sans-serif" font-size="13">$45.000</text>
+
+    <!-- Total Area -->
+    <rect x="792" y="270" width="336" height="70" rx="8" fill="#1e1b4b" stroke="#6366f1" stroke-width="1" />
+    <text x="812" y="295" fill="#c7d2fe" font-family="sans-serif" font-size="12">TOTAL A COBRAR</text>
+    <text x="812" y="325" fill="#ffffff" font-family="sans-serif" font-size="24" font-weight="bold">$ 139.900,00</text>
+
+    <rect x="792" y="355" width="336" height="50" rx="8" fill="#8b5cf6" />
+    <text x="960" y="386" text-anchor="middle" fill="#ffffff" font-family="sans-serif" font-size="15" font-weight="bold">Cobrar & Imprimir Ticket [F12]</text>
+  </g>
+
+  </g>
+</svg>

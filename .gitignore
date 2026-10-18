@@ -2,6 +2,8 @@
 dist/
 # vercel output
 .vercel/
+# astro cache & types
+.astro/
 
 
 # dependencies
