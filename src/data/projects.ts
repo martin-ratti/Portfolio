@@ -1,3 +1,5 @@
+import { resolveProjectImage } from "../utils/projectAssets";
+
 export interface ProjectImage {
     url: string;
     alt: string;
@@ -75,10 +77,10 @@ export const projects: Project[] = [
         link: "https://martin-ratti.github.io/Landing-Zenith/",
         repo: "https://github.com/martin-ratti/Landing-Zenith",
         featured: true,
-        coverImage: "/projects/zenith-pos/cover.svg",
+        coverImage: resolveProjectImage("zenith-pos", "cover"),
         gallery: [
             {
-                url: "/projects/zenith-pos/cover.svg",
+                url: resolveProjectImage("zenith-pos", "cover"),
                 alt: "Terminal de Venta Rápida Zenith POS",
                 caption: {
                     es: "Terminal de venta con escaneo de código de barras, cálculo de ticket e impresión ESC/POS.",
@@ -86,7 +88,7 @@ export const projects: Project[] = [
                 }
             },
             {
-                url: "/projects/zenith-pos/landing.svg",
+                url: resolveProjectImage("zenith-pos", "landing"),
                 alt: "Landing Page Oficial de Zenith POS",
                 caption: {
                     es: "Landing page oficial construida con Astro 5 y Tailwind CSS v4, logrando 99+ en PageSpeed.",
@@ -157,10 +159,10 @@ export const projects: Project[] = [
         link: "https://www.pcfixbaru.com.ar",
         repo: "https://github.com/martin-ratti/PCFIX-Baru",
         featured: true,
-        coverImage: "/projects/pcfix/cover.svg",
+        coverImage: resolveProjectImage("pcfix", "cover"),
         gallery: [
             {
-                url: "/projects/pcfix/cover.svg",
+                url: resolveProjectImage("pcfix", "cover"),
                 alt: "Tienda Online PCFIX y Pipeline Monorepo",
                 caption: {
                     es: "Catálogo de productos con filtrado instantáneo y flujo de integración continua CI/CD.",
@@ -168,7 +170,7 @@ export const projects: Project[] = [
                 }
             },
             {
-                url: "/projects/pcfix/admin.svg",
+                url: resolveProjectImage("pcfix", "admin"),
                 alt: "Panel Administrativo y Business Intelligence",
                 caption: {
                     es: "Dashboard administrativo para control de stock, pedidos en tránsito y facturación mensual.",
@@ -238,10 +240,10 @@ export const projects: Project[] = [
         tags: ["React Native", "TypeScript", "Node.js", "PostgreSQL", "Docker", "Turborepo", "Prisma", "Express", "Jest", "Vitest", "Postman", "Kanban"],
         repo: "https://github.com/agussantinelli/EstacionAR",
         featured: false,
-        coverImage: "/projects/estacionar/cover.svg",
+        coverImage: resolveProjectImage("estacionar", "cover"),
         gallery: [
             {
-                url: "/projects/estacionar/cover.svg",
+                url: resolveProjectImage("estacionar", "cover"),
                 alt: "App móvil EstacionAR y Pase Digital con QR",
                 caption: {
                     es: "Mapa de geolocalización de cocheras y generación de credencial QR para acceso automático.",
@@ -304,10 +306,10 @@ export const projects: Project[] = [
         tags: ["React", "TypeScript", "Node.js", "MySQL", "Prisma", "Express", "Jest", "Vitest", "Playwright", "Scrum", "Kanban"],
         repo: "https://github.com/valenpeppi/FrontEnd-Venta-de-Entradas",
         featured: false,
-        coverImage: "/projects/ticketapp/cover.svg",
+        coverImage: resolveProjectImage("ticketapp", "cover"),
         gallery: [
             {
-                url: "/projects/ticketapp/cover.svg",
+                url: resolveProjectImage("ticketapp", "cover"),
                 alt: "Cartelera de Eventos y Ticket PDF TicketApp",
                 caption: {
                     es: "Catálogo de espectáculos y ticket oficial generado en PDF con código de barras y hash criptográfico.",
@@ -370,10 +372,10 @@ export const projects: Project[] = [
         tags: [".NET WebAPI", "Blazor", "WinForms", "SQL Server", "SQL", "C#"],
         repo: "https://github.com/agussantinelli/ProyectoIDE-BuyJugador",
         featured: false,
-        coverImage: "/projects/buyjugador/cover.svg",
+        coverImage: resolveProjectImage("buyjugador", "cover"),
         gallery: [
             {
-                url: "/projects/buyjugador/cover.svg",
+                url: resolveProjectImage("buyjugador", "cover"),
                 alt: "Panel Blazor Web y Cliente Desktop BuyJugador",
                 caption: {
                     es: "Reportes analíticos con ScottPlot en Blazor Web y grilla de stock en WinForms.",
@@ -436,10 +438,10 @@ export const projects: Project[] = [
         tags: ["Java", "JSP", "MySQL", "Maven", "Java Servlets"],
         repo: "https://github.com/martin-ratti/ProyectoJava-Crowdfunding",
         featured: false,
-        coverImage: "/projects/impulsame/cover.svg",
+        coverImage: resolveProjectImage("impulsame", "cover"),
         gallery: [
             {
-                url: "/projects/impulsame/cover.svg",
+                url: resolveProjectImage("impulsame", "cover"),
                 alt: "Campaña en ImpulsaMe y progreso de recaudación",
                 caption: {
                     es: "Página de proyecto con cálculo de metas porcentuales y recepción de fondos.",
@@ -491,10 +493,10 @@ export const projects: Project[] = [
         tags: ["Python", "Git", "GitHub"],
         repo: "https://github.com/martin-ratti/Extractor-OCR-Python",
         featured: false,
-        coverImage: "/projects/extractor-ocr/cover.svg",
+        coverImage: resolveProjectImage("extractor-ocr", "cover"),
         gallery: [
             {
-                url: "/projects/extractor-ocr/cover.svg",
+                url: resolveProjectImage("extractor-ocr", "cover"),
                 alt: "Extracción selectiva de texto resaltado con OpenCV",
                 caption: {
                     es: "Segmentación en espacio HSV y filtrado inteligente de texto por color de resaltado.",
@@ -546,10 +548,10 @@ export const projects: Project[] = [
         tags: ["C#", ".NET WebAPI", "SQL Server", "WinForms", "Git", "GitHub"],
         repo: "https://github.com/martin-ratti/AnimallForrajeria-version-vieja-",
         featured: false,
-        coverImage: "/projects/animall-forrajeria/cover.svg",
+        coverImage: resolveProjectImage("animall-forrajeria", "cover"),
         gallery: [
             {
-                url: "/projects/animall-forrajeria/cover.svg",
+                url: resolveProjectImage("animall-forrajeria", "cover"),
                 alt: "Sistema de Mostrador y Caja Diaria Animall",
                 caption: {
                     es: "Módulo de gestión de ventas por rubro, arqueo de caja y emisión de comprobantes.",
