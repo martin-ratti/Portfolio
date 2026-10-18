@@ -19,12 +19,15 @@ This is the personal portfolio website of Martín Ratti, a Full Stack Developer 
 - **Logic:** TypeScript for type safety.
 - **Styling:** Tailwind CSS utility classes and global CSS variables for themes.
 - **Directory Structure:**
-  - `src/components`: UI components
-  - `src/pages`: Routes and pages
+  - `src/components`: UI components (including `ProjectDetail.astro`, `ProjectGallery.astro`)
+  - `src/pages`: Routes and pages (including dynamic `/proyectos/[slug].astro` and `/en/proyectos/[slug].astro`)
   - `src/layouts`: Layout wrappers
-  - `src/utils`: Helper functions (including i18n logic)
+  - `src/data`: Structured data (`projects.ts`)
+  - `src/utils`: Helper functions (`projectAssets.ts`, i18n logic, chat)
+  - `public/projects`: Project screenshot assets with automatic `.webp` / `.png` / `.svg` resolution
 
 ## Key Features
-- **Performance:** Optimized for speed with Astro.
-- **Accessibility:** Semantic HTML and ARIA labels where appropriate.
-- **SEO:** Dynamic meta tags and Open Graph support.
+- **Performance:** Optimized for speed with Astro (prerendered dynamic case studies).
+- **Accessibility:** Semantic HTML, ARIA labels, and keyboard-navigable Lightbox (`Esc`, `←`, `→`).
+- **SEO & Social Sharing:** Dynamic Open Graph images per project, structured data JSON-LD, and bidirectional `hreflang`.
+- **Interactive Case Studies:** Full case studies with interactive image gallery, key features, and architecture breakdowns.
