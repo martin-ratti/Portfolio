@@ -11,35 +11,34 @@ Cada proyecto cuenta con su propia subcarpeta nombrada con su `slug` correspondi
 ```text
 public/projects/
 ├── zenith-pos/
-│   ├── cover.jpg           # 🌟 Portada principal (Terminal de venta)
-│   ├── dashboard.jpg       # 📊 Panel de control gerencial
-│   ├── inventario.jpg      # 📦 Control de inventario
-│   ├── caja-reportes.jpg   # 💵 Arqueo y gestión de caja
-│   ├── cuentas-corrientes.jpg # 👥 Cuentas corrientes
-│   ├── administracion.jpg  # ⚙️ Centro de control White-label
-│   └── landing.svg         # 🌐 Landing page comercial   # 🖼️ Captura adicional 2
+│   ├── cover.webp              # 🌟 Portada principal (Terminal de venta)
+│   ├── dashboard.webp          # 📊 Panel de control gerencial
+│   ├── inventario.webp         # 📦 Control de inventario
+│   ├── caja-reportes.webp      # 💵 Arqueo y gestión de caja
+│   ├── cuentas-corrientes.webp # 👥 Cuentas corrientes
+│   └── administracion.webp     # ⚙️ Centro de control White-label
+├── tracker-utn/
+│   ├── cover.webp              # 🌟 Portada principal (Malla curricular)
+│   ├── grafo-interactivo.webp  # 🕸️ Grafo de correlativas y camino crítico
+│   ├── ficha-analitica.webp    # 📄 Analítico oficial descargable en PDF
+│   ├── calendario-metas.webp   # 📅 Calendario de mesas y metas con email
+│   ├── dashboard-estadisticas.webp # 📈 Estadísticas académicas
+│   ├── detalle-materia.webp    # 🔍 Detalle y correlativas por asignatura
+│   └── materias-electivas.webp # 🎓 Panel de materias electivas
+├── buyjugador/
+│   ├── cover.webp              # 🌟 Portada principal (Dashboard Blazor WASM)
+│   ├── arquitectura.webp       # 📐 Solución de 8 proyectos en Visual Studio
+│   ├── reporte-precios.webp    # 📈 Reporte analítico ScottPlot + PDFsharp
+│   ├── pedidos-blazor.webp     # 🌐 Módulo de pedidos Web
+│   ├── ventas-desktop.webp     # 🖥️ Gestión de ventas WinForms
+│   └── pedidos-desktop.webp    # 📦 Abastecimiento y pedidos Desktop
 ├── pcfix/
 │   ├── cover.webp
 │   ├── cover.svg
 │   └── admin.webp
-├── tracker-utn/
-│   ├── cover.png           # 🌟 Portada principal (Malla curricular)
-│   ├── grafo-interactivo.png
-│   ├── ficha-analitica.png
-│   ├── calendario-metas.png
-│   ├── dashboard-estadisticas.png
-│   ├── detalle-materia.png
-│   └── materias-electivas.png
 ├── ticketapp/
 │   ├── cover.webp
 │   └── cover.svg
-├── buyjugador/
-│   ├── cover.jpg           # 🌟 Portada principal (Dashboard Blazor WASM)
-│   ├── arquitectura.jpg    # 📐 Solución de 8 proyectos en Visual Studio
-│   ├── reporte-precios.jpg # 📈 Reporte analítico ScottPlot + PDFsharp
-│   ├── pedidos-blazor.jpg  # 🌐 Módulo de pedidos Web
-│   ├── ventas-desktop.jpg  # 🖥️ Gestión de ventas WinForms
-│   └── pedidos-desktop.jpg # 📦 Abastecimiento y pedidos Desktop
 ├── impulsame/
 │   ├── cover.webp
 │   └── cover.svg

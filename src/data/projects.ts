@@ -126,14 +126,6 @@ export const projects: Project[] = [
                     es: "Administración de usuarios y permisos basados en roles (Admin / Empleado) con inyección dinámica de identidad visual White-label vía config.json.",
                     en: "User access management with role-based permissions (Admin / Employee) and dynamic White-label visual branding injection via config.json."
                 }
-            },
-            {
-                url: resolveProjectImage("zenith-pos", "landing"),
-                alt: "Landing Page Oficial Zenith POS",
-                caption: {
-                    es: "Landing page comercial moderna desarrollada con Astro 5 y Tailwind CSS v4, optimizada para conversión y SEO con puntuación 99+ en PageSpeed.",
-                    en: "Modern commercial landing page developed with Astro 5 and Tailwind CSS v4, conversion and SEO-optimized with 99+ PageSpeed score."
-                }
             }
         ],
         features: [
