@@ -23,7 +23,7 @@ export function resolveProjectImage(slug: string, baseName: string, fallbackUrl?
         }
     }
 
-    return fallbackUrl || `/projects/${slug}/${baseName}.svg`;
+    return fallbackUrl || `/projects/${slug}/${baseName}.webp`;
 }
 
 /**
