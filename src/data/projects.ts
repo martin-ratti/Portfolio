@@ -28,7 +28,7 @@ export const projects: Project[] = [
             es: "Plataforma de comercio electrónico de alto rendimiento con arquitectura monorepo. Incluye tienda online, sistema de usuarios, panel administrativo y business intelligence.",
             en: "High-performance e-commerce platform with monorepo architecture. Includes online store, user system, admin panel, and business intelligence."
         },
-        tags: ["Astro", "React", "TypeScript", "Node.js", "PostgreSQL", "Docker", "Tailwind CSS", "Vercel", "Railway", "Jest", "Vitest", "Playwright", "Prisma", "Express", "GitHub"],
+        tags: ["Astro", "React", "TypeScript", "Node.js", "PostgreSQL", "Docker", "Tailwind CSS", "Vercel", "Railway", "Jest", "Vitest", "Playwright", "Prisma", "Express", "GitHub", "Scrum", "Kanban"],
         link: "https://www.pcfixbaru.com.ar",
         repo: "https://github.com/martin-ratti/PCFIX-Baru",
         featured: true
@@ -39,7 +39,7 @@ export const projects: Project[] = [
             es: "Plataforma mobile-first para gestión y reserva de estacionamientos. Arquitectura escalable monorepo con geolocalización y pagos integrados.",
             en: "Mobile-first platform for parking management and reliable reservations. Scalable monorepo architecture with geolocation and integrated payments."
         },
-        tags: ["React Native", "TypeScript", "Node.js", "PostgreSQL", "Docker", "Turborepo", "Prisma", "Express", "Jest", "Vitest", "Postman"],
+        tags: ["React Native", "TypeScript", "Node.js", "PostgreSQL", "Docker", "Turborepo", "Prisma", "Express", "Jest", "Vitest", "Postman", "Kanban"],
         repo: "https://github.com/agussantinelli/EstacionAR",
         featured: false
     },
@@ -59,7 +59,7 @@ export const projects: Project[] = [
             es: "Marketplace de eventos completo con gestión de carritos, pagos mediante Stripe, generación de tickets PDF y panel administrativo.",
             en: "Complete event marketplace with cart management, Stripe payments, PDF ticket generation, and admin panel."
         },
-        tags: ["React", "TypeScript", "Node.js", "MySQL", "Prisma", "Express", "Jest", "Vitest", "Playwright"],
+        tags: ["React", "TypeScript", "Node.js", "MySQL", "Prisma", "Express", "Jest", "Vitest", "Playwright", "Scrum", "Kanban"],
         repo: "https://github.com/valenpeppi/FrontEnd-Venta-de-Entradas",
         featured: false
     },

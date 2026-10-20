@@ -41,6 +41,8 @@ export const skills: Skills = {
         { name: "GitHub", icon: "simple-icons:github" },
         { name: "Docker", icon: "simple-icons:docker" },
         { name: "Turborepo", icon: "simple-icons:turborepo" },
+        { name: "Scrum", icon: "simple-icons:scrumalliance" },
+        { name: "Kanban", icon: "mdi:view-column-outline" },
         { name: "Vercel", icon: "simple-icons:vercel" },
         { name: "Railway", icon: "simple-icons:railway" },
         { name: "MySQL", icon: "simple-icons:mysql" },
