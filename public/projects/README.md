@@ -11,10 +11,13 @@ Cada proyecto cuenta con su propia subcarpeta nombrada con su `slug` correspondi
 ```text
 public/projects/
 ├── zenith-pos/
-│   ├── cover.webp          # 🌟 Portada principal (Prioridad 1)
-│   ├── cover.svg           # 🔄 Mockup vectorial de fallback
-│   ├── landing.webp        # 🖼️ Captura adicional 1
-│   └── screenshot-2.webp   # 🖼️ Captura adicional 2
+│   ├── cover.jpg           # 🌟 Portada principal (Terminal de venta)
+│   ├── dashboard.jpg       # 📊 Panel de control gerencial
+│   ├── inventario.jpg      # 📦 Control de inventario
+│   ├── caja-reportes.jpg   # 💵 Arqueo y gestión de caja
+│   ├── cuentas-corrientes.jpg # 👥 Cuentas corrientes
+│   ├── administracion.jpg  # ⚙️ Centro de control White-label
+│   └── landing.svg         # 🌐 Landing page comercial   # 🖼️ Captura adicional 2
 ├── pcfix/
 │   ├── cover.webp
 │   ├── cover.svg

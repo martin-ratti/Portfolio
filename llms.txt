@@ -29,9 +29,9 @@ This website serves as a professional portfolio and technical demonstration. It 
 ---
 
 ### [Zenith POS (Landing & Desktop App)](https://github.com/martin-ratti/Landing-Zenith)
-- **Description:** Comprehensive Point of Sale ecosystem. Consists of a high-performance Windows desktop application and a modern, SEO-optimized landing page.
-- **Tech Stack:** Desktop: C# (.NET Framework 4.0), WinForms, SQLite, Dapper. Landing: Astro 6, Tailwind CSS 4, TypeScript.
-- **Key Features:** Clean Architecture (Onion), White-label customization (branding), Hardware ID security (Machine Binding), 100% Offline operation, ESC/POS printing support.
+- **Description:** Comprehensive commercial Point of Sale ecosystem. Consists of a high-performance Windows desktop application and a modern, SEO-optimized landing page.
+- **Tech Stack:** Desktop: C# (.NET Framework 4.0), WinForms (MVP pattern), SQLite, Dapper. Packaging: Inno Setup 6. Landing: Astro 5, Tailwind CSS 4, TypeScript.
+- **Key Features:** Clean Architecture (Onion), White-label customization (ThemeManager via config.json), Hardware ID security (Machine Binding), 100% Offline operation, ESC/POS thermal printing support (58mm/80mm), Accounts Receivable (Cuentas Corrientes), and shift/cash flow reconciliation.
 
 ---
 
