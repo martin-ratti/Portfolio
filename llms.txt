@@ -43,9 +43,9 @@ This website serves as a professional portfolio and technical demonstration. It 
 ---
 
 ### [ProyectoIDE-BuyJugador](https://github.com/agussantinelli/ProyectoIDE-BuyJugador)
-- **Description:** Inventory and sales management system for a gaming/electronics store. Multi-client architecture.
-- **Tech Stack:** .NET 8, Blazor WebAssembly (Web), WinForms (Desktop), ASP.NET Core WebAPI, SQL Server.
-- **Key Features:** Shared logic via ApiClient, JWT Authentication, Reporting with ScottPlot (PDF/PNG), Clean Architecture.
+- **Description:** Multi-layered inventory and commercial management system for gaming and tech retail, developed with Tomas Levrand and Agustín Santinelli for UTN.
+- **Tech Stack:** Web: Blazor WebAssembly + Bootstrap. Desktop: WinForms. Backend: ASP.NET Core Web API (DTOs, Domain Services, Repositories). Database: SQL Server (EF Core + ADO.NET). Reporting: ScottPlot + PDFsharp.
+- **Key Features:** 8-project layered architecture, shared ApiClient, JWT Authentication with CORS, synchronized dual clients, price history line graphs with vector PDF export, and sales-by-vendor analytics.
 
 ---
 

@@ -34,8 +34,12 @@ public/projects/
 │   ├── cover.webp
 │   └── cover.svg
 ├── buyjugador/
-│   ├── cover.webp
-│   └── cover.svg
+│   ├── cover.jpg           # 🌟 Portada principal (Dashboard Blazor WASM)
+│   ├── arquitectura.jpg    # 📐 Solución de 8 proyectos en Visual Studio
+│   ├── reporte-precios.jpg # 📈 Reporte analítico ScottPlot + PDFsharp
+│   ├── pedidos-blazor.jpg  # 🌐 Módulo de pedidos Web
+│   ├── ventas-desktop.jpg  # 🖥️ Gestión de ventas WinForms
+│   └── pedidos-desktop.jpg # 📦 Abastecimiento y pedidos Desktop
 ├── impulsame/
 │   ├── cover.webp
 │   └── cover.svg
