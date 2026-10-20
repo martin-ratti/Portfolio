@@ -74,10 +74,10 @@ Plataforma de comercio electrónico de alto rendimiento con arquitectura monorep
 - **Frontend:** Astro Server Islands + React para máxima reactividad con mínimo JS en el cliente.
 - **Backend & DevOps:** Node.js, Express, PostgreSQL, Prisma ORM, contenedores Docker y testing automatizado E2E con Playwright.
 
-### 🚗 [EstacionAR - Smart Parking](/proyectos/estacionar)
-Plataforma mobile-first para gestión y reserva de cocheras en tiempo real.
-- **Stack:** React Native, Expo, Node.js, PostgreSQL y Turborepo.
-- **Features:** Geolocalización, credenciales dinámicas de acceso por código QR y pagos integrados.
+### 🎓 [Tracker UTN Sistemas - Plan 2023](/proyectos/tracker-utn)
+Plataforma web interactiva para el seguimiento de la carrera de Ingeniería en Sistemas (UTN FRRo).
+- **Stack:** React 19, TypeScript, Tailwind CSS v4, Node.js, Express, Firebase (Auth/Firestore) y Resend.
+- **Features:** Grafo interactivo con camino crítico de correlativas, calendario académico con recordatorios por correo, dashboard de estadísticas y analítico oficial descargable en PDF.
 
 ### 🎟️ [TicketApp - Marketplace de Eventos](/proyectos/ticketapp)
 Marketplace para compra de entradas con checkout seguro en Stripe y generación de tickets PDF con hash criptográfico.

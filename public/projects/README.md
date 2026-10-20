@@ -19,9 +19,14 @@ public/projects/
 │   ├── cover.webp
 │   ├── cover.svg
 │   └── admin.webp
-├── estacionar/
-│   ├── cover.webp
-│   └── cover.svg
+├── tracker-utn/
+│   ├── cover.png           # 🌟 Portada principal (Malla curricular)
+│   ├── grafo-interactivo.png
+│   ├── ficha-analitica.png
+│   ├── calendario-metas.png
+│   ├── dashboard-estadisticas.png
+│   ├── detalle-materia.png
+│   └── materias-electivas.png
 ├── ticketapp/
 │   ├── cover.webp
 │   └── cover.svg
