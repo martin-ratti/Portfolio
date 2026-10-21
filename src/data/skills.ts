@@ -57,6 +57,8 @@ export const skills: Skills = {
         { name: "SQLite", icon: "simple-icons:sqlite" },
         { name: "Firebase", icon: "simple-icons:firebase" },
         { name: "Dapper", icon: "mdi:database-cog" },
-        { name: "Stripe", icon: "simple-icons:stripe" }
+        { name: "Stripe", icon: "simple-icons:stripe" },
+        { name: "pnpm", icon: "simple-icons:pnpm" },
+        { name: "Gemini AI", icon: "simple-icons:googlegemini" }
     ]
 };

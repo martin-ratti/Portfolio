@@ -90,6 +90,12 @@ public/projects/
 
 │   └── mis-proyectos.webp      # 💼 Panel personal del creador
 
+├── ocr-web/
+│   ├── cover.webp              # 🌟 Portada principal (Sirviendo Apuntes)
+│   ├── workspace-apuntes.webp  # 📝 Espacio de trabajo y carga de apuntes
+│   ├── motores-ia.webp         # 🧠 Menú de motores (Gemini, Groq, Local)
+│   ├── resultado-extraccion.webp # 📊 Resumen generado y exportación Word
+│   └── modo-oscuro.webp        # 🌙 Modo oscuro de alto contraste
 ├── extractor-ocr/
 
 │   ├── cover.webp

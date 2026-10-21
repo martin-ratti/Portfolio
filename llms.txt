@@ -85,6 +85,13 @@ This website serves as a professional portfolio and technical demonstration. It 
 
 ---
 
+### [OCR Web - Sirviendo Apuntes](https://github.com/martin-ratti/OCR-Web.git)
+- **Description:** Fullstack web evolution of desktop OCR, designed as a custom tool for study notes with highlighter detection and cloud/local AI vision. Live at https://ocr-web-frontend.vercel.app/
+- **Tech Stack:** Frontend: React 19, TypeScript, Tailwind CSS, Shadcn/ui, Radix UI, Zustand, Tesseract.js (WASM). Backend: Node.js, Express 5, Zod, Multer. AI: Gemini 2.5 Flash Lite, Groq Llama 4 Scout. Monorepo: pnpm workspaces.
+- **Key Features:** Three swappable OCR engines (Strict Gemini highlighter, Groq full-page forensic, 100% offline WASM), Clean Architecture ('EstacionAR'), hyphenation repair, and Word (.docx) export.
+
+---
+
 ### [Extractor-OCR-Python](https://github.com/martin-ratti/Extractor-OCR-Python)
 
 - **Description:** Professional desktop OCR tool that extracts text only from highlighted areas (Yellow, Green, Pink, Violet).

@@ -810,6 +810,126 @@ export const projects: Project[] = [
         period: "2024 - 2025"
     },
     {
+        slug: "ocr-web",
+        title: "Sirviendo Apuntes · OCR Web & IA",
+        tagline: {
+            es: "Plataforma web monorepo con IA y OCR local (WASM) para digitalizar apuntes y extraer texto resaltado.",
+            en: "Monorepo web platform with Cloud AI and local WASM OCR to digitize study notes and extract highlighted text."
+        },
+        description: {
+            es: "Evolución web fullstack del extractor OCR de escritorio, desarrollada en monorepo pnpm con React, Node.js y tres motores intercambiables: Gemini 2.5 Flash Lite para extracción estricta de texto resaltado, Groq Llama 4 Scout para transcripción forense ultrarrápida, y Tesseract.js WASM para procesamiento 100% offline en el navegador.",
+            en: "Fullstack web evolution of the desktop OCR extractor, built as a pnpm monorepo with React, Node.js, and three swappable OCR engines: Gemini 2.5 Flash Lite for strict highlighter text extraction, Groq Llama 4 Scout for ultra-fast full-page transcription, and Tesseract.js WASM for 100% in-browser offline processing."
+        },
+        fullDescription: {
+            es: "OCR Web ('Sirviendo Apuntes') nació como un proyecto dedicado para mi novia, con el propósito de facilitarle el estudio universitario permitiéndole subir fotos de apuntes, libros o fotocopias y generar resúmenes automáticos únicamente a partir de las frases que marcó con resaltador. Arquitectónicamente adopta el estándar de Clean Architecture 'EstacionAR', aislando router, controller, service y repositorios en el backend (Node.js/Express 5), mientras el frontend (React, Tailwind CSS, Shadcn/ui y Zustand) opera con tipado estricto E2E mediante Zod y contratos compartidos en el monorepo. Integra post-procesamiento inteligente para unir palabras partidas por guiones de fin de línea, limpieza de soft hyphens y exportación directa a Microsoft Word (.docx).",
+            en: "OCR Web ('Sirviendo Apuntes') was created as a personalized tool for my girlfriend to streamline her university studies, allowing her to upload photos of lecture notes and textbooks to generate instant summaries strictly from highlighted text. Architecturally structured under the 'EstacionAR' Clean Architecture pattern, it separates routers, controllers, services, and AI adapters on the backend (Node.js/Express 5), while the frontend (React, Tailwind CSS, Shadcn/ui, and Zustand) ensures end-to-end type safety via Zod shared contracts. Features intelligent post-processing to reassemble hyphenated line-broken words, remove invisible soft hyphens, and export directly to Microsoft Word (.docx)."
+        },
+        tags: ["React", "TypeScript", "Node.js", "Express", "Tailwind CSS", "Vite", "Zod", "Vitest", "pnpm", "Vercel", "Git", "GitHub"],
+        link: "https://ocr-web-frontend.vercel.app/",
+        repo: "https://github.com/martin-ratti/OCR-Web.git",
+        featured: false,
+        coverImage: resolveProjectImage("ocr-web", "cover"),
+        gallery: [
+            {
+                url: resolveProjectImage("ocr-web", "cover"),
+                alt: "Sirviendo Apuntes - Pantalla Principal y Dropzone",
+                caption: {
+                    es: "Interfaz principal con diseño editorial pastel, dropzone animado para fotos de apuntes (JPG, PNG, WebP, HEIC) y selector de temas.",
+                    en: "Landing interface with pastel paper aesthetics, animated note dropzone (JPG, PNG, WebP, HEIC), and theme selector."
+                }
+            },
+            {
+                url: resolveProjectImage("ocr-web", "workspace-apuntes"),
+                alt: "Espacio de Trabajo con Apunte Cargado",
+                caption: {
+                    es: "Previsualización del apunte con detección de resaltador, barra de control, conteo de palabras y exportación a Word (.docx).",
+                    en: "Note preview showing highlighted sections, control bar, live word counter, and Word (.docx) export trigger."
+                }
+            },
+            {
+                url: resolveProjectImage("ocr-web", "motores-ia"),
+                alt: "Selector de Motores de OCR e Inteligencia Artificial",
+                caption: {
+                    es: "Arquitectura multi-motor: Gemini 2.5 Flash Lite para resaltado estricto, Groq Llama 4 Scout forense (1000 RPD) y motor Local offline (WASM).",
+                    en: "Multi-engine architecture: Gemini 2.5 Flash Lite for strict highlighting, Groq Llama 4 Scout forensic (1000 RPD), and local offline WASM."
+                }
+            },
+            {
+                url: resolveProjectImage("ocr-web", "resultado-extraccion"),
+                alt: "Panel de Resultados y Resumen Generado con IA",
+                caption: {
+                    es: "Visualizador 'La data' con el texto extraído, reconstrucción de palabras cortadas por guiones y copia instantánea al portapapeles.",
+                    en: "'La data' output panel displaying extracted text, hyphenation repair for line breaks, and instant clipboard copy."
+                }
+            },
+            {
+                url: resolveProjectImage("ocr-web", "modo-oscuro"),
+                alt: "Modo Oscuro de Alto Contraste",
+                caption: {
+                    es: "Paleta oscura accesible implementada con next-themes y Tailwind CSS para jornadas de estudio nocturno sin fatiga visual.",
+                    en: "High-contrast dark mode implemented with next-themes and Tailwind CSS for late-night study sessions without eye fatigue."
+                }
+            }
+        ],
+        features: [
+            {
+                title: { es: "Tres Motores de OCR Seleccionables", en: "Three Swappable OCR Engines" },
+                desc: {
+                    es: "Libertad total de procesamiento: Gemini 2.5 Flash Lite para extraer únicamente lo resaltado con marcador, Groq Llama 4 Scout para transcripción completa ultrarrápida, y Tesseract.js WASM para ejecución 100% privada sin conexión a internet ni consumo de backend.",
+                    en: "Total processing flexibility: Gemini 2.5 Flash Lite for strict highlighter extraction, Groq Llama 4 Scout for high-speed full-page transcription, and Tesseract.js WASM for 100% private in-browser offline execution without backend dependencies."
+                }
+            },
+            {
+                title: { es: "Monorepo pnpm & Clean Architecture", en: "pnpm Monorepo & Clean Architecture" },
+                desc: {
+                    es: "Estructura modular desacoplada ('EstacionAR') con Workspaces en pnpm, separando API Express 5 en backend y SPA React en frontend, con paquete compartido de tipos y esquemas de validación Zod.",
+                    en: "Decoupled modular architecture ('EstacionAR') with pnpm workspaces, isolating Express 5 API on the backend and React SPA on the frontend, bound by a shared Zod contract package."
+                }
+            },
+            {
+                title: { es: "Post-Procesamiento Tipográfico Inteligente", en: "Intelligent Typographic Post-Processing" },
+                desc: {
+                    es: "Algoritmo de reconstrucción para palabras partidas por saltos de línea con guión (ej. 'cons-\\ntitución' a 'constitución'), supresión de soft hyphens invisibles y preservación de sangrías y listas.",
+                    en: "Reconstruction algorithm for line-broken hyphenated words ('cons-\\ntitución' into 'constitución'), invisible soft-hyphen stripping, and list indentation protection."
+                }
+            },
+            {
+                title: { es: "Gestión de Estado Global & Caché Segregada", en: "Global State Management & Partitioned Cache" },
+                desc: {
+                    es: "Store reactivo con Zustand que persiste resultados en memoria y memoria local, segregando la caché por motor, nombre de archivo y peso binario para evitar llamadas redundantes a las APIs.",
+                    en: "Reactive Zustand store with partitioned caching by engine, filename, and file size to eliminate redundant API calls."
+                }
+            },
+            {
+                title: { es: "Exportación Directa a Word (.docx) & Portapapeles", en: "Direct Word (.docx) & Clipboard Export" },
+                desc: {
+                    es: "Generación en tiempo real de documentos Word con formato estructurado listos para imprimir o editar, junto a copiado en un solo clic.",
+                    en: "Real-time generation of formatted Word (.docx) documents ready for printing or editing, alongside one-click clipboard copying."
+                }
+            },
+            {
+                title: { es: "Validación Binaria Estricta (Magic Bytes)", en: "Strict Binary Validation (Magic Bytes)" },
+                desc: {
+                    es: "Inspección binaria en la capa de subida con Multer para validar los encabezados reales de archivo (JPEG, PNG, WebP, GIF, HEIC) previniendo ataques de inyección y archivos corruptos.",
+                    en: "Binary inspection at the Multer upload layer verifying file header signatures (JPEG, PNG, WebP, GIF, HEIC) preventing injection attacks and corrupted uploads."
+                }
+            }
+        ],
+        architecture: {
+            es: "Monorepo orquestado con pnpm Workspaces. Backend en Node.js y Express 5 estructurado en capas (Routers, Controllers, Services y AI Adapters) consumiendo Google GenAI y Groq Cloud API. Frontend en React 19, TypeScript y Tailwind CSS con Shadcn/ui y Radix UI, empaquetado con Vite y ejecutando Tesseract.js (WASM) para OCR en el cliente. Validación compartida de contratos con Zod de punta a punta y despliegue continuo en Vercel.",
+            en: "Monorepo orchestrated with pnpm workspaces. Node.js and Express 5 layered backend (Routers, Controllers, Services, and AI Adapters) consuming Google GenAI and Groq Cloud APIs. Frontend built with React 19, TypeScript, and Tailwind CSS with Shadcn/ui and Radix UI, bundled via Vite and executing in-browser Tesseract.js (WASM) OCR. End-to-end contract validation with shared Zod schemas, continuously deployed on Vercel."
+        },
+        challenges: {
+            es: "Diseñar un prompt de visión multimodal con Gemini y Groq capaz de aislar exclusivamente las áreas pintadas con resaltador ignorando texto circundante, integrando además un fallback automático con Tesseract.js en WebAssembly que ejecuta análisis trigrama en español y rotaciones para procesar fotos torcidas sin enviar datos a servidores externos.",
+            en: "Designing a multimodal vision prompt with Gemini and Groq that isolates text marked with highlighters while ignoring surrounding unhighlighted text, alongside an automatic fallback engine in WebAssembly (Tesseract.js) running Spanish trigram analysis and auto-rotation for skewed photos without external data transfers."
+        },
+        role: {
+            es: "Creador & Desarrollador Full Stack (Monorepo, Integración IA & UI/UX)",
+            en: "Creator & Full Stack Developer (Monorepo, AI Integration & UI/UX)"
+        },
+        period: "2026"
+    },
+    {
         slug: "extractor-ocr",
         title: "Extractor OCR - Green & Pink",
         tagline: {
