@@ -1,95 +1,95 @@
-# Martín Ratti - Portfolio
-
-> Personal portfolio of Martín Ratti, showcasing Full Stack development skills with a focus on performance and modern UI design. Built with Astro, TypeScript, and React.
-
-## Project Details
-
-This website serves as a professional portfolio and technical demonstration. It includes sections for:
-- **About Me:** Professional background and education.
-- **Stack:**
-    - **Frontend:** Astro, React, TypeScript, TailwindCSS.
-    - **Backend:** Node.js, Express, Java (Servlets/JSP), .NET 8 (WebAPI).
-    - **Desktop:** .NET WinForms, Python (Automation/OCR).
-    - **Data:** MySQL, PostgreSQL, SQL Server, Prisma.
-    - **DevOps/Tools:** Docker, Git, NPM Workspaces.
-    - **Methodologies:** Agile, Scrum, Kanban, Clean Architecture.
-- **Projects:** Highlighted works like Zenith POS, PCFIX, and Tracker UTN Sistemas.
-- **Contact:** Links to email, LinkedIn, and GitHub.
-
-
-## Other Projects (Context for AI)
-
-> This section allows the AI to answer questions about Martin's other repositories.
-
-### [PCFIX-Baru](https://github.com/martin-ratti/PCFIX-Baru)
-- **Description:** E-Commerce Monorepo designed for scale. Orchestrates a robust API and a hybrid Frontend.
-- **Tech Stack:** Astro Server Islands, React, Node.js API, Docker, NPM Workspaces.
-- **Key Features:** Instant purchase experience, admin management system, CI/CD with GitHub Actions, End-to-End testing with Playwright.
-
----
-
-### [Zenith POS (Landing & Desktop App)](https://github.com/martin-ratti/Landing-Zenith)
-- **Description:** Comprehensive commercial Point of Sale ecosystem. Consists of a high-performance Windows desktop application and a modern, SEO-optimized landing page.
-- **Tech Stack:** Desktop: C# (.NET Framework 4.0), WinForms (MVP pattern), SQLite, Dapper. Packaging: Inno Setup 6. Landing: Astro 5, Tailwind CSS 4, TypeScript.
-- **Key Features:** Clean Architecture (Onion), White-label customization (ThemeManager via config.json), Hardware ID security (Machine Binding), 100% Offline operation, ESC/POS thermal printing support (58mm/80mm), Accounts Receivable (Cuentas Corrientes), and shift/cash flow reconciliation.
-
----
-
-### [TicketApp (Venta de Entradas)](https://github.com/valenpeppi/FrontEnd-Venta-de-Entradas)
-- **Description:** Event ticket sales platform (Marketplace). Connects organizers with attendees.
-- **Tech Stack:** Frontend: React + TypeScript (Context API). Backend: Node.js + Express + MySQL + Prisma.
-- **Key Features:** Stripe payment integration, PDF ticket generation, Admin panel, AI Chat assistant, Role-based access (Client, Organizer, Admin).
-
----
-
-### [ProyectoIDE-BuyJugador](https://github.com/agussantinelli/ProyectoIDE-BuyJugador)
-- **Description:** Multi-layered inventory and commercial management system for gaming and tech retail, developed with Tomas Levrand and Agustín Santinelli for UTN.
-- **Tech Stack:** Web: Blazor WebAssembly + Bootstrap. Desktop: WinForms. Backend: ASP.NET Core Web API (DTOs, Domain Services, Repositories). Database: SQL Server (EF Core + ADO.NET). Reporting: ScottPlot + PDFsharp.
-- **Key Features:** 8-project layered architecture, shared ApiClient, JWT Authentication with CORS, synchronized dual clients, price history line graphs with vector PDF export, and sales-by-vendor analytics.
-
----
-
-### [Tracker UTN Sistemas](https://github.com/martin-ratti/tracker-ing-sist)
-- **Description:** Interactive web platform for tracking the Systems Engineering curriculum (UTN FRRo - Plan 2023).
-- **Tech Stack:** Frontend: React 19, TypeScript, Tailwind CSS v4, Vite. Backend: Node.js, Express, Resend. Cloud: Firebase (Auth & Firestore). Testing: Vitest, Playwright.
-- **Key Features:** Interactive prerequisite vis-network graph with critical path analysis, official academic exam calendar with automated 7-day email reminders, client-side PDF official transcript generation (jsPDF), dual-degree tracking (ADUSI & Engineering), and 5 dynamic themes.
-
----
-
-### [MetinForge](https://github.com/martin-ratti/MetinForge)
-- **Description:** Desktop application for Metin2 "farmers" to track repetitive tasks and assets.
-- **Key Features:** Alchemy (Draconis) management, Fishing module analytics, Event/Tombola tracking, Floating Timer, Mass account import (.xlsx/.csv).
-
----
-
-### [Extractor-OCR-Python](https://github.com/martin-ratti/Extractor-OCR-Python)
-- **Description:** Professional desktop OCR tool that extracts text only from highlighted areas (Yellow, Green, Pink, Violet).
-- **Tech Stack:** Python, Tesseract OCR, Clean Architecture.
-- **Key Features:** Drag & drop interface, batch processing, intelligent color detection.
-
----
-
-### [GitIgnore-Genius](https://github.com/martin-ratti/GitIgnore-Genius)
-- **Description:** Desktop app to generate robust .gitignore files automatically by analyzing project structure.
-- **Key Features:** Language/Framework detection, Smart generation, Drag & drop.
-
----
-
-### [ProyectoJava-Crowdfunding](https://github.com/martin-ratti/ProyectoJava-Crowdfunding)
-- **Description:** Crowdfunding web platform (ImpulsaMe).
-- **Tech Stack:** Java Servlets, JSP, JSTL, MySQL (DAO pattern).
-- **Key Features:** Project lifecycle (Pending -> Active), Stripe Donations, RBAC Security (AuthFilter), MVC Architecture.
-
-The site is designed with a "performance first" approach using Astro 5, ensuring fast load times. It features a responsive Glassmorphism design with dark mode and internationalization (English/Spanish).
-
-## Documentation
-
-- [README](https://github.com/martin-ratti/Portfolio/blob/main/README.md): Official project README with installation and detailed stack info.
-- [Astro Documentation](https://docs.astro.build/): Reference for the core framework used.
-- [Tailwind CSS](https://tailwindcss.com/docs): Styles reference.
-
-## Optional
-
-- [CV / Resume](file:///CV_Martin_Ratti.pdf): Currículum Vítae / Professional Resume (PDF).
-- [LinkedIn Profile](https://www.linkedin.com/in/martin-ratti-dev/): Professional profile.
-- [GitHub Profile](https://github.com/martin-ratti): Source code repositories.
+# Martín Ratti - Portfolio
+
+> Personal portfolio of Martín Ratti, showcasing Full Stack development skills with a focus on performance and modern UI design. Built with Astro, TypeScript, and React.
+
+## Project Details
+
+This website serves as a professional portfolio and technical demonstration. It includes sections for:
+- **About Me:** Professional background and education.
+- **Stack:**
+    - **Frontend:** Astro, React, TypeScript, TailwindCSS.
+    - **Backend:** Node.js, Express, Java (Servlets/JSP), .NET 8 (WebAPI).
+    - **Desktop:** .NET WinForms, Python (Automation/OCR).
+    - **Data:** MySQL, PostgreSQL, SQL Server, Prisma.
+    - **DevOps/Tools:** Docker, Git, NPM Workspaces.
+    - **Methodologies:** Agile, Scrum, Kanban, Clean Architecture.
+- **Projects:** Highlighted works like Zenith POS, PCFIX, and Tracker UTN Sistemas.
+- **Contact:** Links to email, LinkedIn, and GitHub.
+
+
+## Other Projects (Context for AI)
+
+> This section allows the AI to answer questions about Martin's other repositories.
+
+### [PCFIX-Baru](https://github.com/martin-ratti/PCFIX-Baru)
+- **Description:** E-Commerce Monorepo designed for scale. Orchestrates a robust API and a hybrid Frontend.
+- **Tech Stack:** Astro Server Islands, React, Node.js API, Docker, NPM Workspaces.
+- **Key Features:** Instant purchase experience, admin management system, CI/CD with GitHub Actions, End-to-End testing with Playwright.
+
+---
+
+### [Zenith POS (Landing & Desktop App)](https://github.com/martin-ratti/Landing-Zenith)
+- **Description:** Comprehensive commercial Point of Sale ecosystem. Consists of a high-performance Windows desktop application and a modern, SEO-optimized landing page.
+- **Tech Stack:** Desktop: C# (.NET Framework 4.0), WinForms (MVP pattern), SQLite, Dapper. Packaging: Inno Setup 6. Landing: Astro 5, Tailwind CSS 4, TypeScript.
+- **Key Features:** Clean Architecture (Onion), White-label customization (ThemeManager via config.json), Hardware ID security (Machine Binding), 100% Offline operation, ESC/POS thermal printing support (58mm/80mm), Accounts Receivable (Cuentas Corrientes), and shift/cash flow reconciliation.
+
+---
+
+### [TicketApp (Venta de Entradas)](https://github.com/valenpeppi/FrontEnd-Venta-de-Entradas)
+- **Description:** Event ticket sales platform (Marketplace). Connects organizers with attendees.
+- **Tech Stack:** Frontend: React + TypeScript (Context API). Backend: Node.js + Express + MySQL + Prisma.
+- **Key Features:** Stripe payment integration, PDF ticket generation, Admin panel, AI Chat assistant, Role-based access (Client, Organizer, Admin).
+
+---
+
+### [ProyectoIDE-BuyJugador](https://github.com/agussantinelli/ProyectoIDE-BuyJugador)
+- **Description:** Multi-layered inventory and commercial management system for gaming and tech retail, developed with Tomas Levrand and Agustín Santinelli for UTN.
+- **Tech Stack:** Web: Blazor WebAssembly + Bootstrap. Desktop: WinForms. Backend: ASP.NET Core Web API (DTOs, Domain Services, Repositories). Database: SQL Server (EF Core + ADO.NET). Reporting: ScottPlot + PDFsharp.
+- **Key Features:** 8-project layered architecture, shared ApiClient, JWT Authentication with CORS, synchronized dual clients, price history line graphs with vector PDF export, and sales-by-vendor analytics.
+
+---
+
+### [Tracker UTN Sistemas](https://github.com/martin-ratti/tracker-ing-sist)
+- **Description:** Interactive web platform for tracking the Systems Engineering curriculum (UTN FRRo - Plan 2023).
+- **Tech Stack:** Frontend: React 19, TypeScript, Tailwind CSS v4, Vite. Backend: Node.js, Express, Resend. Cloud: Firebase (Auth & Firestore). Testing: Vitest, Playwright.
+- **Key Features:** Interactive prerequisite vis-network graph with critical path analysis, official academic exam calendar with automated 7-day email reminders, client-side PDF official transcript generation (jsPDF), dual-degree tracking (ADUSI & Engineering), and 5 dynamic themes.
+
+---
+
+### [MetinForge](https://github.com/martin-ratti/MetinForge)
+- **Description:** Desktop application for Metin2 "farmers" to track repetitive tasks and assets.
+- **Key Features:** Alchemy (Draconis) management, Fishing module analytics, Event/Tombola tracking, Floating Timer, Mass account import (.xlsx/.csv).
+
+---
+
+### [Extractor-OCR-Python](https://github.com/martin-ratti/Extractor-OCR-Python)
+- **Description:** Professional desktop OCR tool that extracts text only from highlighted areas (Yellow, Green, Pink, Violet).
+- **Tech Stack:** Python, Tesseract OCR, Clean Architecture.
+- **Key Features:** Drag & drop interface, batch processing, intelligent color detection.
+
+---
+
+### [GitIgnore-Genius](https://github.com/martin-ratti/GitIgnore-Genius)
+- **Description:** Desktop app to generate robust .gitignore files automatically by analyzing project structure.
+- **Key Features:** Language/Framework detection, Smart generation, Drag & drop.
+
+---
+
+### [ImpulsaMe - Java Crowdfunding](https://github.com/agussantinelli/ImpulsaMe-Java.git)
+- **Description:** Crowdfunding web platform built with a 3-tier MVC architecture in Java EE, Apache Tomcat, and MySQL, developed with Joaquín Peralta and Agustín Santinelli.
+- **Tech Stack:** Java Servlets, JSP, JSTL, Apache Tomcat, MySQL (DAO pattern & raw JDBC), Maven, Stripe API (Checkout Sessions), BCrypt.
+- **Key Features:** Campaign lifecycle (Pending -> Active), Stripe Donations in ARS with UUID idempotency keys, RBAC security filter (AuthFilter), backer-only comments with soft delete, and multipart image uploads with UUID filenames.
+
+The site is designed with a "performance first" approach using Astro 5, ensuring fast load times. It features a responsive Glassmorphism design with dark mode and internationalization (English/Spanish).
+
+## Documentation
+
+- [README](https://github.com/martin-ratti/Portfolio/blob/main/README.md): Official project README with installation and detailed stack info.
+- [Astro Documentation](https://docs.astro.build/): Reference for the core framework used.
+- [Tailwind CSS](https://tailwindcss.com/docs): Styles reference.
+
+## Optional
+
+- [CV / Resume](file:///CV_Martin_Ratti.pdf): Currículum Vítae / Professional Resume (PDF).
+- [LinkedIn Profile](https://www.linkedin.com/in/martin-ratti-dev/): Professional profile.
+- [GitHub Profile](https://github.com/martin-ratti): Source code repositories.

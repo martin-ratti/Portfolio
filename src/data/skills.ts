@@ -34,7 +34,8 @@ export const skills: Skills = {
         { name: "Java Servlets", icon: "fa6-brands:java" },
         { name: ".NET WebAPI", icon: "simple-icons:dotnet" },
         { name: "Prisma", icon: "simple-icons:prisma" },
-        { name: "Maven", icon: "simple-icons:apachemaven" }
+        { name: "Maven", icon: "simple-icons:apachemaven" },
+        { name: "Tomcat", icon: "simple-icons:apachetomcat" }
     ],
     tools: [
         { name: "Git", icon: "simple-icons:git" },
@@ -54,6 +55,7 @@ export const skills: Skills = {
         { name: "Postman", icon: "simple-icons:postman" },
         { name: "SQLite", icon: "simple-icons:sqlite" },
         { name: "Firebase", icon: "simple-icons:firebase" },
-        { name: "Dapper", icon: "mdi:database-cog" }
+        { name: "Dapper", icon: "mdi:database-cog" },
+        { name: "Stripe", icon: "simple-icons:stripe" }
     ]
 };
