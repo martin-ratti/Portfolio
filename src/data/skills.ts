@@ -35,7 +35,8 @@ export const skills: Skills = {
         { name: ".NET WebAPI", icon: "simple-icons:dotnet" },
         { name: "Prisma", icon: "simple-icons:prisma" },
         { name: "Maven", icon: "simple-icons:apachemaven" },
-        { name: "Tomcat", icon: "simple-icons:apachetomcat" }
+        { name: "Tomcat", icon: "simple-icons:apachetomcat" },
+        { name: "Zod", icon: "simple-icons:zod" }
     ],
     tools: [
         { name: "Git", icon: "simple-icons:git" },
