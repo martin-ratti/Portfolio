@@ -127,29 +127,39 @@ const alternates = {
 		</div>
 
 		<script is:inline>
-			const getTheme = () => {
-				if (
-					typeof localStorage !== "undefined" &&
-					localStorage.getItem("theme")
-				) {
-					return localStorage.getItem("theme");
+			(() => {
+				const syncTheme = () => {
+					let stored = null;
+					try {
+						stored = localStorage.getItem("theme");
+					} catch {}
+					const meta = document.querySelector('meta[name="color-scheme"]');
+					const isValidOverride = stored === "dark" || stored === "light";
+					if (meta) {
+						meta.setAttribute("content", isValidOverride ? stored : "light dark");
+					}
+					const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+					const resolvedDark = isValidOverride ? stored === "dark" : prefersDark;
+					document.documentElement.classList.toggle("dark", resolvedDark);
+				};
+
+				syncTheme();
+
+				if (!window.__portfolioThemeListenersAttached) {
+					window.__portfolioThemeListenersAttached = true;
+					document.addEventListener("astro:after-swap", syncTheme);
+					window.addEventListener("storage", (e) => {
+						if (e.key === "theme") syncTheme();
+					});
+					window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+						let stored = null;
+						try {
+							stored = localStorage.getItem("theme");
+						} catch {}
+						if (stored !== "dark" && stored !== "light") syncTheme();
+					});
 				}
-				if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-					return "dark";
-				}
-				return "light";
-			};
-			const applyTheme = () => {
-				const theme = getTheme();
-				if (theme === "dark") {
-					document.documentElement.classList.add("dark");
-				} else {
-					document.documentElement.classList.remove("dark");
-				}
-				window.localStorage.setItem("theme", theme);
-			};
-			applyTheme();
-			document.addEventListener("astro:after-swap", applyTheme);
+			})();
 		</script>
 
 		<slot />
