@@ -168,7 +168,7 @@ const t = useTranslations(lang);
                             rows="4"
                             required
                             placeholder=" "
-                            class="peer w-full bg-white dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded-xl px-4 pt-6 pb-2 text-slate-900 dark:text-white focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all duration-300 placeholder-transparent resize-none overflow-hidden"
+                            class="auto-fit-textarea peer w-full bg-white dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded-xl px-4 pt-6 pb-2 text-slate-900 dark:text-white focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all duration-300 placeholder-transparent resize-none"
                         ></textarea>
                         <label
                             for="message"
@@ -267,18 +267,21 @@ const t = useTranslations(lang);
 
         if (!form || !result || !submitBtn || !submitText) return;
 
-        // Auto-resize para el textarea (Expansión 1)
+        // Auto-resize para el textarea: usa CSS field-sizing: content cuando está soportado
         const messageTextarea = document.getElementById("message") as HTMLTextAreaElement;
-        if (messageTextarea) {
-            messageTextarea.addEventListener("input", function() {
-                this.style.height = "auto";
-                this.style.height = (this.scrollHeight) + "px";
-            });
-            
-            // Ajustar altura inicial si hay contenido (por ejemplo, al volver atrás)
-            if (messageTextarea.value) {
+        const supportsFieldSizing =
+            typeof CSS !== "undefined" &&
+            typeof CSS.supports === "function" &&
+            CSS.supports("field-sizing", "content");
+        if (messageTextarea && !supportsFieldSizing) {
+            messageTextarea.style.overflow = "hidden";
+            const resizeTextarea = () => {
                 messageTextarea.style.height = "auto";
-                messageTextarea.style.height = (messageTextarea.scrollHeight) + "px";
+                messageTextarea.style.height = messageTextarea.scrollHeight + "px";
+            };
+            messageTextarea.addEventListener("input", resizeTextarea);
+            if (messageTextarea.value) {
+                resizeTextarea();
             }
         }
 
