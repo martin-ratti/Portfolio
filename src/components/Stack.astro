@@ -11,6 +11,8 @@ const skillCategories = [
         title: "Frontend",
         icon: "mdi:web",
         skills: skills.frontend,
+        glowClass: "bg-violet-400/30 dark:bg-violet-500/30",
+        iconClass: "text-violet-700 dark:text-violet-300",
         colorClass:
             "border-violet-200 dark:border-violet-500/30 bg-violet-100/50 dark:bg-violet-500/10 text-violet-700 dark:text-violet-300 hover:bg-violet-200 dark:hover:bg-violet-500/20",
     },
@@ -18,6 +20,8 @@ const skillCategories = [
         title: "Backend",
         icon: "mdi:server",
         skills: skills.backend,
+        glowClass: "bg-fuchsia-400/30 dark:bg-fuchsia-500/30",
+        iconClass: "text-fuchsia-700 dark:text-fuchsia-300",
         colorClass:
             "border-fuchsia-200 dark:border-fuchsia-500/30 bg-fuchsia-100/50 dark:bg-fuchsia-500/10 text-fuchsia-700 dark:text-fuchsia-300 hover:bg-fuchsia-200 dark:hover:bg-fuchsia-500/20",
     },
@@ -25,6 +29,8 @@ const skillCategories = [
         title: t("stack.languages"),
         icon: "mdi:code-tags",
         skills: skills.languages,
+        glowClass: "bg-cyan-400/30 dark:bg-cyan-500/30",
+        iconClass: "text-cyan-700 dark:text-cyan-300",
         colorClass:
             "border-cyan-200 dark:border-cyan-500/30 bg-cyan-100/50 dark:bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 hover:bg-cyan-200 dark:hover:bg-cyan-500/20",
     },
@@ -32,6 +38,8 @@ const skillCategories = [
         title: t("stack.tools"),
         icon: "mdi:tools",
         skills: skills.tools,
+        glowClass: "bg-emerald-400/30 dark:bg-emerald-500/30",
+        iconClass: "text-emerald-700 dark:text-emerald-300",
         colorClass:
             "border-emerald-200 dark:border-emerald-500/30 bg-emerald-100/50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-200 dark:hover:bg-emerald-500/20",
     },
@@ -57,13 +65,13 @@ const skillCategories = [
                 skillCategories.map((category) => (
                     <div class="glass-card p-8 rounded-2xl relative overflow-hidden group">
                         <div
-                            class={`absolute -right-4 -top-4 w-24 h-24 rounded-full blur-2xl opacity-20 ${category.colorClass.split(" ")[1].replace("/10", "/30")}`}
+                            class={`absolute -right-4 -top-4 w-24 h-24 rounded-full blur-2xl opacity-30 group-hover:opacity-60 transition-opacity pointer-events-none ${category.glowClass}`}
                         />
 
                         <div class="flex items-center gap-2 mb-6">
                             <Icon 
                                 name={category.icon} 
-                                class={`w-6 h-6 ${category.colorClass.split(" ").find(c => c.startsWith("text-"))}`} 
+                                class={`w-6 h-6 ${category.iconClass}`} 
                                 aria-hidden="true"
                             />
                             <h3 class="text-xl font-semibold text-slate-800 dark:text-slate-200">
@@ -74,9 +82,10 @@ const skillCategories = [
                         <div class="flex flex-wrap gap-3">
                             {category.skills.map((skill) => (
                                 <button
+                                    type="button"
                                     class={`skill-btn px-4 py-2 rounded-lg text-sm font-medium border transition-all cursor-pointer hover:scale-105 active:scale-95 flex items-center gap-2 ${category.colorClass}`}
                                     data-skill={skill.name}
-                                    aria-label={`Filtrar proyectos por ${skill.name}`}
+                                    aria-label={`${t("stack.filterBy")} ${skill.name}`}
                                 >
                                     <Icon name={skill.icon} class="w-4 h-4" aria-hidden="true" />
                                     {skill.name}

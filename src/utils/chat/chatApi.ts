@@ -8,7 +8,13 @@ export interface ChatResponse {
     reply?: string;
 }
 
-export async function sendChatMessage(messages: ChatMessage[], currentLang: string): Promise<ChatResponse> {
+export async function sendChatMessage(
+    messages: ChatMessage[],
+    currentLang: string,
+    invalidResponseError = currentLang === "en"
+        ? "Invalid response format from server."
+        : "Formato de respuesta inválido del servidor."
+): Promise<ChatResponse> {
     try {
         const response = await fetch("/api/chat", {
             method: "POST",
@@ -31,7 +37,7 @@ export async function sendChatMessage(messages: ChatMessage[], currentLang: stri
         } else if (data.choices && data.choices[0]) {
             return { reply: data.choices[0].message.content };
         } else {
-            return { error: "Formato de respuesta inválido del servidor." };
+            return { error: invalidResponseError };
         }
     } catch (err) {
         return { error: "Network error" };
