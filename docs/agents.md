@@ -1,12 +1,11 @@
 # AGENTS.md
 
 ## Project Overview
-This is the personal portfolio website of Martín Ratti, a Full Stack Developer and Systems Engineering student. The project is built with Astro 5, TypeScript, and React, featuring a modern Glassmorphism design and internationalization.
+This is the personal portfolio website of Martín Ratti, a Full Stack Developer and Systems Engineering student. The project is built with pure Astro 5, TypeScript, and Tailwind CSS v4, featuring a modern Glassmorphism design, internationalization (ES/EN), and an AI assistant ("Martín AI").
 
 ## Tech Stack
 - **Core:** Astro 5, TypeScript
-- **Frontend:** React 18, Tailwind CSS v4
-- **Styling:** Glassmorphism UI, Dark Mode support
+- **Frontend & Styling:** Pure Astro components, Tailwind CSS v4, Glassmorphism UI, Dark Mode support
 - **I18n:** English and Spanish support
 
 ## Setup Commands

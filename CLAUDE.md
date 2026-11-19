@@ -8,10 +8,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 npm run dev       # Astro dev server at http://localhost:4321
 npm run build     # Production build → dist/ (static) + Vercel function for /api/chat
 npm run preview   # Preview the production build locally
-npm run astro     # Astro CLI (e.g. npm run astro -- check for type-checking)
+npm run check     # Type-checking and Astro diagnostics via @astrojs/check
+npm test          # Unit tests (Node built-in test runner)
 ```
 
-No test runner, linter, or formatter is configured. `@astrojs/check` is installed — run `npm run astro -- check` for diagnostics.
+`@astrojs/check` is installed — run `npm run check` for diagnostics, and `npm test` for unit tests (chat HTML sanitization, i18n key parity, and skill-to-project tag matching).
 
 ## Architecture
 
