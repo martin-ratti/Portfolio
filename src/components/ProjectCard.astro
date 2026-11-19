@@ -1,5 +1,5 @@
 ---
-import { getLangFromUrl } from "../i18n/utils";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
 import type { Project } from "../data/projects";
 
 interface Props {
@@ -11,6 +11,7 @@ interface Props {
 
 const { project, index, featured = false, baseDelay = 0 } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 const delay = (baseDelay + index * 0.1).toFixed(1);
 ---
 
@@ -41,8 +42,9 @@ const delay = (baseDelay + index * 0.1).toFixed(1);
                 <a
                     href={project.repo}
                     target="_blank"
+                    rel="noopener noreferrer"
                     class="p-2 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition"
-                    aria-label="GitHub Repo"
+                    aria-label={`${t("projects.repo.aria")} — ${project.title}`}
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -62,8 +64,9 @@ const delay = (baseDelay + index * 0.1).toFixed(1);
                         <a
                             href={project.link}
                             target="_blank"
+                            rel="noopener noreferrer"
                             class="p-2 bg-violet-600 rounded-full hover:bg-violet-500 transition text-white"
-                            aria-label="Live Demo"
+                            aria-label={`${t("projects.demo.aria")} — ${project.title}`}
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"

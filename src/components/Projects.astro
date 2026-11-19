@@ -127,14 +127,17 @@ const otherProjects = projects.filter((p) => !p.featured);
 
             if (firstMatch) {
                 const matchEl = firstMatch as HTMLElement;
+                const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
                 setTimeout(() => {
                     matchEl.scrollIntoView({
-                        behavior: "smooth",
+                        behavior: reduceMotion ? "auto" : "smooth",
                         block: "center",
                     });
-                    setTimeout(() => {
-                        matchEl.classList.add("animate-success-flash");
-                    }, 500);
+                    if (!reduceMotion) {
+                        setTimeout(() => {
+                            matchEl.classList.add("animate-success-flash");
+                        }, 500);
+                    }
                 }, 100);
             }
         }, { signal });

@@ -35,8 +35,7 @@ const t = useTranslations(lang);
                     class="flex flex-col gap-4 items-center md:items-start max-w-xs mx-auto md:mx-0"
                 >
                     <a
-                        href="https://mail.google.com/mail/?view=cm&fs=1&to=martinratti10@gmail.com"
-                        target="_blank"
+                        href="mailto:martinratti10@gmail.com"
                         class="inline-flex items-center justify-center gap-3 px-8 py-3 glass-card border border-slate-200 dark:border-slate-700 font-medium rounded-2xl hover:bg-slate-100/50 dark:hover:bg-slate-800 transition text-slate-700 dark:text-slate-300 hover:text-red-500 dark:hover:text-red-400 w-full text-base group"
                     >
                         <svg
@@ -61,6 +60,7 @@ const t = useTranslations(lang);
                     <a
                         href="https://www.linkedin.com/in/martin-ratti-dev/"
                         target="_blank"
+                        rel="noopener noreferrer"
                         class="inline-flex items-center justify-center gap-3 px-8 py-3 glass-card border border-slate-200 dark:border-slate-700 font-medium rounded-2xl hover:bg-slate-100/50 dark:hover:bg-slate-800 transition text-slate-700 dark:text-slate-300 hover:text-[#0A66C2] dark:hover:text-[#0A66C2] w-full text-base group"
                     >
                         <svg
@@ -81,6 +81,7 @@ const t = useTranslations(lang);
                     <a
                         href="https://github.com/martin-ratti"
                         target="_blank"
+                        rel="noopener noreferrer"
                         class="inline-flex items-center justify-center gap-3 px-8 py-3 glass-card border border-slate-200 dark:border-slate-700 font-medium rounded-2xl hover:bg-slate-100/50 dark:hover:bg-slate-800 transition text-slate-700 dark:text-slate-300 hover:text-fuchsia-600 dark:hover:text-fuchsia-400 w-full text-base group"
                     >
                         <svg
@@ -184,7 +185,7 @@ const t = useTranslations(lang);
                         type="submit"
                         class="mt-2 w-full bg-violet-600 hover:bg-violet-700 text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 group"
                     >
-                        <span id="submit-text">{t("contact.form.send")}</span>
+                        <span id="submit-text" data-sending={t("contact.form.sending")}>{t("contact.form.send")}</span>
                         <svg
                             class="w-4 h-4 group-hover:translate-x-1 transition-transform"
                             xmlns="http://www.w3.org/2000/svg"
@@ -227,7 +228,7 @@ const t = useTranslations(lang);
 
                 <div id="success-state" class="hidden flex-col items-center justify-center text-center p-6 md:p-12 animate-fade-in bg-slate-50/30 dark:bg-slate-800/20 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 min-h-[490px]">
                     <div class="relative mb-8 flex items-center justify-center">
-                        <svg class="w-24 h-24" viewBox="0 0 52 52">
+                        <svg class="w-24 h-24" viewBox="0 0 52 52" aria-hidden="true">
                             <circle class="animate-circle text-green-500 dark:text-green-400" cx="26" cy="26" r="25" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="160" stroke-dashoffset="160" />
                             <path class="animate-check text-green-500 dark:text-green-400" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="48" stroke-dashoffset="48" />
                         </svg>
@@ -242,7 +243,7 @@ const t = useTranslations(lang);
                     </p>
                     
                     <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-                        <button id="reset-form" class="px-8 py-3 bg-violet-600 hover:bg-violet-700 text-white font-medium rounded-xl transition-all shadow-lg shadow-violet-500/25 hover:scale-105 active:scale-95">
+                        <button id="reset-form" type="button" class="px-8 py-3 bg-violet-600 hover:bg-violet-700 text-white font-medium rounded-xl transition-all shadow-lg shadow-violet-500/25 hover:scale-105 active:scale-95">
                              {t("contact.form.reset")}
                         </button>
                         <a href="#proyectos" class="px-8 py-3 glass-card border border-slate-200 dark:border-slate-700 font-medium rounded-xl hover:bg-white dark:hover:bg-slate-800 transition text-slate-700 dark:text-slate-300 hover:scale-105 active:scale-95">
@@ -257,7 +258,13 @@ const t = useTranslations(lang);
 </section>
 
 <script>
+    let contactAbortController: AbortController | null = null;
+
     function initContactForm() {
+        if (contactAbortController) contactAbortController.abort();
+        contactAbortController = new AbortController();
+        const { signal } = contactAbortController;
+
         const form = document.getElementById("contact-form") as HTMLFormElement;
         const result = document.getElementById("form-result");
         const submitBtn = form?.querySelector(
@@ -279,13 +286,14 @@ const t = useTranslations(lang);
                 messageTextarea.style.height = "auto";
                 messageTextarea.style.height = messageTextarea.scrollHeight + "px";
             };
-            messageTextarea.addEventListener("input", resizeTextarea);
+            messageTextarea.addEventListener("input", resizeTextarea, { signal });
             if (messageTextarea.value) {
                 resizeTextarea();
             }
         }
 
         const originalText = submitText.innerText;
+        const sendingText = submitText.dataset.sending || "Enviando...";
 
         form.addEventListener("submit", function (e) {
             e.preventDefault();
@@ -297,7 +305,7 @@ const t = useTranslations(lang);
 
             submitBtn.disabled = true;
             submitBtn.classList.add("opacity-70", "cursor-not-allowed");
-            submitText.innerText = "...";
+            submitText.innerText = sendingText;
             result.classList.add("hidden");
 
             const formData = new FormData(form);
@@ -322,7 +330,6 @@ const t = useTranslations(lang);
                     );
                     submitText.innerText = originalText;
 
-                    result.classList.remove("hidden");
                     const resultMessage =
                         document.getElementById("result-message");
                     const resultIcon = document.getElementById("result-icon");
@@ -331,7 +338,8 @@ const t = useTranslations(lang);
                     if (!resultMessage || !resultIcon || !resultContainer)
                         return;
 
-                    if (response.status == 200) {
+                    if (response.ok && jsonResponse.success !== false) {
+                        result.classList.add("hidden");
                         const successState = document.getElementById("success-state");
                         if (successState) {
                             form.classList.add("hidden");
@@ -347,7 +355,7 @@ const t = useTranslations(lang);
                                 if (messageTextarea) {
                                     messageTextarea.style.height = "auto";
                                 }
-                            }, { once: true });
+                            }, { once: true, signal });
                         }
                     } else {
                         result.classList.remove("hidden");
@@ -360,7 +368,7 @@ const t = useTranslations(lang);
                             result.dataset.error || "Error";
                     }
                 })
-                .catch((error) => {
+                .catch(() => {
                     result.classList.remove("hidden");
                     const resultMessage =
                         document.getElementById("result-message");
@@ -389,7 +397,7 @@ const t = useTranslations(lang);
                         result.classList.add("hidden");
                     }, 5000);
                 });
-        });
+        }, { signal });
     }
 
     document.addEventListener("astro:page-load", initContactForm);
