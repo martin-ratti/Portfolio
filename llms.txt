@@ -90,6 +90,7 @@ The site is designed with a "performance first" approach using Astro 5, ensuring
 
 ## Optional
 
-- [CV / Resume](https://martinratti.com.ar/CV_Martin_Ratti.pdf): Currículum Vítae / Professional Resume (PDF).
+- [CV (Español)](/CV_Martin_Ratti.pdf): Currículum Vítae en Español (PDF).
+- [Resume (English)](/CV_Martin_Ratti_EN.pdf): Professional Resume in English (PDF).
 - [LinkedIn Profile](https://www.linkedin.com/in/martin-ratti-dev/): Professional profile.
 - [GitHub Profile](https://github.com/martin-ratti): Source code repositories.
