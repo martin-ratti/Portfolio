@@ -15,6 +15,7 @@ export const skills: Skills = {
         { name: "JavaScript", icon: "simple-icons:javascript" },
         { name: "TypeScript", icon: "simple-icons:typescript" },
         { name: "Java", icon: "fa6-brands:java" },
+        { name: "Kotlin", icon: "simple-icons:kotlin" },
         { name: "Python", icon: "simple-icons:python" },
         { name: "C#", icon: "simple-icons:csharp" },
         { name: "SQL", icon: "mdi:database-search" }
@@ -22,7 +23,7 @@ export const skills: Skills = {
     frontend: [
         { name: "Astro", icon: "simple-icons:astro" },
         { name: "React", icon: "simple-icons:react" },
-        { name: "React Native", icon: "simple-icons:react" },
+        { name: "Jetpack Compose", icon: "simple-icons:jetpackcompose" },
         { name: "Tailwind CSS", icon: "simple-icons:tailwindcss" },
         { name: "JSP", icon: "fa6-brands:java" },
         { name: "Blazor", icon: "simple-icons:blazor" },
@@ -42,7 +43,6 @@ export const skills: Skills = {
         { name: "Git", icon: "simple-icons:git" },
         { name: "GitHub", icon: "simple-icons:github" },
         { name: "Docker", icon: "simple-icons:docker" },
-        { name: "Turborepo", icon: "simple-icons:turborepo" },
         { name: "Scrum", icon: "simple-icons:scrumalliance" },
         { name: "Kanban", icon: "mdi:view-column-outline" },
         { name: "Vercel", icon: "simple-icons:vercel" },
@@ -53,12 +53,13 @@ export const skills: Skills = {
         { name: "Jest", icon: "simple-icons:jest" },
         { name: "Vitest", icon: "simple-icons:vitest" },
         { name: "Playwright", icon: "simple-icons:playwright" },
-        { name: "Postman", icon: "simple-icons:postman" },
         { name: "SQLite", icon: "simple-icons:sqlite" },
         { name: "Firebase", icon: "simple-icons:firebase" },
         { name: "Dapper", icon: "mdi:database-cog" },
         { name: "Stripe", icon: "simple-icons:stripe" },
         { name: "pnpm", icon: "simple-icons:pnpm" },
-        { name: "Gemini AI", icon: "simple-icons:googlegemini" }
+        { name: "Vite", icon: "simple-icons:vite" },
+        { name: "Gemini AI", icon: "simple-icons:googlegemini" },
+        { name: "Android", icon: "simple-icons:android" }
     ]
 };

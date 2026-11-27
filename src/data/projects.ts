@@ -1,4 +1,4 @@
-import { resolveProjectImage } from "../utils/projectAssets";
+import { resolveProjectImage } from "../utils/projectAssets.ts";
 
 export interface ProjectImage {
     url: string;
@@ -198,8 +198,8 @@ export const projects: Project[] = [
             en: "High-performance e-commerce platform with monorepo architecture. Includes online store, user system, admin panel, and business intelligence."
         },
         fullDescription: {
-            es: "PCFIX es una plataforma integral de comercio electrónico de componentes tecnológicos diseñada para escalar. Implementa una arquitectura monorepo con Turborepo, combinando un frontend híbrido ultrarrápido con Server Islands y una API REST robusta con Node.js y PostgreSQL.",
-            en: "PCFIX is a scalable tech e-commerce platform. It features a Turborepo monorepo architecture, combining an ultra-fast hybrid frontend using Server Islands with a robust Node.js and PostgreSQL REST API."
+            es: "PCFIX es una plataforma integral de comercio electrónico de componentes tecnológicos diseñada para escalar. Implementa una arquitectura monorepo con NPM Workspaces, combinando un frontend híbrido en Astro 5 (SSR y Server Islands con React y Tailwind CSS v4) y una API REST robusta en Node.js, Express 5, Prisma ORM y PostgreSQL, con pagos vía MercadoPago y verificación HMAC.",
+            en: "PCFIX is a scalable tech e-commerce platform. It features an NPM Workspaces monorepo architecture, combining a hybrid Astro 5 frontend (SSR and Server Islands with React and Tailwind CSS v4) with a robust REST API in Node.js, Express 5, Prisma ORM, and PostgreSQL, including MercadoPago payments with HMAC webhook verification."
         },
         tags: ["Astro", "React", "TypeScript", "JavaScript", "Node.js", "PostgreSQL", "Docker", "Tailwind CSS", "Vercel", "Railway", "Jest", "Vitest", "Playwright", "Prisma", "Express", "GitHub", "Scrum", "Kanban"],
         link: "https://www.pcfixbaru.com.ar",
@@ -209,18 +209,42 @@ export const projects: Project[] = [
         gallery: [
             {
                 url: resolveProjectImage("pcfix", "cover"),
-                alt: "Tienda Online PCFIX y Pipeline Monorepo",
+                alt: "Tienda Online PCFIX — Portada y Ofertas Destacadas",
                 caption: {
-                    es: "Catálogo de productos con filtrado instantáneo y flujo de integración continua CI/CD.",
-                    en: "Product catalog with instant filtering and CI/CD continuous integration pipeline."
+                    es: "Portada principal del e-commerce con carrusel de banners promocionales, búsqueda global y navegación por categorías.",
+                    en: "Main storefront with promotional banner carousel, global product search, and category navigation."
+                }
+            },
+            {
+                url: resolveProjectImage("pcfix", "catalogo-productos"),
+                alt: "Catálogo de Hardware PCFIX con Descuentos y Carrito",
+                caption: {
+                    es: "Catálogo responsive con tarjetas de hardware, cálculo automático de descuentos, favoritos y carga al carrito.",
+                    en: "Responsive hardware catalog with product cards, automatic discount badges, favorites, and cart actions."
                 }
             },
             {
                 url: resolveProjectImage("pcfix", "admin"),
-                alt: "Panel Administrativo y Business Intelligence",
+                alt: "Dashboard de Inteligencia de Ventas PCFIX",
                 caption: {
-                    es: "Dashboard administrativo para control de stock, pedidos en tránsito y facturación mensual.",
-                    en: "Administrative dashboard for inventory control, active orders, and monthly revenue."
+                    es: "Centro de comando administrativo con KPIs en tiempo real, tendencia de ventas a 30 días y Top 5 de productos.",
+                    en: "Administrative command center with real-time KPIs, 30-day sales trend, and Top 5 best-selling products."
+                }
+            },
+            {
+                url: resolveProjectImage("pcfix", "admin-balance"),
+                alt: "Balance Mensual de Ingresos y Stock Inmovilizado",
+                caption: {
+                    es: "Desglose comparativo mensual entre ventas de hardware y servicios técnicos junto a alertas de stock inmovilizado.",
+                    en: "Monthly revenue breakdown comparing hardware sales vs. repair services alongside dead-stock alerts."
+                }
+            },
+            {
+                url: resolveProjectImage("pcfix", "admin-inventario"),
+                alt: "Gestión de Inventario CRUD en PCFIX",
+                caption: {
+                    es: "Panel de inventario con filtros por categoría, marca y bajo stock, edición rápida de precios promocionales y destacados.",
+                    en: "Inventory management panel with category/brand/low-stock filters, flash discount toggles, and quick stock updates."
                 }
             }
         ],
@@ -228,45 +252,45 @@ export const projects: Project[] = [
             {
                 title: { es: "Arquitectura Monorepo", en: "Monorepo Architecture" },
                 desc: {
-                    es: "Gestión unificada de Frontend, Backend y paquetes compartidos mediante Turborepo y NPM Workspaces.",
-                    en: "Unified management of Frontend, Backend, and shared packages using Turborepo and NPM Workspaces."
+                    es: "Gestión unificada del frontend web, API backend y suites de testing mediante NPM Workspaces.",
+                    en: "Unified management of the web frontend, backend API, and test suites using NPM Workspaces."
                 }
             },
             {
-                title: { es: "Astro Server Islands", en: "Astro Server Islands" },
+                title: { es: "Astro SSR & Server Islands", en: "Astro SSR & Server Islands" },
                 desc: {
-                    es: "Renderizado estático para la estructura principal con islas dinámicas de React para el carrito y autenticación.",
-                    en: "Static rendering for primary layout combined with dynamic React islands for cart and auth."
+                    es: "Renderizado híbrido con middleware SSR (control de mantenimiento y sesión) e islas dinámicas de React estilizadas con Tailwind CSS v4.",
+                    en: "Hybrid rendering with SSR middleware (maintenance mode and session checks) and dynamic React islands styled with Tailwind CSS v4."
                 }
             },
             {
-                title: { es: "Testing Automatizado End-to-End", en: "Automated E2E Testing" },
+                title: { es: "Pagos MercadoPago, Auth & Observabilidad", en: "MercadoPago Checkout, Auth & Observability" },
                 desc: {
-                    es: "Batería de pruebas automatizadas con Playwright y Vitest ejecutadas en cada Pull Request con GitHub Actions.",
-                    en: "Automated test suite with Playwright and Vitest executed on every Pull Request with GitHub Actions."
+                    es: "Webhooks de MercadoPago validados con firma HMAC, login con Google OAuth, gestión multimedia en Cloudinary y monitoreo de errores con Sentry.",
+                    en: "MercadoPago webhooks verified via HMAC signatures, Google OAuth login, media handling on Cloudinary, and error tracking with Sentry."
                 }
             },
             {
-                title: { es: "Infraestructura Contenerizada", en: "Containerized Infrastructure" },
+                title: { es: "Infraestructura Contenerizada & CI/CD", en: "Containerized Infrastructure & CI/CD" },
                 desc: {
-                    es: "Ambiente local y de producción estandarizado con Docker para PostgreSQL y servicios auxiliares.",
-                    en: "Standardized local and production environments using Docker for PostgreSQL and auxiliary services."
+                    es: "Ambiente estandarizado con Docker y pipelines paralelos en GitHub Actions ejecutando astro check, Vitest y pruebas E2E con Playwright.",
+                    en: "Standardized Docker environment and parallel GitHub Actions pipelines running astro check, Vitest, and Playwright E2E tests."
                 }
             }
         ],
         architecture: {
-            es: "Frontend desplegado en Vercel comunicándose con una API Node.js/Express en Railway, utilizando Prisma ORM sobre PostgreSQL y Docker.",
-            en: "Frontend deployed on Vercel communicating with a Node.js/Express API on Railway, using Prisma ORM on PostgreSQL and Docker."
+            es: "Frontend Astro 5 + React 18 desplegado en Vercel comunicándose con una API Node.js/Express 5 en Railway, utilizando Prisma ORM sobre PostgreSQL, MercadoPago, Cloudinary, Sentry y Docker.",
+            en: "Astro 5 + React 18 frontend deployed on Vercel communicating with a Node.js/Express 5 API on Railway, using Prisma ORM on PostgreSQL, MercadoPago, Cloudinary, Sentry, and Docker."
         },
         challenges: {
-            es: "Optimizar el tiempo de carga del catálogo inicial manteniendo la reactividad del carrito y asegurar una sincronización sin latencia de órdenes concurrentes.",
-            en: "Optimizing initial catalog load speeds while preserving cart reactivity and ensuring zero-latency concurrency in orders."
+            es: "Optimizar el tiempo de carga del catálogo inicial manteniendo la reactividad del carrito, garantizar stock atómico ante órdenes concurrentes y validar webhooks de pago con firmas HMAC y protecciones anti-IDOR.",
+            en: "Optimizing initial catalog load speeds while preserving cart reactivity, guaranteeing atomic inventory under concurrent orders, and securing payment webhooks with HMAC verification and anti-IDOR checks."
         },
         role: {
             es: "Full Stack Lead & Arquitecto Monorepo",
             en: "Full Stack Lead & Monorepo Architect"
         },
-        period: "2024 - 2025"
+        period: "2024 - 2026"
     },
     {
         slug: "tracker-utn",
@@ -283,7 +307,7 @@ export const projects: Project[] = [
             es: "Tracker UTN Sistemas nació de una necesidad compartida por los estudiantes universitarios: organizar la carrera con claridad y responder al instante preguntas críticas como '¿qué me traba más adelante si no rindo esto ahora?' o '¿puedo cursar el año que viene con lo que ya tengo?'. Tomando como base una idea de Lucas Alonso, decidí rediseñar y rearmar la plataforma por completo desde cero como desafío personal con un stack tecnológico moderno. Ahora, además de organizar el plan de estudio personal, permite compartir un enlace personalizado para que familiares y amigos sigan el progreso, las próximas mesas y las fechas de exámenes en tiempo real.",
             en: "Tracker UTN Sistemas was born from a need shared by university students: tracking academic progress clearly and instantly answering critical questions like 'what does skipping this exam block further down the road?' or 'can I take all next year's subjects with what I have?'. Inspired by an initial concept by Lucas Alonso, I took on the challenge of rewriting the entire platform from scratch with a modern tech stack. Beyond personal academic organization, it allows sharing a personalized link so family and friends can track real-time progress, upcoming exam sittings, and dates in real time."
         },
-        tags: ["React", "TypeScript", "Tailwind CSS", "Node.js", "Express", "Firebase", "Firestore", "Vitest", "Playwright", "GitHub Actions", "Vite"],
+        tags: ["React", "TypeScript", "Tailwind CSS", "Node.js", "Express", "Firebase", "pnpm", "Vitest", "Playwright", "Vite", "Git", "GitHub"],
         link: "https://utn-sistemas-frro.web.app",
         repo: "https://github.com/martin-ratti/tracker-ing-sist",
         featured: false,
@@ -391,8 +415,8 @@ export const projects: Project[] = [
             }
         ],
         architecture: {
-            es: "Frontend reactivo construido en React 19, TypeScript y Tailwind CSS v4 empaquetado con Vite; backend en Node.js y Express para tareas programadas y despacho de correos vía Resend; persistencia multi-dispositivo en Firebase (Auth y Firestore) con suite de testing en Vitest, Playwright y CI/CD en GitHub Actions.",
-            en: "Reactive frontend built on React 19, TypeScript, and Tailwind CSS v4 bundled with Vite; Node.js and Express backend handling scheduled tasks and Resend email dispatches; multi-device persistence in Firebase (Auth and Firestore), backed by Vitest, Playwright, and GitHub Actions CI/CD."
+            es: "Monorepo pnpm con paquete compartido @tracker/types. Frontend PWA en React 19, TypeScript y Tailwind CSS v4 con Service Worker offline y cabeceras CSP; backend en Node.js y Express para tareas programadas y despacho de correos vía Resend; persistencia en Firebase (Auth y Firestore), oxlint, Vitest, Playwright y CI/CD en GitHub Actions.",
+            en: "pnpm monorepo with shared @tracker/types package. PWA frontend in React 19, TypeScript, and Tailwind CSS v4 with offline Service Worker precaching and CSP headers; Node.js and Express backend handling scheduled tasks and Resend email dispatches; Firebase (Auth and Firestore) persistence, oxlint, Vitest, Playwright, and GitHub Actions CI/CD."
         },
         challenges: {
             es: "Modelar el grafo acíclico dirigido (DAG) de correlatividades académicas con validaciones estrictas y reseteo en cascada para prevenir estados inconsistentes, además de optimizar el canvas interactivo para garantizar 60 FPS en dispositivos móviles.",
@@ -562,7 +586,7 @@ export const projects: Project[] = [
             es: "BuyJugador fue desarrollado en equipo junto a Tomas Levrand y Agustín Santinelli como proyecto integral de ingeniería de software para la UTN. El objetivo principal fue concebir una arquitectura robusta, modular y fuertemente tipada que permitiera gestionar todo el ciclo comercial de productos de gaming y hardware (compras a proveedores, pedidos, stock crítico, ventas y reportes analíticos). Implementamos una solución multicapa desacoplada donde un cliente web administrativo en Blazor WebAssembly y una aplicación de escritorio de alta velocidad en WinForms consumen una única Web API en ASP.NET Core a través de una librería compartida ApiClient, garantizando máxima reutilización de código y contratos DTO consistentes.",
             en: "BuyJugador was developed collaboratively with Tomas Levrand and Agustín Santinelli as an extensive software engineering university project for UTN. The goal was to engineer a robust, modular, and strongly-typed architecture to manage the full commercial lifecycle of gaming hardware (supplier procurement, pending orders, critical stock alerts, sales, and analytics). We implemented a decoupled multi-layer solution where a modern Blazor WebAssembly administrative web client and a high-speed WinForms desktop app consume a shared ASP.NET Core Web API via an ApiClient library, ensuring maximum code reuse and consistent DTO contracts."
         },
-        tags: [".NET WebAPI", "Blazor", "WinForms", "C#", "SQL Server", "SQL", "Bootstrap"],
+        tags: [".NET WebAPI", "Blazor", "WinForms", "C#", "SQL Server", "SQL"],
         repo: "https://github.com/agussantinelli/ProyectoIDE-BuyJugador",
         featured: false,
         coverImage: resolveProjectImage("buyjugador", "cover"),
@@ -571,24 +595,16 @@ export const projects: Project[] = [
                 url: resolveProjectImage("buyjugador", "cover"),
                 alt: "Panel Principal y Dashboard de Inventario en Blazor WebAssembly",
                 caption: {
-                    es: "Dashboard administrativo web en Blazor WebAssembly con métricas clave de ventas, pedidos pendientes y alertas de stock crítico.",
-                    en: "Administrative web dashboard in Blazor WebAssembly featuring key sales metrics, pending orders, and critical stock alerts."
+                    es: "Dashboard administrativo web en Blazor WebAssembly con métricas clave de ventas, pedidos pendientes, alertas de stock crítico y accesos rápidos.",
+                    en: "Administrative web dashboard in Blazor WebAssembly featuring key sales metrics, pending orders, critical stock alerts, and quick actions."
                 }
             },
             {
-                url: resolveProjectImage("buyjugador", "arquitectura"),
-                alt: "Arquitectura Multicapa de 8 Proyectos en Visual Studio",
+                url: resolveProjectImage("buyjugador", "productos-blazor"),
+                alt: "Gestión de Productos y Catálogo en Blazor WebAssembly",
                 caption: {
-                    es: "Estructura de la solución dividida en 8 capas desacopladas: ApiClient, BlazorApp, Data, DominioModelo, DominioServicios, DTOs, WebAPI y WinForms.",
-                    en: "Solution structure split into 8 decoupled layers: ApiClient, BlazorApp, Data, DominioModelo, DominioServicios, DTOs, WebAPI, and WinForms."
-                }
-            },
-            {
-                url: resolveProjectImage("buyjugador", "reporte-precios"),
-                alt: "Reporte de Evolución de Precios con ScottPlot y PDFsharp",
-                caption: {
-                    es: "Visualizador analítico con ScottPlot para trazar la evolución histórica de precios de venta y exportación a documentos PDF mediante PDFsharp.",
-                    en: "Analytical visualization using ScottPlot to chart historical sales price evolution with PDF exports via PDFsharp."
+                    es: "Catálogo web interactivo en Blazor con búsqueda en vivo, pestañas Activos/Inactivos, precios de venta, stock y accesos directos a historial y proveedores.",
+                    en: "Interactive Blazor web catalog featuring live search, Active/Inactive tabs, selling prices, stock levels, and shortcuts to price history and suppliers."
                 }
             },
             {
@@ -597,6 +613,30 @@ export const projects: Project[] = [
                 caption: {
                     es: "Interfaz web reactiva para seleccionar proveedores, cargar ítems de hardware gamer y calcular subtotales de compra en tiempo real.",
                     en: "Reactive web interface for supplier selection, gaming hardware item logging, and real-time purchase subtotal calculation."
+                }
+            },
+            {
+                url: resolveProjectImage("buyjugador", "reporte-ventas-blazor"),
+                alt: "Reporte de Ventas por Vendedor y Exportación PDF en Blazor",
+                caption: {
+                    es: "Vista analítica en Blazor WebAssembly filtrada por vendedor (últimos 7 días) con totalización y descarga directa de informe en PDF.",
+                    en: "Analytical view in Blazor WebAssembly filtered by salesperson (last 7 days) with totals and direct PDF report download."
+                }
+            },
+            {
+                url: resolveProjectImage("buyjugador", "panel-desktop"),
+                alt: "Panel de Administrador MDI en Cliente Desktop WinForms",
+                caption: {
+                    es: "Menú principal del cliente de escritorio WinForms con arquitectura MDI, autenticación JWT por rol y acceso a todos los módulos operativos y reportes.",
+                    en: "Main MDI menu in the WinForms desktop client with role-based JWT authentication and direct access to operational modules and reports."
+                }
+            },
+            {
+                url: resolveProjectImage("buyjugador", "productos-desktop"),
+                alt: "Gestión de Productos en Cliente Desktop WinForms",
+                caption: {
+                    es: "Grilla de escritorio en WinForms con búsqueda instantánea, filtros por categoría, control de stock y gestión de historial de precios.",
+                    en: "Desktop product grid in WinForms featuring instant search, category filters, stock control, and price history management."
                 }
             },
             {
@@ -613,6 +653,22 @@ export const projects: Project[] = [
                 caption: {
                     es: "Formulario WinForms para creación de órdenes de compra a proveedores oficiales y marcación de stock recibido.",
                     en: "WinForms form for purchase order creation with official suppliers and received stock verification."
+                }
+            },
+            {
+                url: resolveProjectImage("buyjugador", "reporte-precios"),
+                alt: "Reporte de Evolución de Precios con ScottPlot y PDFsharp",
+                caption: {
+                    es: "Visualizador analítico con ScottPlot para trazar la evolución histórica de precios de venta y exportación a documentos PDF mediante PDFsharp.",
+                    en: "Analytical visualization using ScottPlot to chart historical sales price evolution with PDF exports via PDFsharp."
+                }
+            },
+            {
+                url: resolveProjectImage("buyjugador", "arquitectura"),
+                alt: "Arquitectura Multicapa de 8 Proyectos en Visual Studio",
+                caption: {
+                    es: "Estructura de la solución dividida en 8 capas desacopladas: ApiClient, BlazorApp, Data, DominioModelo, DominioServicios, DTOs, WebAPI y WinForms.",
+                    en: "Solution structure split into 8 decoupled layers: ApiClient, BlazorApp, Data, DominioModelo, DominioServicios, DTOs, WebAPI, and WinForms."
                 }
             }
         ],
@@ -813,18 +869,18 @@ export const projects: Project[] = [
         slug: "ocr-web",
         title: "Sirviendo Apuntes · OCR Web & IA",
         tagline: {
-            es: "Plataforma web monorepo con IA y OCR local (WASM) para digitalizar apuntes y extraer texto resaltado.",
-            en: "Monorepo web platform with Cloud AI and local WASM OCR to digitize study notes and extract highlighted text."
+            es: "Plataforma web monorepo con IA multimodal y OCR local (WebGPU/WASM) para digitalizar apuntes y extraer texto resaltado.",
+            en: "Monorepo web platform with multimodal AI and local WebGPU/WASM OCR to digitize study notes and extract highlighted text."
         },
         description: {
-            es: "Evolución web fullstack del extractor OCR de escritorio, desarrollada en monorepo pnpm con React, Node.js y tres motores intercambiables: Gemini 2.5 Flash Lite para extracción estricta de texto resaltado, Groq Llama 4 Scout para transcripción forense ultrarrápida, y Tesseract.js WASM para procesamiento 100% offline en el navegador.",
-            en: "Fullstack web evolution of the desktop OCR extractor, built as a pnpm monorepo with React, Node.js, and three swappable OCR engines: Gemini 2.5 Flash Lite for strict highlighter text extraction, Groq Llama 4 Scout for ultra-fast full-page transcription, and Tesseract.js WASM for 100% in-browser offline processing."
+            es: "Evolución web fullstack del extractor OCR de escritorio, desarrollada en monorepo pnpm con React, Node.js y tres motores intercambiables: cascada Gemini Flash-Lite para extracción estricta de texto resaltado, Groq Qwen 3.8 para transcripción forense ultrarrápida, y PP-OCRv6 local (WebGPU / WASM) en Web Worker dedicado.",
+            en: "Fullstack web evolution of the desktop OCR extractor, built as a pnpm monorepo with React, Node.js, and three swappable OCR engines: Gemini Flash-Lite cascade for strict highlighter extraction, Groq Qwen 3.8 for ultra-fast full-page transcription, and local PP-OCRv6 (WebGPU / WASM) inside a dedicated Web Worker."
         },
         fullDescription: {
-            es: "OCR Web ('Sirviendo Apuntes') nació como un proyecto dedicado para mi novia, con el propósito de facilitarle el estudio universitario permitiéndole subir fotos de apuntes, libros o fotocopias y generar resúmenes automáticos únicamente a partir de las frases que marcó con resaltador. Arquitectónicamente adopta el estándar de Clean Architecture, aislando router, controller, service y repositorios en el backend (Node.js/Express 5), mientras el frontend (React, Tailwind CSS, Shadcn/ui y Zustand) opera con tipado estricto E2E mediante Zod y contratos compartidos en el monorepo. Integra post-procesamiento inteligente para unir palabras partidas por guiones de fin de línea, limpieza de soft hyphens y exportación directa a Microsoft Word (.docx).",
-            en: "OCR Web ('Sirviendo Apuntes') was created as a personalized tool for my girlfriend to streamline her university studies, allowing her to upload photos of lecture notes and textbooks to generate instant summaries strictly from highlighted text. Architecturally structured under the Clean Architecture pattern, it separates routers, controllers, services, and AI adapters on the backend (Node.js/Express 5), while the frontend (React, Tailwind CSS, Shadcn/ui, and Zustand) ensures end-to-end type safety via Zod shared contracts. Features intelligent post-processing to reassemble hyphenated line-broken words, remove invisible soft hyphens, and export directly to Microsoft Word (.docx)."
+            es: "OCR Web ('Sirviendo Apuntes') nació como un proyecto dedicado para mi novia, con el propósito de facilitarle el estudio universitario permitiéndole subir fotos de apuntes, libros o fotocopias (en lotes o individuales) y generar resúmenes automáticos únicamente a partir de las frases marcadas con resaltador. Arquitectónicamente adopta Clean Architecture modular, aislando router, controller, service y adaptadores en el backend (Node.js/Express 5), mientras el frontend (React, Tailwind CSS, Shadcn/ui y Zustand) opera con tipado estricto E2E mediante Zod y contratos compartidos en el monorepo. Integra post-procesamiento inteligente para unir palabras partidas por guiones de fin de línea, limpieza de soft hyphens y exportación directa a Microsoft Word (.docx) o ZIP.",
+            en: "OCR Web ('Sirviendo Apuntes') was created as a personalized tool for my girlfriend to streamline her university studies, allowing her to upload single or batch photos of lecture notes and textbooks to generate instant summaries strictly from highlighted text. Architecturally structured under modular Clean Architecture, it separates routers, controllers, services, and AI adapters on the backend (Node.js/Express 5), while the frontend (React, Tailwind CSS, Shadcn/ui, and Zustand) ensures end-to-end type safety via Zod shared contracts. Features intelligent post-processing to reassemble hyphenated line-broken words, strip invisible soft hyphens, and export directly to Microsoft Word (.docx) or ZIP."
         },
-        tags: ["React", "TypeScript", "Node.js", "Express", "Tailwind CSS", "Vite", "Zod", "Vitest", "pnpm", "Vercel", "Git", "GitHub"],
+        tags: ["React", "TypeScript", "Node.js", "Express", "Tailwind CSS", "Vite", "Zod", "Vitest", "pnpm", "Vercel", "Gemini AI", "Git", "GitHub"],
         link: "https://ocr-web-frontend.vercel.app/",
         repo: "https://github.com/martin-ratti/OCR-Web.git",
         featured: false,
@@ -832,42 +888,26 @@ export const projects: Project[] = [
         gallery: [
             {
                 url: resolveProjectImage("ocr-web", "cover"),
-                alt: "Sirviendo Apuntes - Pantalla Principal y Dropzone",
+                alt: "Sirviendo Apuntes - Pantalla Principal, Selector de Motores y Dropzone",
                 caption: {
-                    es: "Interfaz principal con diseño editorial pastel, dropzone animado para fotos de apuntes (JPG, PNG, WebP, HEIC) y selector de temas.",
-                    en: "Landing interface with pastel paper aesthetics, animated note dropzone (JPG, PNG, WebP, HEIC), and theme selector."
-                }
-            },
-            {
-                url: resolveProjectImage("ocr-web", "workspace-apuntes"),
-                alt: "Espacio de Trabajo con Apunte Cargado",
-                caption: {
-                    es: "Previsualización del apunte con detección de resaltador, barra de control, conteo de palabras y exportación a Word (.docx).",
-                    en: "Note preview showing highlighted sections, control bar, live word counter, and Word (.docx) export trigger."
+                    es: "Pantalla principal con selector rápido de modo (Solo resaltador / Página entera) y motores (Gemini IA, Groq IA, Local WebGPU), dropzone animado y carga de carpetas completas.",
+                    en: "Landing interface with quick mode toggle (Highlighter only / Full page) and engine selector (Gemini AI, Groq AI, Local WebGPU), animated dropzone, and folder upload."
                 }
             },
             {
                 url: resolveProjectImage("ocr-web", "motores-ia"),
-                alt: "Selector de Motores de OCR e Inteligencia Artificial",
+                alt: "Espacio de Trabajo y Selector Multi-Motor de OCR e IA",
                 caption: {
-                    es: "Arquitectura multi-motor: Gemini 2.5 Flash Lite para resaltado estricto, Groq Llama 4 Scout forense (1000 RPD) y motor Local offline (WASM).",
-                    en: "Multi-engine architecture: Gemini 2.5 Flash Lite for strict highlighting, Groq Llama 4 Scout forensic (1000 RPD), and local offline WASM."
-                }
-            },
-            {
-                url: resolveProjectImage("ocr-web", "resultado-extraccion"),
-                alt: "Panel de Resultados y Resumen Generado con IA",
-                caption: {
-                    es: "Visualizador 'La data' con el texto extraído, reconstrucción de palabras cortadas por guiones y copia instantánea al portapapeles.",
-                    en: "'La data' output panel displaying extracted text, hyphenation repair for line breaks, and instant clipboard copy."
+                    es: "Workspace con apunte real cargado, menú de motores actualizados (Gemini Flash-Lite Cascada, Groq Qwen 3.8 y Local PP-OCRv6 WebGPU) y exportación directa a Word (.docx) o ZIP.",
+                    en: "Workspace showing a real handwritten note, updated engine dropdown (Gemini Flash-Lite Cascade, Groq Qwen 3.8, and Local PP-OCRv6 WebGPU), and direct Word (.docx) or ZIP export."
                 }
             },
             {
                 url: resolveProjectImage("ocr-web", "modo-oscuro"),
-                alt: "Modo Oscuro de Alto Contraste",
+                alt: "Modo Oscuro de Alto Contraste y Visor de Apuntes",
                 caption: {
-                    es: "Paleta oscura accesible implementada con next-themes y Tailwind CSS para jornadas de estudio nocturno sin fatiga visual.",
-                    en: "High-contrast dark mode implemented with next-themes and Tailwind CSS for late-night study sessions without eye fatigue."
+                    es: "Modo oscuro unificado en todo el workspace con controles de zoom, rotación de hojas, ajuste tipográfico (16px) y editor en vivo para jornadas de estudio nocturno.",
+                    en: "Unified high-contrast dark mode across the workspace featuring zoom controls, page rotation, typography sizing (16px), and live note editor for late-night study sessions."
                 }
             }
         ],
@@ -875,15 +915,15 @@ export const projects: Project[] = [
             {
                 title: { es: "Tres Motores de OCR Seleccionables", en: "Three Swappable OCR Engines" },
                 desc: {
-                    es: "Libertad total de procesamiento: Gemini 2.5 Flash Lite para extraer únicamente lo resaltado con marcador, Groq Llama 4 Scout para transcripción completa ultrarrápida, y Tesseract.js WASM para ejecución 100% privada sin conexión a internet ni consumo de backend.",
-                    en: "Total processing flexibility: Gemini 2.5 Flash Lite for strict highlighter extraction, Groq Llama 4 Scout for high-speed full-page transcription, and Tesseract.js WASM for 100% private in-browser offline execution without backend dependencies."
+                    es: "Cascada Gemini Flash-Lite (con pre-filtro cromático Zero-Quota Waste y acción de resaltado forzado), Groq Qwen 3.8 (inferencia LPU ultrarrápida) y motor local PP-OCRv6 sobre WebGPU / WASM con pesos cacheados en CacheStorage para uso 100% offline.",
+                    en: "Gemini Flash-Lite cascade (with Zero-Quota Waste color pre-filter and force-highlight action), Groq Qwen 3.8 (ultra-fast LPU inference), and local PP-OCRv6 on WebGPU / WASM with CacheStorage model caching for 100% offline processing."
                 }
             },
             {
                 title: { es: "Monorepo pnpm & Clean Architecture", en: "pnpm Monorepo & Clean Architecture" },
                 desc: {
-                    es: "Estructura modular desacoplada ('EstacionAR') con Workspaces en pnpm, separando API Express 5 en backend y SPA React en frontend, con paquete compartido de tipos y esquemas de validación Zod.",
-                    en: "Decoupled modular architecture ('EstacionAR') with pnpm workspaces, isolating Express 5 API on the backend and React SPA on the frontend, bound by a shared Zod contract package."
+                    es: "Estructura modular desacoplada con pnpm Workspaces, separando la API Express 5 en backend, la SPA React + Web Workers en frontend y un paquete compartido (@ocr-web/shared) con esquemas de validación Zod.",
+                    en: "Decoupled modular architecture with pnpm workspaces, isolating the Express 5 API backend, the React + Web Workers SPA frontend, and a shared Zod contract package (@ocr-web/shared)."
                 }
             },
             {
@@ -894,10 +934,10 @@ export const projects: Project[] = [
                 }
             },
             {
-                title: { es: "Gestión de Estado Global & Caché Segregada", en: "Global State Management & Partitioned Cache" },
+                title: { es: "Procesamiento en Lotes & Caché Segregada", en: "Batch Processing & Partitioned Cache" },
                 desc: {
-                    es: "Store reactivo con Zustand que persiste resultados en memoria y memoria local, segregando la caché por motor, nombre de archivo y peso binario para evitar llamadas redundantes a las APIs.",
-                    en: "Reactive Zustand store with partitioned caching by engine, filename, and file size to eliminate redundant API calls."
+                    es: "Store reactivo con Zustand que soporta carga múltiple con seguimiento de progreso y descarga en ZIP, segregando la caché por motor, archivo y peso binario para evitar llamadas redundantes.",
+                    en: "Reactive Zustand store supporting multi-image batch processing with progress tracking and ZIP export, partitioning cache by engine, filename, and file size to avoid redundant API calls."
                 }
             },
             {
@@ -916,16 +956,127 @@ export const projects: Project[] = [
             }
         ],
         architecture: {
-            es: "Monorepo orquestado con pnpm Workspaces. Backend en Node.js y Express 5 estructurado en capas (Routers, Controllers, Services y AI Adapters) consumiendo Google GenAI y Groq Cloud API. Frontend en React 19, TypeScript y Tailwind CSS con Shadcn/ui y Radix UI, empaquetado con Vite y ejecutando Tesseract.js (WASM) para OCR en el cliente. Validación compartida de contratos con Zod de punta a punta y despliegue continuo en Vercel.",
-            en: "Monorepo orchestrated with pnpm workspaces. Node.js and Express 5 layered backend (Routers, Controllers, Services, and AI Adapters) consuming Google GenAI and Groq Cloud APIs. Frontend built with React 19, TypeScript, and Tailwind CSS with Shadcn/ui and Radix UI, bundled via Vite and executing in-browser Tesseract.js (WASM) OCR. End-to-end contract validation with shared Zod schemas, continuously deployed on Vercel."
+            es: "Monorepo orquestado con pnpm Workspaces. Backend en Node.js y Express 5 estructurado en capas (Routers, Controllers, Services y AI Adapters) consumiendo Google GenAI y Groq Cloud API. Frontend en React 19, TypeScript y Tailwind CSS con Shadcn/ui, Radix UI y Web Workers dedicados ejecutando PP-OCRv6 (WebGPU / ONNX Runtime Web). Validación compartida de contratos con Zod y despliegue continuo en Vercel.",
+            en: "Monorepo orchestrated with pnpm workspaces. Node.js and Express 5 layered backend (Routers, Controllers, Services, and AI Adapters) consuming Google GenAI and Groq Cloud APIs. Frontend built with React 19, TypeScript, and Tailwind CSS with Shadcn/ui, Radix UI, and dedicated Web Workers running PP-OCRv6 (WebGPU / ONNX Runtime Web). Shared Zod contract validation and continuous Vercel deployment."
         },
         challenges: {
-            es: "Diseñar un prompt de visión multimodal con Gemini y Groq capaz de aislar exclusivamente las áreas pintadas con resaltador ignorando texto circundante, integrando además un fallback automático con Tesseract.js en WebAssembly que ejecuta análisis trigrama en español y rotaciones para procesar fotos torcidas sin enviar datos a servidores externos.",
-            en: "Designing a multimodal vision prompt with Gemini and Groq that isolates text marked with highlighters while ignoring surrounding unhighlighted text, alongside an automatic fallback engine in WebAssembly (Tesseract.js) running Spanish trigram analysis and auto-rotation for skewed photos without external data transfers."
+            es: "Diseñar prompts multimodales con failover automático entre modelos capaz de aislar exclusivamente texto resaltado, junto con un motor local PP-OCRv6 en WebGPU/WASM ejecutado en Web Worker con balance de blancos adaptativo para apuntes con luz cálida sin enviar datos a servidores externos.",
+            en: "Designing multimodal prompts with automatic model failover to isolate highlighted text exclusively, alongside a local PP-OCRv6 engine on WebGPU/WASM running inside a Web Worker with adaptive white-balance for warm-lit notes and zero external data transfers."
         },
         role: {
             es: "Creador & Desarrollador Full Stack (Monorepo, Integración IA & UI/UX)",
             en: "Creator & Full Stack Developer (Monorepo, AI Integration & UI/UX)"
+        },
+        period: "2026"
+    },
+    {
+        slug: "timelens",
+        title: "TimeLens - Bienestar Digital Android",
+        tagline: {
+            es: "App nativa Android en Kotlin y Jetpack Compose para métricas reales de uso, límites por app y bienestar digital 100% offline.",
+            en: "Native Android app in Kotlin & Jetpack Compose for real usage analytics, per-app limits, and 100% offline digital wellbeing."
+        },
+        description: {
+            es: "Aplicación nativa de Android desarrollada en Kotlin con Jetpack Compose y Material 3 bajo Clean Architecture + MVVM. Analiza eventos reales del sistema (UsageEvents) sin datos simulados, ofrece límites diarios por aplicación con alertas en WorkManager, widgets nativos con Jetpack Glance, diagnóstico de hábitos y suite de 95 tests unitarios.",
+            en: "Native Android application built with Kotlin, Jetpack Compose, and Material 3 under Clean Architecture + MVVM. Analyzes real OS events (UsageEvents) with zero simulated data, provides per-app daily limits via WorkManager alerts, native Jetpack Glance widgets, habit diagnostics, and a 95-test unit suite."
+        },
+        fullDescription: {
+            es: "TimeLens es una aplicación nativa de Android orientada al bienestar digital y la privacidad absoluta: procesa y almacena toda la telemetría localmente en el dispositivo sin servidores externos ni rastreadores. A diferencia de herramientas que estiman métricas, consulta directamente los eventos reales del kernel mediante UsageStatsManager y UsageEvents, reconstruyendo sesiones continuas con manejo de cruces de medianoche y eventos de apagado. Su interfaz de estética Cyberpunk Neón (junto a modos Claro y Sistema) corre a 60/120 Hz con renderizado nativo de íconos en ImageBitmap y gráficos en Compose Canvas.",
+            en: "TimeLens is a native Android application focused on digital wellbeing and strict privacy: all telemetry is processed and stored locally on-device with zero external servers or trackers. Rather than estimating metrics, it queries real OS events via UsageStatsManager and UsageEvents, reconstructing continuous sessions across midnight boundaries and shutdown events. Its Cyberpunk Neon interface (alongside Light and System themes) runs smoothly at 60/120 Hz using native ImageBitmap icon rendering and Compose Canvas charts."
+        },
+        tags: ["Kotlin", "Jetpack Compose", "Android", "Git", "GitHub"],
+        repo: "https://github.com/martin-ratti/Healty_Hour",
+        featured: false,
+        coverImage: resolveProjectImage("timelens", "cover"),
+        gallery: [
+            {
+                url: resolveProjectImage("timelens", "cover"),
+                alt: "TimeLens - Panel Principal, Top Apps y Tendencias en Android",
+                caption: {
+                    es: "Vista general con anillo de meta diaria en Compose Canvas, ranking de aplicaciones reales y evolución semanal.",
+                    en: "Overview featuring the daily goal ring in Compose Canvas, real app rankings, and weekly trends."
+                }
+            },
+            {
+                url: resolveProjectImage("timelens", "bienestar-apps"),
+                alt: "TimeLens - Filtro por Categorías y Diagnóstico de Hábitos",
+                caption: {
+                    es: "Desglose por categorías con carga nativa de íconos y panel de diagnóstico de hábitos con score diario y regla 20-20-20.",
+                    en: "Category breakdown with native app icon loading and habit diagnostic sheet scoring daily wellbeing."
+                }
+            },
+            {
+                url: resolveProjectImage("timelens", "tendencias-detalle"),
+                alt: "TimeLens - Gráficos de Tendencias Semanales y Actividad por Hora",
+                caption: {
+                    es: "Tendencia comparativa de 7/14/30 días desde Room junto al histograma horario de 24h por aplicación.",
+                    en: "7/14/30-day comparative trends backed by Room alongside per-app 24-hour usage histograms."
+                }
+            },
+            {
+                url: resolveProjectImage("timelens", "detalle-ajustes"),
+                alt: "TimeLens - Detalle de App, Límites Diarios y Configuración",
+                caption: {
+                    es: "Métricas detalladas por aplicación, topes diarios configurables, selector de tema Neón/Claro/Sistema y exportación CSV.",
+                    en: "Per-app session analytics, configurable daily caps, Neon/Light/System theme switcher, and CSV export."
+                }
+            }
+        ],
+        features: [
+            {
+                title: { es: "Integridad 100% Real con UsageEvents", en: "100% Real Data Integrity via UsageEvents" },
+                desc: {
+                    es: "Reconstrucción exacta de sesiones continuas, desbloqueos y horarios pico desde UsageStatsManager, descartando datos artificiales con purga atómica en Room.",
+                    en: "Exact reconstruction of continuous sessions, unlocks, and peak hours from UsageStatsManager, enforcing zero simulated metrics with atomic Room cleanup."
+                }
+            },
+            {
+                title: { es: "Límites Diarios por App & Alertas WorkManager", en: "Per-App Daily Limits & WorkManager Alerts" },
+                desc: {
+                    es: "Definición de topes diarios personalizados por aplicación con barras de progreso reactivas y notificaciones preventivas automáticas al alcanzar el 80% y 100%.",
+                    en: "Custom daily time caps per application with reactive progress bars and proactive background notifications at 80% and 100% thresholds."
+                }
+            },
+            {
+                title: { es: "Detalle Enriquecido con 6 KPIs & Horario Pico", en: "Rich App Detail with 6 KPIs & Hourly Chart" },
+                desc: {
+                    es: "Vista dedicada por aplicación con tiempo diario, frecuencia de aperturas, sesión récord, promedio, tendencia semanal, gráfico por hora (00-23 hs) y accesos directos del sistema.",
+                    en: "Dedicated per-app screen showing daily usage, opening frequency, longest continuous session, average duration, weekly trend, 24h bar chart, and OS shortcuts."
+                }
+            },
+            {
+                title: { es: "Diagnóstico de Hábitos & Cierre del Día", en: "Habit Diagnostics & Nightly Debrief" },
+                desc: {
+                    es: "Motor dinámico de recomendaciones sin hardcoding con score de bienestar (0-100), franja diurna más productiva y modo de revisión nocturna automática a las 22:00 hs.",
+                    en: "Dynamic rule-based recommendation engine with wellbeing score (0-100), most productive daytime window, and scheduled 22:00 nightly debrief mode."
+                }
+            },
+            {
+                title: { es: "Widgets Nativos con Jetpack Glance & Compose Canvas", en: "Native Jetpack Glance Widgets & Compose Canvas" },
+                desc: {
+                    es: "Widgets de pantalla de inicio actualizados en segundo plano y gráficos semanales/horarios dibujados directamente en Canvas con soporte de temas Oscuro Neón, Claro y Sistema.",
+                    en: "Home screen widgets updated in the background alongside weekly and hourly charts drawn directly on Compose Canvas with Neon Dark, Light, and System themes."
+                }
+            },
+            {
+                title: { es: "Suite de 95 Tests Unitarios en JVM", en: "95-Test JVM Unit Testing Suite" },
+                desc: {
+                    es: "Cobertura integral sobre cálculo de sesiones, casos de uso, mapeadores Room, preferencias reactivas, ViewModels y Workers usando MockK y Kotlinx Coroutines Test.",
+                    en: "Comprehensive test coverage across session calculations, use cases, Room mappers, reactive preferences, ViewModels, and Workers using MockK and Coroutines Test."
+                }
+            }
+        ],
+        architecture: {
+            es: "Clean Architecture + MVVM con flujo unidireccional de datos (UDF) en 100% Kotlin. Capa presentation en Jetpack Compose, Material 3, Navigation Compose y Jetpack Glance; capa domain pura con SessionCalculator y UseCases; capa data con Room, SharedPreferences reactivo vía StateFlow y UsageDataSource; inyección de dependencias con Hilt y tareas periódicas con WorkManager.",
+            en: "Clean Architecture + MVVM with Unidirectional Data Flow (UDF) in 100% Kotlin. Presentation layer built with Jetpack Compose, Material 3, Navigation Compose, and Jetpack Glance; pure domain layer with SessionCalculator and UseCases; data layer using Room, StateFlow-backed preferences, and UsageDataSource; dependency injection with Hilt and background scheduling via WorkManager."
+        },
+        challenges: {
+            es: "Calcular sesiones continuas reales a partir de eventos crudos del sistema manejando cruces de medianoche y apagados del dispositivo, manteniendo un scroll fluido a 60/120 Hz mediante renderizado nativo de íconos en ImageBitmap y shaders memorizados en Canvas.",
+            en: "Computing accurate continuous sessions from raw OS events across midnight boundaries and shutdown events, while sustaining 60/120 Hz scroll fluidity via native ImageBitmap icon caching and memoized Canvas shaders."
+        },
+        role: {
+            es: "Creador & Desarrollador Android (Kotlin / Jetpack Compose)",
+            en: "Creator & Android Developer (Kotlin / Jetpack Compose)"
         },
         period: "2026"
     },
@@ -951,10 +1102,10 @@ export const projects: Project[] = [
         gallery: [
             {
                 url: resolveProjectImage("extractor-ocr", "cover"),
-                alt: "Extracción selectiva de texto resaltado con OpenCV",
+                alt: "Extractor OCR Green & Pink - Procesamiento de Apuntes Resaltados",
                 caption: {
-                    es: "Segmentación en espacio HSV y filtrado inteligente de texto por color de resaltado.",
-                    en: "HSV color-space segmentation and intelligent text filtering by highlight color."
+                    es: "Interfaz de escritorio en CustomTkinter con procesamiento por lotes, vista previa del documento resaltado, texto extraído con limpieza inteligente y exportación a .txt.",
+                    en: "CustomTkinter desktop interface featuring batch processing, highlighted document preview, cleaned extracted text, and .txt export."
                 }
             }
         ],
@@ -983,60 +1134,5 @@ export const projects: Project[] = [
             en: "Algorithm & Python Developer"
         },
         period: "2023"
-    },
-    {
-        slug: "animall-forrajeria",
-        title: "Animall Forrajería - Legacy",
-        tagline: {
-            es: "Sistema comercial de facturación y control de caja diaria para retail veterinario.",
-            en: "Commercial invoicing and retail register system for pet & agricultural stores."
-        },
-        description: {
-            es: "Sistema de punto de venta (POS) y gestión de caja desarrollado en C#. Software robusto para operaciones diarias de comercio.",
-            en: "Point of Sale (POS) and cash management system developed in C#. Robust software for daily retail operations."
-        },
-        fullDescription: {
-            es: "Software comercial desarrollado para automatizar el mostrador de ventas, inventario de alimentos balanceados y cuentas corrientes de clientes en una forrajería y veterinaria comercial.",
-            en: "Commercial software engineered to streamline retail sales, animal feed inventory, and customer credit lines for a veterinary and agricultural business."
-        },
-        tags: ["C#", ".NET WebAPI", "SQL Server", "WinForms", "Git", "GitHub"],
-        repo: "https://github.com/martin-ratti/AnimallForrajeria-version-vieja-",
-        featured: false,
-        coverImage: resolveProjectImage("animall-forrajeria", "cover"),
-        gallery: [
-            {
-                url: resolveProjectImage("animall-forrajeria", "cover"),
-                alt: "Sistema de Mostrador y Caja Diaria Animall",
-                caption: {
-                    es: "Módulo de gestión de ventas por rubro, arqueo de caja y emisión de comprobantes.",
-                    en: "Category sales management, register balance audit, and receipt printing."
-                }
-            }
-        ],
-        features: [
-            {
-                title: { es: "Gestión de Cuentas Corrientes", en: "Customer Credit Accounts" },
-                desc: {
-                    es: "Seguimiento riguroso de deudas de clientes con historial de pagos y límites de crédito.",
-                    en: "Accurate tracking of customer balances with transaction history and credit ceilings."
-                }
-            },
-            {
-                title: { es: "Arqueo de Fondos", en: "Cash Register Audits" },
-                desc: {
-                    es: "Conciliación automática de efectivo, tarjetas y transferencias al cierre de cada turno.",
-                    en: "Automatic reconciliation of cash, card payments, and wire transfers at shift close."
-                }
-            }
-        ],
-        architecture: {
-            es: "Arquitectura cliente-servidor con Windows Forms en C# y base de datos relacional SQL Server.",
-            en: "Client-server architecture with C# Windows Forms and SQL Server relational database."
-        },
-        role: {
-            es: "Desarrollador C# & SQL Server",
-            en: "C# & SQL Server Developer"
-        },
-        period: "2022 - 2023"
     }
 ];

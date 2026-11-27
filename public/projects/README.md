@@ -44,25 +44,37 @@ public/projects/
 
 ├── buyjugador/
 
-│   ├── cover.webp              # 🌟 Portada principal (Dashboard Blazor WASM)
+│   ├── cover.webp                  # 🌟 Portada principal (Dashboard Blazor WASM)
 
-│   ├── arquitectura.webp       # 📐 Solución de 8 proyectos en Visual Studio
+│   ├── productos-blazor.webp       # 📦 Gestión de productos Web
 
-│   ├── reporte-precios.webp    # 📈 Reporte analítico ScottPlot + PDFsharp
+│   ├── pedidos-blazor.webp         # 🌐 Módulo de pedidos Web
 
-│   ├── pedidos-blazor.webp     # 🌐 Módulo de pedidos Web
+│   ├── reporte-ventas-blazor.webp  # 📊 Reporte de ventas Web
 
-│   ├── ventas-desktop.webp     # 🖥️ Gestión de ventas WinForms
+│   ├── panel-desktop.webp          # 🖥️ Panel de administrador MDI WinForms
 
-│   └── pedidos-desktop.webp    # 📦 Abastecimiento y pedidos Desktop
+│   ├── productos-desktop.webp      # 📋 Gestión de productos Desktop
+
+│   ├── ventas-desktop.webp         # 💳 Gestión de ventas WinForms
+
+│   ├── pedidos-desktop.webp        # 📥 Abastecimiento y pedidos Desktop
+
+│   ├── reporte-precios.webp        # 📈 Reporte analítico ScottPlot + PDFsharp
+
+│   └── arquitectura.webp           # 📐 Solución de 8 proyectos en Visual Studio
 
 ├── pcfix/
 
 │   ├── cover.webp
 
-│   ├── cover.svg
+│   ├── catalogo-productos.webp
 
-│   └── admin.webp
+│   ├── admin.webp
+
+│   ├── admin-balance.webp
+
+│   └── admin-inventario.webp
 
 ├── ticketapp/
 │   ├── cover.webp              # 🌟 Portada principal (Ficha del espectáculo)
@@ -92,21 +104,16 @@ public/projects/
 
 ├── ocr-web/
 │   ├── cover.webp              # 🌟 Portada principal (Sirviendo Apuntes)
-│   ├── workspace-apuntes.webp  # 📝 Espacio de trabajo y carga de apuntes
-│   ├── motores-ia.webp         # 🧠 Menú de motores (Gemini, Groq, Local)
-│   ├── resultado-extraccion.webp # 📊 Resumen generado y exportación Word
+│   ├── motores-ia.webp         # 🧠 Workspace y menú de motores (Gemini, Groq Qwen 3.8, Local PP-OCRv6)
 │   └── modo-oscuro.webp        # 🌙 Modo oscuro de alto contraste
-├── extractor-ocr/
+├── timelens/
+│   ├── cover.webp              # 🌟 Trio principal (Inicio, Top Apps y Tendencias)
+│   ├── bienestar-apps.webp     # 📊 Categorías, apps más usadas y diagnóstico de hábitos
+│   ├── tendencias-detalle.webp # 📈 Evolución semanal e histograma horario por app
+│   └── detalle-ajustes.webp    # ⚙️ Detalle de métricas, límites diarios y ajustes
+└── extractor-ocr/
 
-│   ├── cover.webp
-
-│   └── cover.svg
-
-└── animall-forrajeria/
-
-    ├── cover.webp
-
-    └── cover.svg
+    └── cover.webp              # 🌟 Interfaz Green & Pink con extracción en lote
 
 ```
 

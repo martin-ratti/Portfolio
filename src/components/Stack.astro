@@ -127,6 +127,7 @@ const skillCategories = [
     }
 
     function initStackFilter() {
+        activeSkill = null;
         if (abortController) abortController.abort();
         abortController = new AbortController();
         const { signal } = abortController;

@@ -50,12 +50,12 @@ const otherProjects = projects.filter((p) => !p.featured);
     </div>
 </section>
 
-<style>
+<style is:global>
     .project-card.is-match {
         opacity: 1;
-        filter: grayscale(0) drop-shadow(0 0 15px rgba(139, 92, 246, 0.4));
+        filter: grayscale(0) drop-shadow(0 0 15px rgba(139, 92, 246, 0.45));
         transform: scale(1.05);
-        border-color: rgba(139, 92, 246, 0.8);
+        border-color: rgba(139, 92, 246, 0.85);
         z-index: 10;
     }
 
@@ -83,7 +83,7 @@ const otherProjects = projects.filter((p) => !p.featured);
         }
     }
 
-    .animate-success-flash {
+    .project-card.animate-success-flash {
         animation: success-flash 1.2s ease-out forwards;
     }
 </style>
@@ -113,7 +113,7 @@ const otherProjects = projects.filter((p) => !p.featured);
             cards.forEach((card) => {
                 const el = card as HTMLElement;
                 const techs = JSON.parse(el.getAttribute("data-techs") || "[]");
-                el.classList.remove("animate-success-flash");
+                el.classList.remove("animate-fade-in-up", "animate-success-flash");
 
                 if (techs.includes(selectedSkill)) {
                     el.classList.add("is-match");

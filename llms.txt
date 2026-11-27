@@ -10,7 +10,9 @@ This website serves as a professional portfolio and technical demonstration. It 
 
 - **Stack:**
 
-    - **Frontend:** Astro, React, TypeScript, TailwindCSS.
+    - **Frontend:** Astro, React, Jetpack Compose, TypeScript, TailwindCSS.
+
+    - **Mobile:** Native Android (Kotlin, Jetpack Compose, Room, Hilt).
 
     - **Backend:** Node.js, Express, Java (Servlets/JSP), .NET 8 (WebAPI).
 
@@ -34,9 +36,9 @@ This website serves as a professional portfolio and technical demonstration. It 
 
 - **Description:** E-Commerce Monorepo designed for scale. Orchestrates a robust API and a hybrid Frontend.
 
-- **Tech Stack:** Astro Server Islands, React, Node.js API, Docker, NPM Workspaces.
+- **Tech Stack:** Astro 5 (SSR & Server Islands), React 18, Tailwind CSS v4, Node.js/Express 5 API, Prisma, PostgreSQL, Docker, NPM Workspaces.
 
-- **Key Features:** Instant purchase experience, admin management system, CI/CD with GitHub Actions, End-to-End testing with Playwright.
+- **Key Features:** Instant purchase experience, MercadoPago checkout with HMAC webhooks, Google OAuth, admin management system, Sentry error tracking, CI/CD with GitHub Actions, End-to-End testing with Playwright.
 
 ---
 
@@ -71,9 +73,9 @@ This website serves as a professional portfolio and technical demonstration. It 
 
 - **Description:** Interactive web platform for tracking the Systems Engineering curriculum (UTN FRRo - Plan 2023).
 
-- **Tech Stack:** Frontend: React 19, TypeScript, Tailwind CSS v4, Vite. Backend: Node.js, Express, Resend. Cloud: Firebase (Auth & Firestore). Testing: Vitest, Playwright.
+- **Tech Stack:** Frontend: React 19, TypeScript, Tailwind CSS v4, Vite (PWA). Backend: Node.js, Express, Resend. Cloud: Firebase (Auth & Firestore). Monorepo: pnpm workspaces. Testing: Vitest, Playwright.
 
-- **Key Features:** Interactive prerequisite vis-network graph with critical path analysis, official academic exam calendar with automated 7-day email reminders, client-side PDF official transcript generation (jsPDF), dual-degree tracking (ADUSI & Engineering), and 5 dynamic themes.
+- **Key Features:** Interactive prerequisite vis-network graph with critical path analysis, official academic exam calendar with automated 7-day email reminders, client-side PDF official transcript generation (jsPDF), offline Service Worker precache, dual-degree tracking (ADUSI & Engineering), and 5 dynamic themes.
 
 ---
 
@@ -87,8 +89,15 @@ This website serves as a professional portfolio and technical demonstration. It 
 
 ### [OCR Web - Sirviendo Apuntes](https://github.com/martin-ratti/OCR-Web.git)
 - **Description:** Fullstack web evolution of desktop OCR, designed as a custom tool for study notes with highlighter detection and cloud/local AI vision. Live at https://ocr-web-frontend.vercel.app/
-- **Tech Stack:** Frontend: React 19, TypeScript, Tailwind CSS, Shadcn/ui, Radix UI, Zustand, Tesseract.js (WASM). Backend: Node.js, Express 5, Zod, Multer. AI: Gemini 2.5 Flash Lite, Groq Llama 4 Scout. Monorepo: pnpm workspaces.
-- **Key Features:** Three swappable OCR engines (Strict Gemini highlighter, Groq full-page forensic, 100% offline WASM), Clean Architecture ('EstacionAR'), hyphenation repair, and Word (.docx) export.
+- **Tech Stack:** Frontend: React 19, TypeScript, Tailwind CSS, Shadcn/ui, Radix UI, Zustand, PP-OCRv6 (WebGPU / ONNX Runtime Web). Backend: Node.js, Express 5, Zod, Multer. AI: Gemini Flash-Lite cascade, Groq Qwen 3.8. Monorepo: pnpm workspaces.
+- **Key Features:** Three swappable OCR engines (Gemini highlighter cascade with Zero-Quota Waste pre-filter, Groq Qwen 3.8 forensic, 100% offline WebGPU/WASM PP-OCRv6), modular Clean Architecture, batch processing with ZIP export, hyphenation repair, and Word (.docx) export.
+
+---
+
+### [TimeLens - Android App](https://github.com/martin-ratti/Healty_Hour)
+- **Description:** Native Android digital wellbeing application built in 100% Kotlin and Jetpack Compose under Clean Architecture + MVVM.
+- **Tech Stack:** Kotlin, Jetpack Compose, Material 3, Room, Hilt, Coroutines/StateFlow, WorkManager, Jetpack Glance, MockK.
+- **Key Features:** 100% real OS UsageEvents tracking (zero simulated data), per-app daily time limits with WorkManager alerts, enriched 6-KPI app detail with 24h chart, dynamic habit diagnostics & nightly debrief, home screen Glance widgets, and 95 JVM unit tests.
 
 ---
 

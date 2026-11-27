@@ -233,7 +233,7 @@ const targetLangUrl = isEn
 
         const syncActiveHash = (href: string | null) => {
             if (href && href.startsWith("#") && window.location.hash !== href) {
-                history.replaceState(null, "", href);
+                history.replaceState(history.state, "", href);
                 updateLangHref();
             }
         };
@@ -302,8 +302,8 @@ const targetLangUrl = isEn
                             behavior: reduceMotion ? "auto" : "smooth",
                             block: "start",
                         });
-                        // Actualizar URL y el link de idioma inmediatamente
-                        history.pushState(null, "", href);
+                        // Actualizar URL preservando history.state de Astro ClientRouter y actualizar el link de idioma
+                        history.replaceState(history.state, "", href);
                         updateLangHref();
                     }
                 }
