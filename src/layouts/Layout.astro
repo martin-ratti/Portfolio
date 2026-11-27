@@ -16,7 +16,7 @@ const t = useTranslations(lang);
 const {
 	title,
 	description = t('seo.description'),
-	image = "/og-image.jpg",
+	image = "/og-image.png",
 } = Astro.props;
 
 const siteUrl = "https://martinratti.com.ar";
@@ -26,6 +26,9 @@ const alternates = {
     es: new URL(cleanPath, siteUrl).href,
     en: new URL("/en" + (cleanPath.startsWith("/") ? cleanPath : "/" + cleanPath), siteUrl).href,
 };
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
+const ogImageUrl = new URL("/og-image.png", siteUrl).href;
+const pageImageUrl = new URL(image, siteUrl).href;
 ---
 
 <!doctype html>
@@ -33,7 +36,11 @@ const alternates = {
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="theme-color" content="#7c3aed" media="(prefers-color-scheme: light)" />
+		<meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
+		<meta name="color-scheme" content="light dark" />
+		<meta name="author" content="Martín Ratti" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -43,37 +50,66 @@ const alternates = {
 			rel="stylesheet"
 		/>
 		<meta property="og:type" content="website" />
-		<meta property="og:url" content={Astro.url} />
+		<meta property="og:locale" content={lang === 'es' ? 'es_AR' : 'en_US'} />
+		<meta property="og:locale:alternate" content={lang === 'es' ? 'en_US' : 'es_AR'} />
+		<meta property="og:site_name" content="Martín Ratti — Portfolio" />
+		<meta property="og:url" content={canonicalUrl} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
-		<meta property="og:image" content={new URL(image, siteUrl).href} />
+		<meta property="og:image" content={pageImageUrl} />
+		<meta property="og:image:alt" content={title} />
 
 		<!-- SEO Expansion 1: Bidirectional Semantic Connection (hreflang) -->
-		<link rel="canonical" href={lang === 'es' ? alternates.es : alternates.en} />
+		<link rel="canonical" href={canonicalUrl} />
 		<link rel="alternate" hreflang="es" href={alternates.es} />
 		<link rel="alternate" hreflang="en" href={alternates.en} />
 		<link rel="alternate" hreflang="x-default" href={alternates.en} />
 
-		<meta property="twitter:card" content="summary_large_image" />
-		<meta property="twitter:url" content={Astro.url} />
-		<meta property="twitter:title" content={title} />
-		<meta property="twitter:description" content={description} />
-		<meta property="twitter:image" content={new URL(image, siteUrl).href} />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:url" content={canonicalUrl} />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={pageImageUrl} />
 		<ClientRouter />
-		<script is:inline type="application/ld+json">
-			{
-			  "@context": "https://schema.org",
-			  "@type": "Person",
-			  "name": "Martín Ratti",
-			  "url": "https://martinratti.com.ar",
-			  "jobTitle": "Full Stack Developer",
-			  "sameAs": [
+		<script is:inline type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "Person",
+			"name": "Martín Ratti",
+			"url": siteUrl,
+			"image": ogImageUrl,
+			"jobTitle": "Full Stack Developer",
+			"description": description,
+			"email": "mailto:martinratti10@gmail.com",
+			"sameAs": [
 				"https://github.com/martin-ratti",
 				"https://www.linkedin.com/in/martin-ratti-dev/"
-			  ],
-			  "description": "Desarrollador Full Stack especializado en React, Node.js y Astro."
+			],
+			"knowsAbout": [
+				"Astro", "React", "TypeScript", "Node.js", "Express",
+				".NET", "C#", "Java", "Python", "PostgreSQL", "SQL Server",
+				"Tailwind CSS", "Docker", "Prisma"
+			],
+			"alumniOf": {
+				"@type": "CollegeOrUniversity",
+				"name": "Universidad Tecnológica Nacional - Facultad Regional Rosario",
+				"url": "https://www.frro.utn.edu.ar/"
+			},
+			"address": {
+				"@type": "PostalAddress",
+				"addressCountry": "AR",
+				"addressLocality": "Rosario"
 			}
-		</script>
+		})} />
+		<script is:inline type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "WebSite",
+			"name": "Martín Ratti — Portfolio",
+			"url": siteUrl,
+			"inLanguage": [lang === 'es' ? 'es-AR' : 'en-US'],
+			"author": { "@type": "Person", "name": "Martín Ratti" }
+		})} />
+		<script is:inline defer src="/_vercel/insights/script.js"></script>
+		<script is:inline defer src="/_vercel/speed-insights/script.js"></script>
 		<title>{title}</title>
 	</head>
 	<body
@@ -94,69 +130,113 @@ const alternates = {
 		</div>
 
 		<script is:inline>
-			const getTheme = () => {
-				if (
-					typeof localStorage !== "undefined" &&
-					localStorage.getItem("theme")
-				) {
-					return localStorage.getItem("theme");
+			(() => {
+				const syncTheme = () => {
+					let stored = null;
+					try {
+						stored = localStorage.getItem("theme");
+					} catch {}
+					const meta = document.querySelector('meta[name="color-scheme"]');
+					const isValidOverride = stored === "dark" || stored === "light";
+					if (meta) {
+						meta.setAttribute("content", isValidOverride ? stored : "light dark");
+					}
+					const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+					const resolvedDark = isValidOverride ? stored === "dark" : prefersDark;
+					document.documentElement.classList.toggle("dark", resolvedDark);
+				};
+
+				syncTheme();
+
+				if (!window.__portfolioThemeListenersAttached) {
+					window.__portfolioThemeListenersAttached = true;
+					document.addEventListener("astro:after-swap", syncTheme);
+					window.addEventListener("storage", (e) => {
+						if (e.key === "theme") syncTheme();
+					});
+					window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+						let stored = null;
+						try {
+							stored = localStorage.getItem("theme");
+						} catch {}
+						if (stored !== "dark" && stored !== "light") syncTheme();
+					});
 				}
-				if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-					return "dark";
-				}
-				return "light";
-			};
-			const applyTheme = () => {
-				const theme = getTheme();
-				if (theme === "dark") {
-					document.documentElement.classList.add("dark");
-				} else {
-					document.documentElement.classList.remove("dark");
-				}
-				window.localStorage.setItem("theme", theme);
-			};
-			applyTheme();
-			document.addEventListener("astro:after-swap", applyTheme);
+			})();
 		</script>
 
 		<slot />
 
 		<script>
+			let spotlightController: AbortController | null = null;
+			let spotlightObserver: IntersectionObserver | null = null;
+			let spotlightRafId: number | null = null;
+
+			const cleanupSpotlight = () => {
+				if (spotlightController) {
+					spotlightController.abort();
+					spotlightController = null;
+				}
+				if (spotlightObserver) {
+					spotlightObserver.disconnect();
+					spotlightObserver = null;
+				}
+				if (spotlightRafId !== null) {
+					window.cancelAnimationFrame(spotlightRafId);
+					spotlightRafId = null;
+				}
+			};
+
 			const initSpotlight = () => {
-				const cards = document.querySelectorAll(".glass-card");
+				cleanupSpotlight();
+
+				const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+				if (reduceMotion) return;
+
+				const cards = document.querySelectorAll<HTMLElement>(".glass-card");
 				if (cards.length === 0) return;
 
-				// UI/UX Expansion 5: Optimización Pasiva con IntersectionObserver
-				const visibleCards = new Set();
-				
-				const observer = new IntersectionObserver((entries) => {
-					entries.forEach(entry => {
+				spotlightController = new AbortController();
+				const { signal } = spotlightController;
+
+				const visibleCards = new Set<HTMLElement>();
+
+				spotlightObserver = new IntersectionObserver((entries) => {
+					entries.forEach((entry) => {
+						const target = entry.target as HTMLElement;
 						if (entry.isIntersecting) {
-							visibleCards.add(entry.target);
+							visibleCards.add(target);
 						} else {
-							visibleCards.delete(entry.target);
+							visibleCards.delete(target);
 						}
 					});
 				}, { threshold: 0.1 });
 
-				cards.forEach(card => observer.observe(card));
+				cards.forEach((card) => spotlightObserver?.observe(card));
+
+				let lastX = 0;
+				let lastY = 0;
 
 				document.addEventListener(
 					"mousemove",
 					(e) => {
 						if (visibleCards.size === 0) return;
-						
-						window.requestAnimationFrame(() => {
-							visibleCards.forEach((card: any) => {
+						lastX = e.clientX;
+						lastY = e.clientY;
+						if (spotlightRafId !== null) return;
+
+						spotlightRafId = window.requestAnimationFrame(() => {
+							spotlightRafId = null;
+							visibleCards.forEach((card) => {
 								const rect = card.getBoundingClientRect();
-								const x = e.clientX - rect.left;
-								const y = e.clientY - rect.top;
+								const x = lastX - rect.left;
+								const y = lastY - rect.top;
 								card.style.setProperty("--mouse-x", `${x}px`);
 								card.style.setProperty("--mouse-y", `${y}px`);
 							});
 						});
 					},
-					{ passive: true },
+					{ passive: true, signal },
 				);
 			};
 
@@ -167,9 +247,8 @@ const alternates = {
 				}, 100);
 			};
 
-			initSpotlight();
-			initThemeTransitions();
-			document.addEventListener("astro:after-swap", () => {
+			document.addEventListener("astro:before-swap", cleanupSpotlight);
+			document.addEventListener("astro:page-load", () => {
 				initSpotlight();
 				initThemeTransitions();
 			});

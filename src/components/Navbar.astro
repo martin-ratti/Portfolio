@@ -6,6 +6,7 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const isEn = lang === "en";
 const homePrefix = isEn ? "/en" : "";
+const cvHref = isEn ? "/CV_Martin_Ratti_EN.pdf" : "/CV_Martin_Ratti.pdf";
 
 const navItems = [
     { name: t("nav.about"), url: `${homePrefix}#sobre-mi` },
@@ -48,7 +49,7 @@ const targetLangUrl = isEn
 
             <div class="h-4 w-px bg-slate-700/50 hidden md:block"></div>
 
-            <ul class="flex gap-3 md:gap-6 shrink-0">
+            <ul class="nav-scroll-group flex gap-3 md:gap-6 shrink-0">
                 {
                     navItems.map((item) => (
                         <li>
@@ -69,6 +70,7 @@ const targetLangUrl = isEn
                 <a
                     href="https://github.com/martin-ratti"
                     target="_blank"
+                    rel="noopener noreferrer"
                     class="text-slate-400 hover:text-white transition hidden sm:block delay-75"
                     aria-label="GitHub"
                 >
@@ -85,8 +87,9 @@ const targetLangUrl = isEn
 
                 <button
                     id="theme-toggle"
+                    type="button"
                     class="p-1.5 md:p-3 text-slate-500 dark:text-slate-400 hover:text-violet-600 dark:hover:text-white transition rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
-                    aria-label={lang === 'es' ? 'Cambiar modo' : 'Toggle theme'}
+                    aria-label={t("nav.theme.toggle")}
                     aria-pressed="false"
                     data-label-dark={t("nav.theme.dark")}
                     data-label-light={t("nav.theme.light")}
@@ -104,11 +107,11 @@ const targetLangUrl = isEn
                 </button>
 
                 <a
-                    href="/CV_Martin_Ratti.pdf"
+                    href={cvHref}
                     target="_blank"
                     rel="noopener noreferrer"
                     class="hidden sm:block text-xs font-medium text-violet-600 dark:text-violet-300 hover:text-violet-700 dark:hover:text-white border border-violet-500/30 bg-violet-500/10 px-3 py-1.5 rounded-full transition"
-                    aria-label={lang === "es" ? "Ver CV de Martín Ratti (abre en nueva pestaña)" : "View Martín Ratti's Resume (opens in new tab)"}
+                    aria-label={t("nav.cv.aria")}
                 >
                     {t("nav.cv")}
                 </a>
@@ -118,29 +121,63 @@ const targetLangUrl = isEn
 </nav>
 
 <script>
-    document.addEventListener("astro:page-load", () => {
+    let navAbortController: AbortController | null = null;
+    let navObserver: IntersectionObserver | null = null;
+
+    function cleanupNavbar() {
+        if (navAbortController) {
+            navAbortController.abort();
+            navAbortController = null;
+        }
+        if (navObserver) {
+            navObserver.disconnect();
+            navObserver = null;
+        }
+    }
+
+    function initNavbar() {
+        cleanupNavbar();
+        navAbortController = new AbortController();
+        const { signal } = navAbortController;
+
         const themeToggle = document.getElementById("theme-toggle");
-        
+
         const updateThemeAria = () => {
             if (!themeToggle) return;
             const isDark = document.documentElement.classList.contains("dark");
             const label = isDark ? themeToggle.dataset.labelDark : themeToggle.dataset.labelLight;
-            
+
             themeToggle.setAttribute("aria-pressed", isDark ? "true" : "false");
             if (label) themeToggle.setAttribute("aria-label", label);
         };
 
         const handleToggleClick = () => {
             const element = document.documentElement;
-            element.classList.toggle("dark");
+            const currentlyDark = element.classList.contains("dark");
+            const targetTheme = currentlyDark ? "light" : "dark";
+            const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light";
+            const meta = document.querySelector('meta[name="color-scheme"]');
 
-            const isDark = element.classList.contains("dark");
-            localStorage.setItem("theme", isDark ? "dark" : "light");
+            try {
+                if (targetTheme === systemTheme) {
+                    localStorage.removeItem("theme");
+                    meta?.setAttribute("content", "light dark");
+                } else {
+                    localStorage.setItem("theme", targetTheme);
+                    meta?.setAttribute("content", targetTheme);
+                }
+            } catch {
+                meta?.setAttribute("content", targetTheme);
+            }
+
+            element.classList.toggle("dark", targetTheme === "dark");
             updateThemeAria();
         };
 
-        themeToggle?.addEventListener("click", handleToggleClick);
-        updateThemeAria(); // Inicializar al cargar la página
+        themeToggle?.addEventListener("click", handleToggleClick, { signal });
+        updateThemeAria();
 
         // Scroll Indicators Logic
         const navContainer = document.getElementById("nav-container");
@@ -158,97 +195,10 @@ const targetLangUrl = isEn
                     scrollLeft + clientWidth < scrollWidth - 10 ? "1" : "0";
             };
 
-            navContainer.addEventListener("scroll", updateFades);
-            updateFades(); // Inicial
-            window.addEventListener("resize", updateFades);
+            navContainer.addEventListener("scroll", updateFades, { passive: true, signal });
+            updateFades();
+            window.addEventListener("resize", updateFades, { passive: true, signal });
         }
-
-        // Scroll Spy Logic
-        const navLinks = document.querySelectorAll(".nav-link");
-        const sections = document.querySelectorAll("section[id]");
-
-        if (navLinks.length === 0 || sections.length === 0) return;
-
-        // Estilos para estado activo e inactivo
-        const activeClasses = [
-            "text-violet-600",
-            "dark:text-violet-400",
-            "font-bold",
-        ];
-        const inactiveClasses = [
-            "text-slate-500",
-            "dark:text-slate-400",
-            "font-medium",
-        ];
-        const hoverClasses = ["hover:text-slate-900", "dark:hover:text-white"];
-
-        const observerOptions = {
-            root: null,
-            rootMargin: "-20% 0px -50% 0px",
-            threshold: 0,
-        };
-
-        const observerCallback = (entries: IntersectionObserverEntry[]) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    const activeId = entry.target.getAttribute("id");
-
-                    navLinks.forEach((link) => {
-                        const href = link.getAttribute("href");
-                        if (href && href.startsWith("#")) {
-                            if (href === `#${activeId}`) {
-                                link.classList.remove(
-                                    ...inactiveClasses,
-                                    ...hoverClasses,
-                                );
-                                link.classList.add(...activeClasses);
-
-                                if (window.location.hash !== href) {
-                                    history.replaceState(null, "", href);
-                                    updateLangHref();
-                                }
-                            } else {
-                                link.classList.remove(...activeClasses);
-                                link.classList.add(
-                                    ...inactiveClasses,
-                                    ...hoverClasses,
-                                );
-                            }
-                        }
-                    });
-                }
-            });
-        };
-
-        const observer = new IntersectionObserver(
-            observerCallback,
-            observerOptions,
-        );
-
-        sections.forEach((section) => {
-            observer.observe(section);
-        });
-
-        // Click Handler for Centered Scroll
-        navLinks.forEach((link) => {
-            link.addEventListener("click", (e) => {
-                const href = link.getAttribute("href");
-                if (href && href.startsWith("#")) {
-                    e.preventDefault();
-                    const targetId = href.substring(1);
-                    const targetElement = document.getElementById(targetId);
-                    if (targetElement) {
-                        targetElement.scrollIntoView({
-                            behavior: "smooth",
-                            block: "start",
-                        });
-                        // Actualizar URL y el link de idioma inmediatamente
-                        history.pushState(null, "", href);
-                        updateLangHref();
-                    }
-                }
-            });
-        });
 
         // Language toggle persistence
         const langToggle = document.getElementById("lang-toggle");
@@ -267,7 +217,100 @@ const targetLangUrl = isEn
 
         if (langToggle) {
             updateLangHref();
-            window.addEventListener("hashchange", updateLangHref);
+            window.addEventListener("hashchange", updateLangHref, { signal });
         }
-    });
+
+        // Scroll Spy Logic
+        const navLinks = document.querySelectorAll(".nav-link");
+        const sections = document.querySelectorAll("section[id]");
+
+        if (navLinks.length === 0 || sections.length === 0) return;
+
+        const supportsScrollTargetGroup =
+            typeof CSS !== "undefined" &&
+            typeof CSS.supports === "function" &&
+            CSS.supports("scroll-target-group: auto");
+
+        const syncActiveHash = (href: string | null) => {
+            if (href && href.startsWith("#") && window.location.hash !== href) {
+                history.replaceState(null, "", href);
+                updateLangHref();
+            }
+        };
+
+        if (supportsScrollTargetGroup) {
+            const syncAriaCurrent = () => {
+                const currentLink = document.querySelector(".nav-link:target-current");
+                navLinks.forEach((link) => {
+                    const isCurrent = link === currentLink;
+                    link.setAttribute("aria-current", isCurrent ? "true" : "false");
+                });
+                if (currentLink) {
+                    syncActiveHash(currentLink.getAttribute("href"));
+                }
+            };
+            syncAriaCurrent();
+            document.addEventListener("scrollend", syncAriaCurrent, { passive: true, signal });
+        } else {
+            const observerOptions = {
+                root: null,
+                rootMargin: "-20% 0px -50% 0px",
+                threshold: 0,
+            };
+
+            const observerCallback = (entries: IntersectionObserverEntry[]) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const activeId = entry.target.getAttribute("id");
+
+                        navLinks.forEach((link) => {
+                            const href = link.getAttribute("href");
+                            if (href && href.startsWith("#")) {
+                                const isActive = href === `#${activeId}`;
+                                link.classList.toggle("target-current", isActive);
+                                link.setAttribute("aria-current", isActive ? "true" : "false");
+                                if (isActive) {
+                                    syncActiveHash(href);
+                                }
+                            }
+                        });
+                    }
+                });
+            };
+
+            navObserver = new IntersectionObserver(
+                observerCallback,
+                observerOptions,
+            );
+
+            sections.forEach((section) => {
+                navObserver?.observe(section);
+            });
+        }
+
+        // Click Handler for Centered Scroll
+        navLinks.forEach((link) => {
+            link.addEventListener("click", (e) => {
+                const href = link.getAttribute("href");
+                if (href && href.startsWith("#")) {
+                    e.preventDefault();
+                    const targetId = href.substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+                        targetElement.scrollIntoView({
+                            behavior: reduceMotion ? "auto" : "smooth",
+                            block: "start",
+                        });
+                        // Actualizar URL y el link de idioma inmediatamente
+                        history.pushState(null, "", href);
+                        updateLangHref();
+                    }
+                }
+            }, { signal });
+        });
+    }
+
+    document.addEventListener("astro:before-swap", cleanupNavbar);
+    document.addEventListener("astro:page-load", initNavbar);
 </script>

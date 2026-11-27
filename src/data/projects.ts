@@ -73,7 +73,7 @@ export const projects: Project[] = [
             es: "Zenith POS nace como respuesta a la rigidez y las altas cuotas mensuales del software de gestión tradicional. El reto técnico principal fue construir una plataforma que combinara rendimiento nativo de ultra-baja latencia en Windows con una personalización absoluta de marca (White-label), sin necesidad de recompilar el código fuente por cada cliente. La lógica de negocio está totalmente desacoplada de la interfaz mediante Clean Architecture (Onion Pattern) y MVP, permitiendo operar 100% offline ante cortes de conexión y garantizando compatibilidad desde Windows XP hasta Windows 11.",
             en: "Zenith POS was born to address the rigidity and recurring subscription fees of traditional retail software. The primary technical challenge was creating a platform that combined ultra-low latency native Windows performance with complete White-label brand customization—without recompiling source code per customer. The business logic is strictly decoupled from the UI using Clean Architecture (Onion Pattern) and MVP, enabling 100% offline operations during internet blackouts and ensuring compatibility from Windows XP up to Windows 11."
         },
-        tags: ["C#", ".NET", "WinForms", "SQLite", "Dapper", "Clean Architecture", "Astro", "Tailwind CSS", "TypeScript", "Inno Setup"],
+        tags: ["C#", ".NET WebAPI", "WinForms", "SQLite", "Dapper", "Astro", "Tailwind CSS", "TypeScript", "JavaScript", "Git", "GitHub"],
         link: "https://martin-ratti.github.io/Landing-Zenith/",
         repo: "https://github.com/martin-ratti/Landing-Zenith",
         featured: true,
@@ -201,7 +201,7 @@ export const projects: Project[] = [
             es: "PCFIX es una plataforma integral de comercio electrónico de componentes tecnológicos diseñada para escalar. Implementa una arquitectura monorepo con Turborepo, combinando un frontend híbrido ultrarrápido con Server Islands y una API REST robusta con Node.js y PostgreSQL.",
             en: "PCFIX is a scalable tech e-commerce platform. It features a Turborepo monorepo architecture, combining an ultra-fast hybrid frontend using Server Islands with a robust Node.js and PostgreSQL REST API."
         },
-        tags: ["Astro", "React", "TypeScript", "Node.js", "PostgreSQL", "Docker", "Tailwind CSS", "Vercel", "Railway", "Jest", "Vitest", "Playwright", "Prisma", "Express", "GitHub", "Scrum", "Kanban"],
+        tags: ["Astro", "React", "TypeScript", "JavaScript", "Node.js", "PostgreSQL", "Docker", "Tailwind CSS", "Vercel", "Railway", "Jest", "Vitest", "Playwright", "Prisma", "Express", "GitHub", "Scrum", "Kanban"],
         link: "https://www.pcfixbaru.com.ar",
         repo: "https://github.com/martin-ratti/PCFIX-Baru",
         featured: true,

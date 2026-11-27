@@ -3,6 +3,18 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
+    :root {
+        color-scheme: light dark;
+
+        &:has(> head > meta[name="color-scheme"][content="dark"]) {
+            color-scheme: dark;
+        }
+
+        &:has(> head > meta[name="color-scheme"][content="light"]) {
+            color-scheme: light;
+        }
+    }
+
     html {
         font-family: 'Inter', system-ui, sans-serif;
         scroll-behavior: smooth;
@@ -34,6 +46,36 @@
 }
 
 @layer utilities {
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .nav-scroll-group {
+        scroll-target-group: auto;
+    }
+
+    .nav-link:is(:target-current, .target-current) {
+        color: #7c3aed;
+        font-weight: 700;
+    }
+
+    .dark .nav-link:is(:target-current, .target-current) {
+        color: #a78bfa;
+    }
+
+    .auto-fit-textarea {
+        field-sizing: content;
+        height: auto;
+        min-block-size: 6.5rem;
+        max-block-size: 20rem;
+        overflow-y: auto;
+    }
+
     .text-gradient {
         @apply bg-clip-text text-transparent bg-linear-to-r from-violet-600 via-fuchsia-600 to-cyan-600 dark:from-violet-400 dark:via-fuchsia-400 dark:to-cyan-400;
     }
@@ -86,6 +128,14 @@
             animation: none;
             opacity: 1;
             transform: none;
+        }
+
+        .glass-card::before {
+            display: none;
+        }
+
+        html {
+            scroll-behavior: auto;
         }
 
         *,

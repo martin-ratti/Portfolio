@@ -34,28 +34,28 @@
 Este repositorio aloja el portfolio profesional de **Martín Ratti**, estudiante avanzado de **Ingeniería en Sistemas (UTN Rosario)**. Más que una simple presentación estática, este sitio es una demostración técnica de ingeniería de software, arquitectura moderna, rendimiento extremo y diseño UI premium.
 
 ### 🌟 Características Principales
-* **Performance First:** Construido sobre **Astro 5** con renderizado híbrido y tiempos de carga instantáneos (PageSpeed 99+).
+* **Performance First:** Construido sobre **Astro 5** con generación estática y SSR exclusivo para `/api/chat` (PageSpeed 99+).
 * **UI Glassmorphism:** Micro-interacciones visuales fluidas, spotlight interactivo en tarjetas y **Dark / Light Mode** con persistencia.
 * **Casos de Estudio Dedicados:** Páginas individuales por proyecto (`/proyectos/[slug]` y `/en/proyectos/[slug]`) con transiciones fluidas de Astro (`ClientRouter`).
 * **Galería Interactiva con Lightbox:** Visor principal con miniaturas y zoom a pantalla completa accesible por teclado (`Esc`, `←`, `→`).
 * **Gestión Inteligente de Recursos:** Detección y priorización automática de formatos de imagen (`.webp` ➔ `.png` ➔ `.jpg` ➔ `.svg`).
 * **Internacionalización (i18n):** Soporte bidireccional completo en Español 🇪🇸 e Inglés 🇺🇸 preservando el contexto de navegación.
-* **Asistente IA con Contexto Real:** Chatbot integrado que responde consultas técnicas leyendo la base documental [`llms.txt`](./llms.txt).
+* **Asistente IA con Contexto Real:** Chatbot integrado que responde consultas técnicas leyendo la base documental [`llms.txt`](./llms.txt) con sanitización HTML y rate limiting.
 * **SEO Semántico & Accesibilidad:** Datos estructurados JSON-LD, etiquetas Open Graph dinámicas, accesibilidad WCAG 2.2 y semántica HTML5.
 
 ---
 
 ## 🛠 Stack Tecnológico
 
-El portfolio demuestra dominio sobre un ecosistema diverso, moderno y escalable:
+El portfolio está construido con Astro + TypeScript + Tailwind CSS v4, y demuestra dominio sobre un ecosistema diverso, moderno y escalable:
 
 | Área | Tecnologías |
 | :--- | :--- |
-| **Core & SSG** | ![Astro](https://img.shields.io/badge/Astro-5.0-orange?style=flat-square) ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square) |
-| **Frontend UI** | ![React](https://img.shields.io/badge/React-18-blue?style=flat-square) ![Tailwind](https://img.shields.io/badge/Tailwind_CSS-v4-cyan?style=flat-square) |
-| **Backend & APIs** | ![Node](https://img.shields.io/badge/Node.js-Runtime-green?style=flat-square) ![C#](https://img.shields.io/badge/.NET_8-WebAPI-purple?style=flat-square) ![Java](https://img.shields.io/badge/Java-Servlets_JSP-red?style=flat-square) ![Express](https://img.shields.io/badge/Express-Framework-lightgrey?style=flat-square) |
+| **Core & SSG** | ![Astro](https://img.shields.io/badge/Astro-5.0-orange?style=flat-square) ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue?style=flat-square) |
+| **Frontend UI** | ![React](https://img.shields.io/badge/React-Frontend-blue?style=flat-square) ![Blazor](https://img.shields.io/badge/Blazor-WebAssembly-512BD4?style=flat-square) ![Tailwind](https://img.shields.io/badge/Tailwind_CSS-v4-cyan?style=flat-square) |
+| **Backend & APIs** | ![Node](https://img.shields.io/badge/Node.js-Runtime-green?style=flat-square) ![C#](https://img.shields.io/badge/.NET-WebAPI-purple?style=flat-square) ![Java](https://img.shields.io/badge/Java-Servlets_JSP-red?style=flat-square) ![Express](https://img.shields.io/badge/Express-Framework-lightgrey?style=flat-square) |
 | **Bases de Datos** | ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-DB-blue?style=flat-square) ![MySQL](https://img.shields.io/badge/MySQL-DB-blue?style=flat-square) ![SQL Server](https://img.shields.io/badge/SQL_Server-DB-red?style=flat-square) ![SQLite](https://img.shields.io/badge/SQLite-Offline-lightblue?style=flat-square) ![Prisma](https://img.shields.io/badge/Prisma-ORM-darkblue?style=flat-square) |
-| **Desktop & Mobile** | ![C# WinForms](https://img.shields.io/badge/C%23-WinForms-purple?style=flat-square) ![React Native](https://img.shields.io/badge/React_Native-Expo-black?style=flat-square) ![Python](https://img.shields.io/badge/Python-OpenCV_OCR-yellow?style=flat-square) |
+| **Desktop & Mobile** | ![C# WinForms](https://img.shields.io/badge/C%23-WinForms-purple?style=flat-square) ![Kotlin](https://img.shields.io/badge/Kotlin-Android_Compose-7F52FF?style=flat-square) ![Python](https://img.shields.io/badge/Python-OpenCV_OCR-yellow?style=flat-square) |
 | **DevOps & QA** | ![Docker](https://img.shields.io/badge/Docker-Containers-blue?style=flat-square) ![Git](https://img.shields.io/badge/Git-VCS-orange?style=flat-square) ![Vercel](https://img.shields.io/badge/Vercel-Production-black?style=flat-square) ![Playwright](https://img.shields.io/badge/Playwright-E2E-green?style=flat-square) |
 
 ---

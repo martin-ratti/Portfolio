@@ -80,8 +80,8 @@ const detailUrl = lang === "en" ? `/en/proyectos/${project.slug}` : `/proyectos/
                     target="_blank"
                     rel="noopener noreferrer"
                     class="p-2 bg-slate-100 dark:bg-slate-800/80 rounded-full hover:bg-slate-200 dark:hover:bg-violet-900/50 hover:text-violet-600 dark:hover:text-violet-300 transition text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/50"
-                    aria-label={`GitHub Repo: ${project.title}`}
-                    title="GitHub Repository"
+                    aria-label={`${t("projects.repo.aria")} — ${project.title}`}
+                    title={t("projects.repo.aria")}
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -103,8 +103,8 @@ const detailUrl = lang === "en" ? `/en/proyectos/${project.slug}` : `/proyectos/
                             target="_blank"
                             rel="noopener noreferrer"
                             class="p-2 bg-violet-600 hover:bg-violet-500 rounded-full transition text-white shadow-md shadow-violet-600/20"
-                            aria-label={`Live Demo: ${project.title}`}
-                            title="Live Demo"
+                            aria-label={`${t("projects.demo.aria")} — ${project.title}`}
+                            title={t("projects.demo.aria")}
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
