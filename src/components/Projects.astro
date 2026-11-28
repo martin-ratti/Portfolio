@@ -11,11 +11,34 @@ const otherProjects = projects.filter((p) => !p.featured);
 ---
 
 <section id="proyectos" class="py-20 px-4 max-w-7xl mx-auto scroll-mt-16">
-    <h2 class="text-4xl md:text-5xl font-bold mb-16 text-center">
+    <h2 class="text-4xl md:text-5xl font-bold mb-10 text-center">
         <span class="text-gradient leading-relaxed py-2"
             >{t("projects.title")}</span
         >
     </h2>
+
+    <div
+        id="projects-filter-banner"
+        role="status"
+        aria-live="polite"
+        data-prefix={t("projects.filter.active")}
+        data-singular={t("projects.filter.countSingular")}
+        data-plural={t("projects.filter.countPlural")}
+        class="hidden mb-10 mx-auto max-w-2xl glass-card rounded-full px-5 py-2.5 flex-wrap items-center justify-center gap-3 text-sm border border-violet-500/30 shadow-md shadow-violet-500/10"
+    >
+        <span id="projects-filter-text" class="font-medium text-slate-700 dark:text-slate-200"></span>
+        <button
+            type="button"
+            id="projects-filter-clear"
+            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-violet-600 hover:bg-violet-700 text-white transition-colors cursor-pointer"
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+            {t("projects.filter.clear")}
+        </button>
+    </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
         {
@@ -91,10 +114,29 @@ const otherProjects = projects.filter((p) => !p.featured);
 <script>
     let projectsFilterController: AbortController | null = null;
 
+    function cleanupProjectsFilter() {
+        if (projectsFilterController) {
+            projectsFilterController.abort();
+            projectsFilterController = null;
+        }
+    }
+
     function initProjectsFilter() {
-        if (projectsFilterController) projectsFilterController.abort();
+        cleanupProjectsFilter();
         projectsFilterController = new AbortController();
         const { signal } = projectsFilterController;
+
+        const banner = document.getElementById("projects-filter-banner");
+        const bannerText = document.getElementById("projects-filter-text");
+        const clearBtn = document.getElementById("projects-filter-clear");
+
+        clearBtn?.addEventListener("click", () => {
+            window.dispatchEvent(
+                new CustomEvent("filter-projects", {
+                    detail: { skill: null },
+                }),
+            );
+        }, { signal });
 
         window.addEventListener("filter-projects", (e: Event) => {
             const customEvent = e as CustomEvent;
@@ -105,10 +147,16 @@ const otherProjects = projects.filter((p) => !p.featured);
                 cards.forEach((card) => {
                     card.classList.remove("is-match", "is-dimmed", "animate-success-flash");
                 });
+                if (banner) {
+                    banner.classList.add("hidden");
+                    banner.classList.remove("flex");
+                }
+                if (bannerText) bannerText.textContent = "";
                 return;
             }
 
             let firstMatch: HTMLElement | null = null;
+            let matchCount = 0;
 
             cards.forEach((card) => {
                 const el = card as HTMLElement;
@@ -118,12 +166,23 @@ const otherProjects = projects.filter((p) => !p.featured);
                 if (techs.includes(selectedSkill)) {
                     el.classList.add("is-match");
                     el.classList.remove("is-dimmed");
+                    matchCount++;
                     if (!firstMatch) firstMatch = el;
                 } else {
                     el.classList.add("is-dimmed");
                     el.classList.remove("is-match");
                 }
             });
+
+            if (banner && bannerText) {
+                const prefix = banner.dataset.prefix || "Filtrando por";
+                const noun = matchCount === 1
+                    ? (banner.dataset.singular || "proyecto")
+                    : (banner.dataset.plural || "proyectos");
+                bannerText.textContent = `${prefix} ${selectedSkill} (${matchCount} ${noun})`;
+                banner.classList.remove("hidden");
+                banner.classList.add("flex");
+            }
 
             if (firstMatch) {
                 const matchEl = firstMatch as HTMLElement;
@@ -143,5 +202,6 @@ const otherProjects = projects.filter((p) => !p.featured);
         }, { signal });
     }
 
+    document.addEventListener("astro:before-swap", cleanupProjectsFilter);
     document.addEventListener("astro:page-load", initProjectsFilter);
 </script>
