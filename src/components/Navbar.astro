@@ -5,23 +5,27 @@ import { Icon } from "astro-icon/components";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const isEn = lang === "en";
-const homePrefix = isEn ? "/en" : "";
 const cvHref = isEn ? "/CV_Martin_Ratti_EN.pdf" : "/CV_Martin_Ratti.pdf";
 
+const normalizePath = (p: string) => p.replace(/\/+$/, "") || "/";
+const currentPath = normalizePath(Astro.url.pathname);
+const homePath = isEn ? "/en" : "/";
+const isHomePage = currentPath === homePath;
+const anchorPrefix = isHomePage ? "" : homePath;
+
 const navItems = [
-    { name: t("nav.about"), url: `${homePrefix}#sobre-mi` },
-    { name: t("nav.stack"), url: `${homePrefix}#stack` },
-    { name: t("nav.projects"), url: `${homePrefix}#proyectos` },
-    { name: t("nav.contact"), url: `${homePrefix}#contacto` },
+    { name: t("nav.about"), url: `${anchorPrefix}#sobre-mi` },
+    { name: t("nav.stack"), url: `${anchorPrefix}#stack` },
+    { name: t("nav.projects"), url: `${anchorPrefix}#proyectos` },
+    { name: t("nav.contact"), url: `${anchorPrefix}#contacto` },
 ];
 
-const pathname = Astro.url.pathname;
-const targetLangUrl = isEn
-    ? (pathname.replace(/^\/en(\/|$)/, "$1") || "/")
-    : ("/en" + (pathname.startsWith("/") ? pathname : "/" + pathname));
+const basePath = normalizePath(currentPath.replace(/^\/en(\/|$)/, "/"));
+const targetLangUrl = isEn ? basePath : (basePath === "/" ? "/en" : `/en${basePath}`);
 ---
 
 <nav
+    aria-label={t("nav.aria")}
     class="fixed top-4 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none"
 >
     <div class="relative pointer-events-auto max-w-[95vw]">
@@ -42,7 +46,7 @@ const targetLangUrl = isEn
             class="glass-card rounded-full px-3 py-2 md:px-6 md:py-3 flex items-center gap-2 md:gap-8 shadow-lg shadow-violet-900/10 overflow-x-auto no-scrollbar relative"
         >
             <a
-                href={lang === "en" ? "/en" : "/"}
+                href={homePath}
                 class="font-bold text-transparent bg-clip-text bg-linear-to-r from-violet-400 to-cyan-400 hover:opacity-80 transition shrink-0"
                 >MR</a
             >
@@ -80,6 +84,7 @@ const targetLangUrl = isEn
                 <a
                     id="lang-toggle"
                     href={targetLangUrl}
+                    aria-label={t("nav.lang.aria")}
                     class="text-[10px] md:text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-violet-600 dark:hover:text-white transition uppercase border border-slate-300 dark:border-slate-700 px-1.5 py-0.5 md:px-2 md:py-1 rounded"
                 >
                     {lang === "es" ? "EN" : "ES"}
@@ -123,6 +128,27 @@ const targetLangUrl = isEn
 <script>
     let navAbortController: AbortController | null = null;
     let navObserver: IntersectionObserver | null = null;
+    let themeTransitionTimer: ReturnType<typeof setTimeout> | null = null;
+
+    const normalizePath = (p: string) => p.replace(/\/+$/, "") || "/";
+
+    function getSamePageHash(link: Element): string | null {
+        const href = (link as HTMLAnchorElement).href;
+        if (!href) return null;
+        try {
+            const url = new URL(href, window.location.origin);
+            if (
+                url.origin === window.location.origin &&
+                normalizePath(url.pathname) === normalizePath(window.location.pathname) &&
+                url.hash
+            ) {
+                return url.hash;
+            }
+        } catch {
+            return null;
+        }
+        return null;
+    }
 
     function cleanupNavbar() {
         if (navAbortController) {
@@ -132,6 +158,11 @@ const targetLangUrl = isEn
         if (navObserver) {
             navObserver.disconnect();
             navObserver = null;
+        }
+        if (themeTransitionTimer !== null) {
+            clearTimeout(themeTransitionTimer);
+            themeTransitionTimer = null;
+            document.body?.classList.remove("theme-transitions-ready");
         }
     }
 
@@ -152,6 +183,11 @@ const targetLangUrl = isEn
         };
 
         const handleToggleClick = () => {
+            if (themeTransitionTimer !== null) {
+                clearTimeout(themeTransitionTimer);
+            }
+            document.body.classList.add("theme-transitions-ready");
+
             const element = document.documentElement;
             const currentlyDark = element.classList.contains("dark");
             const targetTheme = currentlyDark ? "light" : "dark";
@@ -174,6 +210,11 @@ const targetLangUrl = isEn
 
             element.classList.toggle("dark", targetTheme === "dark");
             updateThemeAria();
+
+            themeTransitionTimer = setTimeout(() => {
+                document.body.classList.remove("theme-transitions-ready");
+                themeTransitionTimer = null;
+            }, 320);
         };
 
         themeToggle?.addEventListener("click", handleToggleClick, { signal });
@@ -220,92 +261,98 @@ const targetLangUrl = isEn
             window.addEventListener("hashchange", updateLangHref, { signal });
         }
 
-        // Scroll Spy Logic
+        // Scroll Spy & Anchor Click Logic
         const navLinks = document.querySelectorAll(".nav-link");
         const sections = document.querySelectorAll("section[id]");
 
-        if (navLinks.length === 0 || sections.length === 0) return;
+        if (navLinks.length === 0) return;
 
-        const supportsScrollTargetGroup =
-            typeof CSS !== "undefined" &&
-            typeof CSS.supports === "function" &&
-            CSS.supports("scroll-target-group: auto");
-
-        const syncActiveHash = (href: string | null) => {
-            if (href && href.startsWith("#") && window.location.hash !== href) {
-                history.replaceState(history.state, "", href);
+        const syncActiveHash = (hash: string | null) => {
+            if (hash && hash.startsWith("#") && window.location.hash !== hash) {
+                history.replaceState(history.state, "", hash);
                 updateLangHref();
             }
         };
 
-        if (supportsScrollTargetGroup) {
-            const syncAriaCurrent = () => {
-                const currentLink = document.querySelector(".nav-link:target-current");
-                navLinks.forEach((link) => {
-                    const isCurrent = link === currentLink;
-                    link.setAttribute("aria-current", isCurrent ? "true" : "false");
-                });
-                if (currentLink) {
-                    syncActiveHash(currentLink.getAttribute("href"));
-                }
-            };
-            syncAriaCurrent();
-            document.addEventListener("scrollend", syncAriaCurrent, { passive: true, signal });
-        } else {
-            const observerOptions = {
-                root: null,
-                rootMargin: "-20% 0px -50% 0px",
-                threshold: 0,
-            };
+        if (sections.length > 0) {
+            const supportsScrollTargetGroup =
+                typeof CSS !== "undefined" &&
+                typeof CSS.supports === "function" &&
+                CSS.supports("scroll-target-group: auto");
 
-            const observerCallback = (entries: IntersectionObserverEntry[]) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        const activeId = entry.target.getAttribute("id");
-
-                        navLinks.forEach((link) => {
-                            const href = link.getAttribute("href");
-                            if (href && href.startsWith("#")) {
-                                const isActive = href === `#${activeId}`;
-                                link.classList.toggle("target-current", isActive);
-                                link.setAttribute("aria-current", isActive ? "true" : "false");
-                                if (isActive) {
-                                    syncActiveHash(href);
-                                }
-                            }
-                        });
+            if (supportsScrollTargetGroup) {
+                const syncAriaCurrent = () => {
+                    const currentLink = document.querySelector(".nav-link:target-current");
+                    navLinks.forEach((link) => {
+                        if (link === currentLink) {
+                            link.setAttribute("aria-current", "location");
+                        } else {
+                            link.removeAttribute("aria-current");
+                        }
+                    });
+                    if (currentLink) {
+                        syncActiveHash(getSamePageHash(currentLink));
                     }
+                };
+                syncAriaCurrent();
+                document.addEventListener("scrollend", syncAriaCurrent, { passive: true, signal });
+            } else {
+                const observerOptions = {
+                    root: null,
+                    rootMargin: "-20% 0px -50% 0px",
+                    threshold: 0,
+                };
+
+                const observerCallback = (entries: IntersectionObserverEntry[]) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            const activeId = entry.target.getAttribute("id");
+
+                            navLinks.forEach((link) => {
+                                const hash = getSamePageHash(link);
+                                if (hash) {
+                                    const isActive = hash === `#${activeId}`;
+                                    link.classList.toggle("target-current", isActive);
+                                    if (isActive) {
+                                        link.setAttribute("aria-current", "location");
+                                        syncActiveHash(hash);
+                                    } else {
+                                        link.removeAttribute("aria-current");
+                                    }
+                                }
+                            });
+                        }
+                    });
+                };
+
+                navObserver = new IntersectionObserver(
+                    observerCallback,
+                    observerOptions,
+                );
+
+                sections.forEach((section) => {
+                    navObserver?.observe(section);
                 });
-            };
-
-            navObserver = new IntersectionObserver(
-                observerCallback,
-                observerOptions,
-            );
-
-            sections.forEach((section) => {
-                navObserver?.observe(section);
-            });
+            }
         }
 
-        // Click Handler for Centered Scroll
+        // Click Handler for Same-Page Smooth Scroll
         navLinks.forEach((link) => {
             link.addEventListener("click", (e) => {
-                const href = link.getAttribute("href");
-                if (href && href.startsWith("#")) {
+                const hash = getSamePageHash(link);
+                if (!hash) return;
+
+                const targetId = hash.slice(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
                     e.preventDefault();
-                    const targetId = href.substring(1);
-                    const targetElement = document.getElementById(targetId);
-                    if (targetElement) {
-                        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-                        targetElement.scrollIntoView({
-                            behavior: reduceMotion ? "auto" : "smooth",
-                            block: "start",
-                        });
-                        // Actualizar URL preservando history.state de Astro ClientRouter y actualizar el link de idioma
-                        history.replaceState(history.state, "", href);
-                        updateLangHref();
-                    }
+                    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+                    targetElement.scrollIntoView({
+                        behavior: reduceMotion ? "auto" : "smooth",
+                        block: "start",
+                    });
+                    history.replaceState(history.state, "", hash);
+                    updateLangHref();
                 }
             }, { signal });
         });
