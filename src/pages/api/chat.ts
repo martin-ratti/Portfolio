@@ -92,7 +92,7 @@ async function getContext(): Promise<string> {
 
 const MAX_MESSAGES = 20;
 const MAX_MESSAGE_LENGTH = 1500;
-const MODEL_TIMEOUT_MS = 12_000;
+const MODEL_TIMEOUT_MS = 7_500;
 
 interface ValidatedMessage {
     role: 'user' | 'assistant';
@@ -147,7 +147,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
         || request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
         || 'unknown';
     if (!checkRateLimit(ip)) {
-        return new Response(JSON.stringify({ error: 'Rate limit exceeded. Try again in a minute.' }), {
+        return new Response(JSON.stringify({ error: 'Rate limit exceeded. Try again in a minute.', code: 'RATE_LIMIT' }), {
             status: 429,
             headers: { 'Content-Type': 'application/json', 'Retry-After': '60' }
         });

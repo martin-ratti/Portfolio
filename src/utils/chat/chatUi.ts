@@ -187,9 +187,11 @@ export function showTypingIndicator(container: HTMLElement | null) {
     const div = document.createElement("div");
     div.id = "typing-indicator";
     div.className = "flex gap-3";
+    div.setAttribute("role", "status");
+    div.setAttribute("aria-label", "...");
     div.innerHTML = `
         <div class="w-8 h-8 rounded-full bg-linear-to-tr from-violet-500 to-fuchsia-500 shrink-0 flex items-center justify-center text-white text-xs font-bold" aria-hidden="true">AI</div>
-        <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl rounded-tl-none border border-black/5 dark:border-white/10 shadow-sm flex gap-1 items-center h-[46px]">
+        <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl rounded-tl-none border border-black/5 dark:border-white/10 shadow-sm flex gap-1 items-center h-[46px]" aria-hidden="true">
         <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce"></span>
         <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 100ms;"></span>
         <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 200ms;"></span>
