@@ -1,5 +1,6 @@
 ---
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { Icon } from "astro-icon/components";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -8,29 +9,26 @@ const cvHref = lang === "en" ? "/CV_Martin_Ratti_EN.pdf" : "/CV_Martin_Ratti.pdf
 
 <section
     id="inicio"
-    class="min-h-[90vh] flex flex-col justify-center items-center text-center px-4 relative overflow-hidden pt-24 md:pt-32"
+    class="min-h-[86svh] sm:min-h-[90vh] flex flex-col justify-center items-center text-center px-4 relative overflow-hidden pt-24 pb-12 md:pt-32"
 >
     <div
-        class="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-violet-600/30 rounded-full blur-[100px] -z-10 animate-pulse"
+        class="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-violet-600/25 dark:bg-violet-600/30 rounded-full blur-[100px] -z-10 pointer-events-none"
         aria-hidden="true"
     >
     </div>
 
-    <div class="space-y-6 max-w-4xl z-10">
+    <div class="space-y-5 sm:space-y-6 max-w-4xl z-10 w-full">
         <div class="animate-fade-in-up" style="animation-delay: 0.1s">
             <span
-                class="inline-flex items-center gap-2 px-3 py-1 text-sm font-medium text-emerald-700 dark:text-emerald-400 bg-emerald-100/50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 rounded-full"
+                class="inline-flex items-center gap-2 px-3.5 py-1.5 text-xs sm:text-sm font-medium text-emerald-700 dark:text-emerald-400 bg-emerald-100/60 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/80 rounded-full"
             >
-                <span class="relative flex h-2 w-2" aria-hidden="true">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                </span>
+                <span class="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.65)]" aria-hidden="true"></span>
                 {t("hero.available")}
             </span>
         </div>
 
         <h1
-            class="text-6xl md:text-8xl font-bold tracking-tight text-slate-900 dark:text-white"
+            class="text-5xl sm:text-7xl md:text-8xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.08]"
         >
             {t("hero.greeting")}
             <br />
@@ -38,12 +36,12 @@ const cvHref = lang === "en" ? "/CV_Martin_Ratti_EN.pdf" : "/CV_Martin_Ratti.pdf
         </h1>
 
         <p
-            class="text-xl md:text-2xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto animate-fade-in-up"
+            class="text-lg sm:text-xl md:text-2xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto animate-fade-in-up leading-relaxed"
             style="animation-delay: 0.3s"
         >
             {t("hero.role")}
             <span
-                class="inline-flex min-w-[120px] justify-start text-left relative"
+                class="inline-flex min-w-[100px] sm:min-w-[120px] justify-start text-left relative"
             >
                 <span id="typewriter-text" class="font-bold text-violet-600 dark:text-violet-400">Astro</span>
                 <span id="typewriter-cursor" class="animate-blink ml-1" aria-hidden="true">|</span>
@@ -154,18 +152,18 @@ const cvHref = lang === "en" ? "/CV_Martin_Ratti_EN.pdf" : "/CV_Martin_Ratti.pdf
         </style>
 
         <div
-            class="flex flex-wrap gap-6 justify-center pt-8 animate-fade-in-up"
+            class="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 justify-center items-center pt-6 sm:pt-8 w-full sm:w-auto animate-fade-in-up"
             style="animation-delay: 0.4s"
         >
             <a
                 href="#proyectos"
-                class="px-8 py-3 bg-violet-600 hover:bg-violet-700 text-white font-bold rounded-full transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(124,58,237,0.5)] min-w-[180px] flex justify-center items-center"
+                class="w-full sm:w-auto min-w-[180px] min-h-[48px] px-7 py-3 bg-violet-600 hover:bg-violet-700 text-white font-semibold rounded-full transition-all hover:scale-[1.03] shadow-lg shadow-violet-600/25 flex justify-center items-center"
             >
                 {t("hero.viewProjects")}
             </a>
             <a
                 href="#contacto"
-                class="px-8 py-3 glass-card bg-white/5 dark:bg-white/5 hover:bg-white/10 dark:hover:bg-white/10 rounded-full font-semibold transition-all border-slate-200/50 dark:border-white/10 text-slate-700 dark:text-slate-300 min-w-[180px] flex justify-center items-center"
+                class="w-full sm:w-auto min-w-[180px] min-h-[48px] px-7 py-3 glass-card hover:border-violet-500/50 rounded-full font-semibold transition-all text-slate-700 dark:text-slate-200 flex justify-center items-center"
             >
                 {t("hero.contactMe")}
             </a>
@@ -173,24 +171,10 @@ const cvHref = lang === "en" ? "/CV_Martin_Ratti_EN.pdf" : "/CV_Martin_Ratti.pdf
                 href={cvHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="px-4 py-3 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-medium transition-all flex items-center justify-center gap-2 group"
+                class="min-h-[44px] px-5 py-2.5 rounded-full text-slate-600 dark:text-slate-300 hover:text-violet-600 dark:hover:text-violet-300 hover:bg-slate-200/60 dark:hover:bg-slate-800/60 font-medium transition-all flex items-center justify-center gap-2 group"
                 aria-label={t("hero.cv.aria")}
             >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                    ></path>
-                </svg>
+                <Icon name="mdi:download-outline" class="w-4.5 h-4.5" aria-hidden="true" />
                 {t("nav.cv")}
             </a>
         </div>

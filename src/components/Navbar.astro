@@ -32,12 +32,12 @@ const targetLangUrl = isEn ? basePath : (basePath === "/" ? "/en" : `/en${basePa
         <!-- Fades para scroll horizontal en móvil -->
         <div
             id="nav-fade-left"
-            class="absolute left-0 top-0 bottom-0 w-12 bg-linear-to-r from-slate-900/40 dark:from-black/60 to-transparent z-10 opacity-0 transition-opacity pointer-events-none rounded-l-full"
+            class="absolute left-0 top-0 bottom-0 w-10 bg-linear-to-r from-white/95 dark:from-slate-950/90 to-transparent z-10 opacity-0 transition-opacity pointer-events-none rounded-l-full"
         >
         </div>
         <div
             id="nav-fade-right"
-            class="absolute right-0 top-0 bottom-0 w-12 bg-linear-to-l from-slate-900/40 dark:from-black/60 to-transparent z-10 opacity-0 transition-opacity pointer-events-none rounded-r-full"
+            class="absolute right-0 top-0 bottom-0 w-10 bg-linear-to-l from-white/95 dark:from-slate-950/90 to-transparent z-10 opacity-0 transition-opacity pointer-events-none rounded-r-full"
         >
         </div>
 
@@ -47,11 +47,11 @@ const targetLangUrl = isEn ? basePath : (basePath === "/" ? "/en" : `/en${basePa
         >
             <a
                 href={homePath}
-                class="font-bold text-transparent bg-clip-text bg-linear-to-r from-violet-400 to-cyan-400 hover:opacity-80 transition shrink-0"
+                class="font-bold text-transparent bg-clip-text bg-linear-to-r from-violet-500 to-cyan-500 hover:opacity-80 transition shrink-0"
                 >MR</a
             >
 
-            <div class="h-4 w-px bg-slate-700/50 hidden md:block"></div>
+            <div class="h-4 w-px bg-slate-300/80 dark:bg-slate-700/60 hidden md:block"></div>
 
             <ul class="nav-scroll-group flex gap-3 md:gap-6 shrink-0">
                 {
@@ -59,7 +59,7 @@ const targetLangUrl = isEn ? basePath : (basePath === "/" ? "/en" : `/en${basePa
                         <li>
                             <a
                                 href={item.url}
-                                class="nav-link text-xs md:text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition whitespace-nowrap"
+                                class="nav-link text-xs md:text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition whitespace-nowrap"
                             >
                                 {item.name}
                             </a>
@@ -68,14 +68,14 @@ const targetLangUrl = isEn ? basePath : (basePath === "/" ? "/en" : `/en${basePa
                 }
             </ul>
 
-            <div class="h-4 w-px bg-slate-700/50 hidden md:block"></div>
+            <div class="h-4 w-px bg-slate-300/80 dark:bg-slate-700/60 hidden md:block"></div>
 
-            <div class="flex gap-1 md:gap-4 items-center shrink-0">
+            <div class="flex gap-1.5 md:gap-3 items-center shrink-0">
                 <a
                     href="https://github.com/martin-ratti"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="text-slate-400 hover:text-white transition hidden sm:block delay-75"
+                    class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition hidden sm:inline-flex items-center justify-center p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800/80"
                     aria-label="GitHub"
                 >
                     <Icon name="simple-icons:github" class="w-5 h-5" />
@@ -85,7 +85,7 @@ const targetLangUrl = isEn ? basePath : (basePath === "/" ? "/en" : `/en${basePa
                     id="lang-toggle"
                     href={targetLangUrl}
                     aria-label={t("nav.lang.aria")}
-                    class="text-[10px] md:text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-violet-600 dark:hover:text-white transition uppercase border border-slate-300 dark:border-slate-700 px-1.5 py-0.5 md:px-2 md:py-1 rounded"
+                    class="min-h-[32px] inline-flex items-center justify-center text-[11px] md:text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-violet-600 dark:hover:text-white transition uppercase border border-slate-300 dark:border-slate-700 px-2 py-1 rounded-lg"
                 >
                     {lang === "es" ? "EN" : "ES"}
                 </a>
@@ -93,7 +93,7 @@ const targetLangUrl = isEn ? basePath : (basePath === "/" ? "/en" : `/en${basePa
                 <button
                     id="theme-toggle"
                     type="button"
-                    class="p-1.5 md:p-3 text-slate-500 dark:text-slate-400 hover:text-violet-600 dark:hover:text-white transition rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
+                    class="p-2 md:p-2.5 min-w-[36px] min-h-[36px] flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-violet-600 dark:hover:text-white transition rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
                     aria-label={t("nav.theme.toggle")}
                     aria-pressed="false"
                     data-label-dark={t("nav.theme.dark")}
@@ -102,12 +102,12 @@ const targetLangUrl = isEn ? basePath : (basePath === "/" ? "/en" : `/en${basePa
                     <Icon
                         id="sun-icon"
                         name="mdi:weather-sunny"
-                        class="hidden dark:block w-5 h-5 md:w-6 md:h-6"
+                        class="hidden dark:block w-5 h-5"
                     />
                     <Icon
                         id="moon-icon"
                         name="mdi:weather-night"
-                        class="block dark:hidden w-5 h-5 md:w-6 md:h-6"
+                        class="block dark:hidden w-5 h-5"
                     />
                 </button>
 
