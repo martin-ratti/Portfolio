@@ -4,6 +4,7 @@ import { sanitizeAssistantHtml, renderAssistantMarkdown } from "../src/utils/cha
 import { ui } from "../src/i18n/ui.ts";
 import { skills } from "../src/data/skills.ts";
 import { projects } from "../src/data/projects.ts";
+import { buildLlmsIndex, buildLlmsFullContext } from "../src/utils/llms.ts";
 
 describe("Chat HTML Sanitization & Markdown Rendering (Mejora #1)", () => {
     it("strips <script>, <iframe>, <object>, <embed>, <svg>, and <form> tags", () => {
@@ -133,5 +134,52 @@ describe("Skill-to-Project Filter Alignment (Mejora #7)", () => {
                 );
             }
         }
+    });
+});
+
+describe("LLMs Context Generation & Sync (llms.txt & llms-full.txt)", () => {
+    const llmsIndex = buildLlmsIndex();
+    const llmsFull = buildLlmsFullContext();
+
+    it("includes every project slug as an absolute case-study URL and links to llms-full.txt in llms.txt", () => {
+        assert.ok(llmsIndex.includes("https://martinratti.com.ar/llms-full.txt"));
+        for (const project of projects) {
+            assert.ok(
+                llmsIndex.includes(`https://martinratti.com.ar/proyectos/${project.slug}`),
+                `Missing project slug "${project.slug}" in llms.txt index`
+            );
+        }
+    });
+
+    it("includes every project slug, repo, live link, and canonical skill in llms-full.txt", () => {
+        for (const project of projects) {
+            assert.ok(llmsFull.includes(project.slug), `Missing slug "${project.slug}" in llms-full.txt`);
+            assert.ok(llmsFull.includes(project.repo), `Missing repo "${project.repo}" in llms-full.txt`);
+            if (project.link) {
+                assert.ok(llmsFull.includes(project.link), `Missing live link "${project.link}" in llms-full.txt`);
+            }
+        }
+
+        const allSkills = [
+            ...skills.languages,
+            ...skills.frontend,
+            ...skills.backend,
+            ...skills.databases,
+            ...skills.tools,
+        ];
+        for (const skill of allSkills) {
+            assert.ok(llmsFull.includes(skill.name), `Missing skill "${skill.name}" in llms-full.txt`);
+        }
+    });
+
+    it("does not expose raw personal email or relative CV links in either llms document", () => {
+        for (const doc of [llmsIndex, llmsFull]) {
+            assert.ok(!doc.includes("martinratti10@gmail.com"));
+            assert.ok(!doc.includes("](/CV_"));
+        }
+    });
+
+    it("keeps llms.txt strictly shorter than llms-full.txt", () => {
+        assert.ok(llmsIndex.length < llmsFull.length);
     });
 });

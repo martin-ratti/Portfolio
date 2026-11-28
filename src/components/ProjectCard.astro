@@ -15,11 +15,23 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const detailUrl = lang === "en" ? `/en/proyectos/${project.slug}` : `/proyectos/${project.slug}`;
 const projectTitle = project.title[lang];
+
+const platforms: ("web" | "mobile" | "desktop")[] = [];
+if (project.tags.some((tag) => ["Astro", "React", "Blazor", "JSP"].includes(tag))) {
+    platforms.push("web");
+}
+if (project.tags.some((tag) => ["WinForms", "Python"].includes(tag))) {
+    platforms.push("desktop");
+}
+if (project.tags.some((tag) => ["Android", "Kotlin", "Jetpack Compose"].includes(tag))) {
+    platforms.push("mobile");
+}
 ---
 
 <article
     class={`project-card project-reveal glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-6 hover:border-violet-500/50 transition-all duration-300 group relative overflow-hidden flex flex-col h-full shadow-lg shadow-slate-200/40 dark:shadow-none ${featured ? "border-violet-500/20" : ""}`}
     data-techs={JSON.stringify(project.tags)}
+    data-platforms={JSON.stringify(platforms)}
 >
     <!-- Background hover glow -->
     <div class="absolute inset-0 bg-linear-to-br from-violet-500/5 via-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" aria-hidden="true"></div>
@@ -59,13 +71,22 @@ const projectTitle = project.title[lang];
                 </span>
             )
         }
+
+        {
+            project.link && (
+                <span class="absolute top-2.5 right-2.5 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-slate-950/75 text-emerald-300 backdrop-blur-md border border-emerald-400/35 shadow-sm">
+                    <span class="h-1.5 w-1.5 rounded-full bg-emerald-400" aria-hidden="true"></span>
+                    {t("project.live")}
+                </span>
+            )
+        }
     </div>
 
     <!-- Content & Action Header -->
     <div class="relative flex flex-col grow pointer-events-none">
         <div class="flex justify-between items-start gap-3 mb-2">
             <h3
-                class={`font-bold text-slate-900 dark:text-white group-hover:text-violet-600 dark:group-hover:text-violet-300 transition-colors line-clamp-2 ${featured ? "text-lg sm:text-xl md:text-2xl" : "text-base sm:text-lg"}`}
+                class={`font-bold text-slate-900 dark:text-white group-hover:text-violet-600 dark:group-hover:text-violet-300 transition-colors line-clamp-2 ${featured ? "text-lg sm:text-xl" : "text-base sm:text-lg"}`}
             >
                 {projectTitle}
             </h3>

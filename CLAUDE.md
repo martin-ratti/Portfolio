@@ -41,7 +41,7 @@ The Stack ↔ Projects filter uses a **DOM CustomEvent** bus, not shared state:
 - UI: `src/components/ChatWidget.astro` (single root `#chat-widget` — the inner `chat-window` toggles `inert` + `aria-hidden` when closed; do not nest a second `id="chat-widget"`).
 - Client logic: `src/utils/chat/chatApi.ts` (POSTs to `/api/chat`) + `src/utils/chat/chatUi.ts` (DOM rendering, `marked` for assistant markdown, focus trap).
 - Server: `src/pages/api/chat.ts` proxies to OpenRouter (`OPENROUTER_API_KEY` env var). It enforces an **origin allowlist** (`martinratti.com.ar`, `www`, `martin-ratti-portfolio.vercel.app`, localhost:4321/3000) and an **in-memory per-IP rate limit** (10 req/min). Adding a new deployed origin requires extending `ALLOWED_ORIGINS` in that file.
-- Context source: `llms.txt` at the repo root. It's read once and cached at module scope (cold-start cost only). Project facts the AI cites must be edited there, not in the system prompt.
+- Context source: `src/utils/llms.ts` builds both `/llms.txt` (compact index) and `/llms-full.txt` (full technical context used by `src/pages/api/chat.ts`) directly from `src/data/projects.ts` and `src/data/skills.ts` and caches it at module scope. Project facts the AI cites must be edited in `src/data/` or `src/utils/llms.ts`, not in the system prompt.
 - Model fallback: `chat.ts` iterates `models[]` (free OpenRouter tier) and breaks on the first non-error response.
 
 ### Data

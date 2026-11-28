@@ -1,9 +1,7 @@
 export const prerender = false;
 
 import type { APIRoute } from 'astro';
-import fs from 'node:fs/promises';
-import path from 'node:path';
-import rawLlmsTxt from '../../../llms.txt?raw';
+import { buildLlmsFullContext } from '../../utils/llms';
 
 const OPENROUTER_API_KEY = import.meta.env.OPENROUTER_API_KEY;
 const SITE_URL = import.meta.env.SITE || 'https://martinratti.com.ar';
@@ -75,20 +73,7 @@ function checkRateLimit(ip: string): boolean {
     return true;
 }
 
-let cachedContext: string | null = typeof rawLlmsTxt === 'string' && rawLlmsTxt.trim().length > 0
-    ? rawLlmsTxt
-    : null;
-
-async function getContext(): Promise<string> {
-    if (cachedContext !== null) return cachedContext;
-    try {
-        const llmsTxtPath = path.resolve(process.cwd(), 'llms.txt');
-        cachedContext = await fs.readFile(llmsTxtPath, 'utf-8');
-    } catch {
-        cachedContext = 'Context unavailable due to internal error.';
-    }
-    return cachedContext;
-}
+const PORTFOLIO_CONTEXT = buildLlmsFullContext();
 
 const MAX_MESSAGES = 20;
 const MAX_MESSAGE_LENGTH = 1500;
@@ -169,8 +154,6 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
             ? 'The user is navigating the site in English. YOU MUST answer exclusively in English.'
             : 'El usuario está navegando el sitio en Español. DEBES responder exclusivamente en Español.';
 
-        const context = await getContext();
-
         const systemPrompt = `You are Martín AI, a virtual assistant for Martín Ratti's portfolio.
 Your goal is to chat about Martín's skills and projects in a professional yet approachable way.
 
@@ -191,7 +174,7 @@ Your goal is to chat about Martín's skills and projects in a professional yet a
 - **GitHub:** If asked, share his profile: https://github.com/martin-ratti
 
 Context about Martín:
-${context}
+${PORTFOLIO_CONTEXT}
 `;
 
         let lastError: unknown = null;

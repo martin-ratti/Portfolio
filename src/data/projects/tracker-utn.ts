@@ -22,7 +22,7 @@ export const trackerUtn: Project = {
     tags: ["React", "TypeScript", "Tailwind CSS", "Node.js", "Express", "Firebase", "pnpm", "Vitest", "Playwright", "Vite", "Git", "GitHub"],
     link: "https://utn-sistemas-frro.web.app",
     repo: "https://github.com/martin-ratti/tracker-ing-sist",
-    featured: false,
+    featured: true,
     coverImage: resolveProjectImage("tracker-utn", "cover"),
     gallery: [
         {

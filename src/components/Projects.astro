@@ -9,11 +9,28 @@ const t = useTranslations(lang);
 
 const featuredProjects = projects.filter((p) => p.featured);
 const otherProjects = projects.filter((p) => !p.featured);
+
+const webCount = projects.filter((p) =>
+    p.tags.some((tag) => ["Astro", "React", "Blazor", "JSP"].includes(tag)),
+).length;
+const desktopCount = projects.filter((p) =>
+    p.tags.some((tag) => ["WinForms", "Python"].includes(tag)),
+).length;
+const mobileCount = projects.filter((p) =>
+    p.tags.some((tag) => ["Android", "Kotlin", "Jetpack Compose"].includes(tag)),
+).length;
+
+const platformOptions = [
+    { id: "all", label: t("projects.platform.all"), count: projects.length },
+    { id: "web", label: t("projects.platform.web"), count: webCount },
+    { id: "desktop", label: t("projects.platform.desktop"), count: desktopCount },
+    { id: "mobile", label: t("projects.platform.mobile"), count: mobileCount },
+] as const;
 ---
 
 <section id="proyectos" class="py-16 sm:py-24 px-4 max-w-6xl mx-auto scroll-mt-16">
     <!-- Editorial Header -->
-    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-8 sm:mb-12">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-6 sm:mb-8">
         <div>
             <div class="inline-flex items-center gap-3 mb-2 sm:mb-3">
                 <span class="font-mono text-xs uppercase tracking-[0.22em] text-violet-600 dark:text-violet-400 font-semibold">
@@ -31,6 +48,30 @@ const otherProjects = projects.filter((p) => !p.featured);
             <Icon name="mdi:folder-multiple-outline" class="w-4 h-4 text-violet-500 shrink-0" aria-hidden="true" />
             <span>{t("projects.subtitle")}</span>
         </p>
+    </div>
+
+    <!-- Platform Filter Pills -->
+    <div
+        id="projects-platform-bar"
+        role="group"
+        aria-label={t("projects.platform.aria")}
+        class="mb-7 sm:mb-9 flex flex-wrap items-center gap-2"
+    >
+        {
+            platformOptions.map((opt, idx) => (
+                <button
+                    type="button"
+                    data-platform={opt.id}
+                    aria-pressed={idx === 0 ? "true" : "false"}
+                    class={`platform-filter-btn min-h-[38px] inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold border transition-colors cursor-pointer ${idx === 0 ? "is-platform-active bg-violet-600 text-white border-violet-600 shadow-sm shadow-violet-600/25" : "bg-white/75 dark:bg-slate-900/60 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-violet-500/50 hover:text-violet-600 dark:hover:text-violet-300"}`}
+                >
+                    <span>{opt.label}</span>
+                    <span class={`platform-count font-mono text-[11px] px-1.5 py-0.5 rounded-full ${idx === 0 ? "bg-white/20 text-white" : "bg-slate-200/80 dark:bg-slate-800 text-slate-600 dark:text-slate-400"}`}>
+                        {opt.count}
+                    </span>
+                </button>
+            ))
+        }
     </div>
 
     <div
@@ -53,7 +94,7 @@ const otherProjects = projects.filter((p) => !p.featured);
         </button>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-7">
+    <div id="featured-projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
         {
             featuredProjects.map((project, index) => (
                 <ProjectCard
@@ -66,7 +107,7 @@ const otherProjects = projects.filter((p) => !p.featured);
         }
     </div>
 
-    <div class="mt-14 sm:mt-16 mb-7 sm:mb-9">
+    <div id="other-projects-heading" class="mt-14 sm:mt-16 mb-7 sm:mb-9">
         <p class="font-mono text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 font-semibold mb-1.5">
             {t("projects.otherEyebrow")}
         </p>
@@ -75,7 +116,7 @@ const otherProjects = projects.filter((p) => !p.featured);
         </h3>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+    <div id="other-projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
         {
             otherProjects.map((project, index) => (
                 <ProjectCard
@@ -148,77 +189,189 @@ const otherProjects = projects.filter((p) => !p.featured);
         const banner = document.getElementById("projects-filter-banner");
         const bannerText = document.getElementById("projects-filter-text");
         const clearBtn = document.getElementById("projects-filter-clear");
+        const platformButtons = document.querySelectorAll<HTMLButtonElement>(".platform-filter-btn");
+        const featuredGrid = document.getElementById("featured-projects-grid");
+        const otherHeading = document.getElementById("other-projects-heading");
+        const otherGrid = document.getElementById("other-projects-grid");
 
-        clearBtn?.addEventListener("click", () => {
-            window.dispatchEvent(
-                new CustomEvent("filter-projects", {
-                    detail: { skill: null },
-                }),
-            );
-        }, { signal });
+        let activePlatform = "all";
+        let hasActiveSkillFilter = false;
 
-        window.addEventListener("filter-projects", (e: Event) => {
-            const customEvent = e as CustomEvent;
-            const selectedSkill = customEvent.detail?.skill;
-            const cards = document.querySelectorAll(".project-card");
+        const ACTIVE_BTN_CLASSES = [
+            "is-platform-active",
+            "bg-violet-600",
+            "text-white",
+            "border-violet-600",
+            "shadow-sm",
+            "shadow-violet-600/25",
+        ];
+        const INACTIVE_BTN_CLASSES = [
+            "bg-white/75",
+            "dark:bg-slate-900/60",
+            "text-slate-700",
+            "dark:text-slate-300",
+            "border-slate-200",
+            "dark:border-slate-800",
+            "hover:border-violet-500/50",
+            "hover:text-violet-600",
+            "dark:hover:text-violet-300",
+        ];
 
-            if (!selectedSkill) {
-                cards.forEach((card) => {
-                    card.classList.remove("is-match", "is-dimmed", "animate-success-flash");
-                });
-                if (banner) {
-                    banner.classList.add("hidden");
-                    banner.classList.remove("flex");
-                }
-                if (bannerText) bannerText.textContent = "";
-                return;
-            }
+        function applyPlatformFilter(platform: string) {
+            activePlatform = platform;
 
-            let firstMatch: HTMLElement | null = null;
-            let matchCount = 0;
+            platformButtons.forEach((btn) => {
+                const isSelected = btn.dataset.platform === platform;
+                btn.setAttribute("aria-pressed", isSelected ? "true" : "false");
+                const countSpan = btn.querySelector(".platform-count");
 
-            cards.forEach((card) => {
-                const el = card as HTMLElement;
-                const techs = JSON.parse(el.getAttribute("data-techs") || "[]");
-                el.classList.remove("animate-success-flash");
-
-                if (techs.includes(selectedSkill)) {
-                    el.classList.add("is-match");
-                    el.classList.remove("is-dimmed");
-                    matchCount++;
-                    if (!firstMatch) firstMatch = el;
+                if (isSelected) {
+                    btn.classList.add(...ACTIVE_BTN_CLASSES);
+                    btn.classList.remove(...INACTIVE_BTN_CLASSES);
+                    countSpan?.classList.add("bg-white/20", "text-white");
+                    countSpan?.classList.remove(
+                        "bg-slate-200/80",
+                        "dark:bg-slate-800",
+                        "text-slate-600",
+                        "dark:text-slate-400",
+                    );
                 } else {
-                    el.classList.add("is-dimmed");
-                    el.classList.remove("is-match");
+                    btn.classList.remove(...ACTIVE_BTN_CLASSES);
+                    btn.classList.add(...INACTIVE_BTN_CLASSES);
+                    countSpan?.classList.remove("bg-white/20", "text-white");
+                    countSpan?.classList.add(
+                        "bg-slate-200/80",
+                        "dark:bg-slate-800",
+                        "text-slate-600",
+                        "dark:text-slate-400",
+                    );
                 }
             });
 
-            if (banner && bannerText) {
-                const prefix = banner.dataset.prefix || "Filtrando por";
-                const noun = matchCount === 1
-                    ? (banner.dataset.singular || "proyecto")
-                    : (banner.dataset.plural || "proyectos");
-                bannerText.textContent = `${prefix} ${selectedSkill} (${matchCount} ${noun})`;
-                banner.classList.remove("hidden");
-                banner.classList.add("flex");
-            }
+            const syncGridVisibility = (grid: HTMLElement | null): number => {
+                if (!grid) return 0;
+                let visibleCount = 0;
+                grid.querySelectorAll<HTMLElement>(".project-card").forEach((card) => {
+                    const cardPlatforms = JSON.parse(
+                        card.getAttribute("data-platforms") || "[]",
+                    ) as string[];
+                    const matches = platform === "all" || cardPlatforms.includes(platform);
+                    card.classList.toggle("hidden", !matches);
+                    if (matches) visibleCount++;
+                });
+                grid.classList.toggle("hidden", visibleCount === 0);
+                return visibleCount;
+            };
 
-            if (firstMatch) {
-                const matchEl = firstMatch as HTMLElement;
-                const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-                setTimeout(() => {
-                    matchEl.scrollIntoView({
-                        behavior: reduceMotion ? "auto" : "smooth",
-                        block: "center",
-                    });
-                    if (!reduceMotion) {
-                        setTimeout(() => {
-                            matchEl.classList.add("animate-success-flash");
-                        }, 450);
+            syncGridVisibility(featuredGrid);
+            const otherVisible = syncGridVisibility(otherGrid);
+            otherHeading?.classList.toggle("hidden", otherVisible === 0);
+        }
+
+        platformButtons.forEach((btn) => {
+            btn.addEventListener(
+                "click",
+                () => {
+                    const targetPlatform = btn.dataset.platform || "all";
+                    if (hasActiveSkillFilter) {
+                        hasActiveSkillFilter = false;
+                        window.dispatchEvent(
+                            new CustomEvent("filter-projects", {
+                                detail: { skill: null },
+                            }),
+                        );
                     }
-                }, 100);
-            }
-        }, { signal });
+                    applyPlatformFilter(targetPlatform);
+                },
+                { signal },
+            );
+        });
+
+        clearBtn?.addEventListener(
+            "click",
+            () => {
+                window.dispatchEvent(
+                    new CustomEvent("filter-projects", {
+                        detail: { skill: null },
+                    }),
+                );
+            },
+            { signal },
+        );
+
+        window.addEventListener(
+            "filter-projects",
+            (e: Event) => {
+                const customEvent = e as CustomEvent;
+                const selectedSkill = customEvent.detail?.skill;
+                const cards = document.querySelectorAll(".project-card");
+
+                if (!selectedSkill) {
+                    hasActiveSkillFilter = false;
+                    cards.forEach((card) => {
+                        card.classList.remove("is-match", "is-dimmed", "animate-success-flash");
+                    });
+                    if (banner) {
+                        banner.classList.add("hidden");
+                        banner.classList.remove("flex");
+                    }
+                    if (bannerText) bannerText.textContent = "";
+                    return;
+                }
+
+                hasActiveSkillFilter = true;
+                if (activePlatform !== "all") {
+                    applyPlatformFilter("all");
+                }
+
+                let firstMatch: HTMLElement | null = null;
+                let matchCount = 0;
+
+                cards.forEach((card) => {
+                    const el = card as HTMLElement;
+                    const techs = JSON.parse(el.getAttribute("data-techs") || "[]");
+                    el.classList.remove("animate-success-flash");
+
+                    if (techs.includes(selectedSkill)) {
+                        el.classList.add("is-match");
+                        el.classList.remove("is-dimmed");
+                        matchCount++;
+                        if (!firstMatch) firstMatch = el;
+                    } else {
+                        el.classList.add("is-dimmed");
+                        el.classList.remove("is-match");
+                    }
+                });
+
+                if (banner && bannerText) {
+                    const prefix = banner.dataset.prefix || "Filtrando por";
+                    const noun =
+                        matchCount === 1
+                            ? banner.dataset.singular || "proyecto"
+                            : banner.dataset.plural || "proyectos";
+                    bannerText.textContent = `${prefix} ${selectedSkill} (${matchCount} ${noun})`;
+                    banner.classList.remove("hidden");
+                    banner.classList.add("flex");
+                }
+
+                if (firstMatch) {
+                    const matchEl = firstMatch as HTMLElement;
+                    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+                    setTimeout(() => {
+                        matchEl.scrollIntoView({
+                            behavior: reduceMotion ? "auto" : "smooth",
+                            block: "center",
+                        });
+                        if (!reduceMotion) {
+                            setTimeout(() => {
+                                matchEl.classList.add("animate-success-flash");
+                            }, 450);
+                        }
+                    }, 100);
+                }
+            },
+            { signal },
+        );
     }
 
     document.addEventListener("astro:before-swap", cleanupProjectsFilter);
