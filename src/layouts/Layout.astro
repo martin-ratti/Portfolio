@@ -39,6 +39,7 @@ const ogImageUrl = new URL("/og-image.png", siteUrl).href;
 const pageImageUrl = new URL(image, siteUrl).href;
 const isDefaultOg = image === "/og-image.png";
 const pageImageType = image.toLowerCase().endsWith(".webp") ? "image/webp" : undefined;
+const enableVercelTelemetry = import.meta.env.PROD && Boolean(process.env.VERCEL);
 ---
 
 <!doctype html>
@@ -142,8 +143,14 @@ const pageImageType = image.toLowerCase().endsWith(".webp") ? "image/webp" : und
 				<script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
 			))
 		}
-		<script is:inline defer src="/_vercel/insights/script.js"></script>
-		<script is:inline defer src="/_vercel/speed-insights/script.js"></script>
+		{
+			enableVercelTelemetry && (
+				<>
+					<script is:inline defer src="/_vercel/insights/script.js"></script>
+					<script is:inline defer src="/_vercel/speed-insights/script.js"></script>
+				</>
+			)
+		}
 		<title>{title}</title>
 	</head>
 	<body

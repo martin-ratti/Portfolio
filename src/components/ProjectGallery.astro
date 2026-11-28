@@ -1,13 +1,15 @@
 ---
 import type { ProjectImage } from "../data/projects";
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { Icon } from "astro-icon/components";
 
 interface Props {
     images: ProjectImage[];
     projectTitle: string;
+    coverTransitionName?: string;
 }
 
-const { images, projectTitle } = Astro.props;
+const { images, projectTitle, coverTransitionName } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
@@ -23,81 +25,85 @@ const serializedImages = (images || []).map((img) => ({
 
 {
     primaryImage && (
-        <section class="project-gallery w-full my-8" aria-label={t("project.gallery")}>
+        <section class="project-gallery w-full my-6 sm:my-8" aria-label={t("project.gallery")}>
             <script is:inline type="application/json" id="gallery-data" set:html={JSON.stringify(serializedImages)} />
 
-            <!-- Main Featured Image Display -->
-            <div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-slate-900/80 border border-slate-700/60 shadow-2xl group">
-                <button
-                    type="button"
-                    id="gallery-open-btn"
-                    class="block w-full h-full cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-violet-500"
-                    aria-label={t("project.openFullscreen")}
-                >
-                    <img
-                        id="gallery-main-img"
-                        src={primaryImage.url}
-                        alt={primaryImage.alt[lang] || projectTitle}
-                        fetchpriority="high"
-                        decoding="async"
-                        class="w-full h-full object-cover object-top transition-all duration-300 group-hover:scale-[1.02]"
-                        data-current-index="0"
-                    />
-                </button>
+            <!-- Main Gallery Card -->
+            <div class="rounded-2xl sm:rounded-3xl overflow-hidden bg-white/80 dark:bg-slate-900/70 border border-slate-200/90 dark:border-slate-800/90 shadow-xl">
+                <!-- Image Stage -->
+                <div id="gallery-stage" class="relative w-full aspect-video bg-slate-900/85 group overflow-hidden">
+                    <button
+                        type="button"
+                        id="gallery-open-btn"
+                        class="block w-full h-full cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-violet-500"
+                        aria-label={t("project.openFullscreen")}
+                    >
+                        <img
+                            id="gallery-main-img"
+                            src={primaryImage.url}
+                            alt={primaryImage.alt[lang] || projectTitle}
+                            fetchpriority="high"
+                            decoding="async"
+                            class="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
+                            data-current-index="0"
+                            {...(coverTransitionName ? { "transition:name": coverTransitionName } : {})}
+                        />
+                    </button>
 
-                <!-- Quick Navigation Arrows on Main Frame -->
-                {hasMultiple && (
-                    <>
-                        <button
-                            type="button"
-                            id="gallery-main-prev"
-                            class="absolute left-3 top-1/2 -translate-y-1/2 z-10 p-2.5 rounded-full bg-slate-900/75 hover:bg-violet-600 text-white backdrop-blur-md border border-slate-700/50 opacity-90 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100 focus-visible:opacity-100 transition-all duration-200 shadow-lg cursor-pointer"
-                            aria-label={t("project.galleryPrev")}
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                <path d="m15 18-6-6 6-6" />
-                            </svg>
-                        </button>
-                        <button
-                            type="button"
-                            id="gallery-main-next"
-                            class="absolute right-3 top-1/2 -translate-y-1/2 z-10 p-2.5 rounded-full bg-slate-900/75 hover:bg-violet-600 text-white backdrop-blur-md border border-slate-700/50 opacity-90 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100 focus-visible:opacity-100 transition-all duration-200 shadow-lg cursor-pointer"
-                            aria-label={t("project.galleryNext")}
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                <path d="m9 18 6-6-6-6" />
-                            </svg>
-                        </button>
-                    </>
-                )}
+                    <!-- Compact Top-Right Counter & Zoom Cue -->
+                    <span
+                        class="pointer-events-none absolute top-3 right-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-mono font-semibold text-white bg-slate-950/70 backdrop-blur-md border border-white/15 shadow-md"
+                        aria-hidden="true"
+                    >
+                        <Icon name="mdi:fullscreen" class="w-3.5 h-3.5 text-violet-300" />
+                        <span id="gallery-main-counter">1 / {images.length}</span>
+                    </span>
 
-                <!-- Overlay Caption and Fullscreen Hint -->
-                <div class="absolute inset-x-0 bottom-0 p-4 bg-linear-to-t from-slate-950/90 via-slate-950/50 to-transparent flex flex-col sm:flex-row sm:items-center justify-between gap-2 pointer-events-none">
+                    <!-- Quick Navigation Arrows on Main Frame -->
+                    {hasMultiple && (
+                        <>
+                            <button
+                                type="button"
+                                id="gallery-main-prev"
+                                class="absolute left-2.5 sm:left-3 top-1/2 -translate-y-1/2 z-10 min-w-[40px] min-h-[40px] p-2 flex items-center justify-center rounded-full bg-slate-900/80 hover:bg-violet-600 text-white backdrop-blur-md border border-white/15 opacity-95 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100 focus-visible:opacity-100 transition-all duration-200 shadow-lg cursor-pointer"
+                                aria-label={t("project.galleryPrev")}
+                            >
+                                <Icon name="mdi:chevron-left" class="w-5 h-5" aria-hidden="true" />
+                            </button>
+                            <button
+                                type="button"
+                                id="gallery-main-next"
+                                class="absolute right-2.5 sm:right-3 top-1/2 -translate-y-1/2 z-10 min-w-[40px] min-h-[40px] p-2 flex items-center justify-center rounded-full bg-slate-900/80 hover:bg-violet-600 text-white backdrop-blur-md border border-white/15 opacity-95 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100 focus-visible:opacity-100 transition-all duration-200 shadow-lg cursor-pointer"
+                                aria-label={t("project.galleryNext")}
+                            >
+                                <Icon name="mdi:chevron-right" class="w-5 h-5" aria-hidden="true" />
+                            </button>
+                        </>
+                    )}
+                </div>
+
+                <!-- Unobstructed Caption Bar Below Image -->
+                <div class="px-4 py-3 border-t border-slate-200/80 dark:border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <p
                         id="gallery-main-caption"
-                        class="text-xs sm:text-sm text-slate-200 font-medium drop-shadow-md line-clamp-2"
+                        class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 font-medium leading-snug"
                     >
                         {primaryImage.caption?.[lang] || primaryImage.alt[lang]}
                     </p>
-                    <span class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-violet-300 bg-violet-950/60 border border-violet-800/60 px-2.5 py-1 rounded-full shrink-0 backdrop-blur-sm self-start sm:self-auto">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <polyline points="15 3 21 3 21 9" />
-                            <polyline points="9 21 3 21 3 15" />
-                            <line x1="21" y1="3" x2="14" y2="10" />
-                            <line x1="3" y1="21" x2="10" y2="14" />
-                        </svg>
-                        {t("project.galleryHint")}
+                    <span class="inline-flex items-center gap-1.5 text-[11px] font-medium text-violet-600 dark:text-violet-400 shrink-0">
+                        <Icon name="mdi:fullscreen" class="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
+                        <span>{t("project.galleryHint")}</span>
                     </span>
                 </div>
             </div>
 
             <!-- Thumbnail Carousel / Selector -->
             {hasMultiple && (
-                <div class="mt-4 flex items-center gap-3 overflow-x-auto no-scrollbar pb-2 pt-1 px-1">
+                <div class="gallery-thumbs mt-3.5 flex items-center gap-2.5 sm:gap-3 overflow-x-auto no-scrollbar pb-2 pt-1 px-0.5">
                     {images.map((img, idx) => (
                         <button
                             type="button"
-                            class={`gallery-thumb-btn shrink-0 w-24 sm:w-32 aspect-video rounded-xl overflow-hidden border-2 transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-violet-500 ${idx === 0 ? "border-violet-500 ring-2 ring-violet-500/40 opacity-100 scale-102" : "border-slate-700/60 opacity-60 hover:opacity-100 hover:border-slate-500"}`}
+                            class={`gallery-thumb-btn shrink-0 w-24 sm:w-32 aspect-video rounded-xl overflow-hidden border-2 transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 ${idx === 0 ? "border-violet-500 ring-2 ring-violet-500/40 opacity-100 scale-102" : "border-slate-300 dark:border-slate-700/60 opacity-65 hover:opacity-100 hover:border-slate-400 dark:hover:border-slate-500"}`}
                             data-index={idx}
                             aria-label={`${t("project.viewScreenshot")} ${idx + 1}`}
                             aria-current={idx === 0 ? "true" : undefined}
@@ -114,78 +120,108 @@ const serializedImages = (images || []).map((img) => ({
                 </div>
             )}
 
-            <!-- Fullscreen Lightbox Modal -->
-            <div
+            <!-- Native Top-Layer Modal Lightbox -->
+            <dialog
                 id="gallery-lightbox"
-                inert
-                aria-hidden="true"
-                class="fixed inset-0 z-50 bg-slate-950/92 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 opacity-0 pointer-events-none transition-opacity duration-300"
-                role="dialog"
-                aria-modal="true"
+                class="gallery-lightbox"
                 aria-label={t("project.gallery")}
+                {...({ closedby: "any" } as Record<string, unknown>)}
             >
-                <!-- Close Button -->
-                <button
-                    type="button"
-                    id="lightbox-close"
-                    class="absolute top-4 right-4 z-60 p-3 rounded-full bg-slate-800/80 hover:bg-violet-600 text-white border border-slate-700/60 transition cursor-pointer shadow-xl focus:outline-none focus:ring-2 focus:ring-violet-400"
-                    aria-label={t("project.closeLightbox")}
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <line x1="18" y1="6" x2="6" y2="18" />
-                        <line x1="6" y1="6" x2="18" y2="6" />
-                    </svg>
-                </button>
-
-                <!-- Navigation Previous -->
-                {hasMultiple && (
-                    <button
-                        type="button"
-                        id="lightbox-prev"
-                        class="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-60 p-3 rounded-full bg-slate-900/80 hover:bg-violet-600 text-white border border-slate-700/60 backdrop-blur-md transition cursor-pointer shadow-xl focus:outline-none focus:ring-2 focus:ring-violet-400"
-                        aria-label={t("project.galleryPrev")}
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="m15 18-6-6 6-6" />
-                        </svg>
-                    </button>
-                )}
-
-                <!-- Image and Caption Box -->
-                <div class="relative max-w-5xl max-h-[85vh] flex flex-col items-center justify-center">
-                    <img
-                        id="lightbox-img"
-                        src={primaryImage.url}
-                        alt={primaryImage.alt[lang] || projectTitle}
-                        class="max-w-[92vw] max-h-[75vh] object-contain rounded-xl shadow-2xl border border-slate-700/60 select-none"
-                    />
-                    <div class="mt-4 text-center px-4 max-w-2xl">
-                        <p id="lightbox-caption" class="text-sm sm:text-base text-slate-200 font-medium drop-shadow">
-                            {primaryImage.caption?.[lang] || primaryImage.alt[lang]}
-                        </p>
-                        <span id="lightbox-counter" class="text-xs text-slate-400 font-mono mt-1 block">
+                <div class="rounded-2xl bg-slate-950/95 border border-white/10 p-3 sm:p-4 flex flex-col gap-3 shadow-2xl text-white">
+                    <!-- Top Controls Bar -->
+                    <div class="flex items-center justify-between gap-3 px-1">
+                        <span id="lightbox-counter" class="text-xs font-mono text-slate-300">
                             1 / {images.length}
                         </span>
+                        <button
+                            type="button"
+                            id="lightbox-close"
+                            autofocus
+                            class="min-w-[44px] min-h-[44px] p-2.5 flex items-center justify-center rounded-full bg-slate-800/80 hover:bg-violet-600 text-white border border-slate-700/60 transition cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-400"
+                            aria-label={t("project.closeLightbox")}
+                        >
+                            <Icon name="mdi:close" class="w-5 h-5" aria-hidden="true" />
+                        </button>
                     </div>
-                </div>
 
-                <!-- Navigation Next -->
-                {hasMultiple && (
-                    <button
-                        type="button"
-                        id="lightbox-next"
-                        class="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-60 p-3 rounded-full bg-slate-900/80 hover:bg-violet-600 text-white border border-slate-700/60 backdrop-blur-md transition cursor-pointer shadow-xl focus:outline-none focus:ring-2 focus:ring-violet-400"
-                        aria-label={t("project.galleryNext")}
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="m9 18 6-6-6-6" />
-                        </svg>
-                    </button>
-                )}
-            </div>
+                    <!-- Lightbox Image Stage -->
+                    <div id="lightbox-stage" class="relative flex items-center justify-center">
+                        {hasMultiple && (
+                            <button
+                                type="button"
+                                id="lightbox-prev"
+                                class="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 z-10 min-w-[44px] min-h-[44px] p-2.5 flex items-center justify-center rounded-full bg-slate-900/85 hover:bg-violet-600 text-white border border-white/15 backdrop-blur-md transition cursor-pointer shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-400"
+                                aria-label={t("project.galleryPrev")}
+                            >
+                                <Icon name="mdi:chevron-left" class="w-6 h-6" aria-hidden="true" />
+                            </button>
+                        )}
+
+                        <img
+                            id="lightbox-img"
+                            src={primaryImage.url}
+                            alt={primaryImage.alt[lang] || projectTitle}
+                            class="max-w-full max-h-[68dvh] sm:max-h-[74dvh] object-contain rounded-xl border border-white/10 select-none"
+                        />
+
+                        {hasMultiple && (
+                            <button
+                                type="button"
+                                id="lightbox-next"
+                                class="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-10 min-w-[44px] min-h-[44px] p-2.5 flex items-center justify-center rounded-full bg-slate-900/85 hover:bg-violet-600 text-white border border-white/15 backdrop-blur-md transition cursor-pointer shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-400"
+                                aria-label={t("project.galleryNext")}
+                            >
+                                <Icon name="mdi:chevron-right" class="w-6 h-6" aria-hidden="true" />
+                            </button>
+                        )}
+                    </div>
+
+                    <!-- Caption -->
+                    <p id="lightbox-caption" class="text-xs sm:text-sm text-slate-200 font-medium text-center px-2 pb-1">
+                        {primaryImage.caption?.[lang] || primaryImage.alt[lang]}
+                    </p>
+                </div>
+            </dialog>
         </section>
     )
 }
+
+<style>
+    .gallery-thumbs {
+        scroll-snap-type: x proximity;
+    }
+
+    .gallery-thumb-btn {
+        scroll-snap-align: start;
+    }
+
+    dialog.gallery-lightbox {
+        margin: auto;
+        padding: 0;
+        border: none;
+        background: transparent;
+        width: min(94vw, 68rem);
+        max-width: min(94vw, 68rem);
+        max-height: 92dvh;
+        overflow: visible;
+    }
+
+    dialog.gallery-lightbox[open] {
+        display: flex;
+        flex-direction: column;
+    }
+
+    dialog.gallery-lightbox:modal {
+        overscroll-behavior: contain;
+    }
+
+    dialog.gallery-lightbox::backdrop {
+        background-color: rgba(2, 6, 23, 0.92);
+        backdrop-filter: blur(8px);
+        overflow: hidden;
+        overscroll-behavior: contain;
+    }
+</style>
 
 <script>
     interface GalleryImageItem {
@@ -195,15 +231,16 @@ const serializedImages = (images || []).map((img) => ({
     }
 
     let galleryAbortController: AbortController | null = null;
-    let lastFocusedElement: HTMLElement | null = null;
 
     function cleanupGallery() {
+        const lightbox = document.getElementById("gallery-lightbox") as HTMLDialogElement | null;
+        if (lightbox?.open) {
+            lightbox.close();
+        }
         if (galleryAbortController) {
             galleryAbortController.abort();
             galleryAbortController = null;
         }
-        document.body.style.overflow = "";
-        lastFocusedElement = null;
     }
 
     function initGallery() {
@@ -225,23 +262,23 @@ const serializedImages = (images || []).map((img) => ({
 
         let currentIndex = 0;
 
+        const mainStage = document.getElementById("gallery-stage");
         const mainImg = document.getElementById("gallery-main-img") as HTMLImageElement | null;
         const mainCaption = document.getElementById("gallery-main-caption");
+        const mainCounter = document.getElementById("gallery-main-counter");
         const openBtn = document.getElementById("gallery-open-btn");
         const mainPrev = document.getElementById("gallery-main-prev");
         const mainNext = document.getElementById("gallery-main-next");
         const thumbBtns = document.querySelectorAll<HTMLButtonElement>(".gallery-thumb-btn");
 
-        const lightbox = document.getElementById("gallery-lightbox");
+        const lightbox = document.getElementById("gallery-lightbox") as HTMLDialogElement | null;
+        const lightboxStage = document.getElementById("lightbox-stage");
         const lightboxImg = document.getElementById("lightbox-img") as HTMLImageElement | null;
         const lightboxCaption = document.getElementById("lightbox-caption");
         const lightboxCounter = document.getElementById("lightbox-counter");
         const lightboxClose = document.getElementById("lightbox-close") as HTMLButtonElement | null;
         const lightboxPrev = document.getElementById("lightbox-prev");
         const lightboxNext = document.getElementById("lightbox-next");
-
-        const isLightboxOpen = () =>
-            Boolean(lightbox && !lightbox.hasAttribute("inert") && lightbox.getAttribute("aria-hidden") !== "true");
 
         function updateView(idx: number) {
             if (idx < 0) idx = images.length - 1;
@@ -250,6 +287,7 @@ const serializedImages = (images || []).map((img) => ({
 
             const item = images[currentIndex];
             const captionText = item.caption || item.alt || "";
+            const counterText = `${currentIndex + 1} / ${images.length}`;
 
             if (mainImg) {
                 mainImg.src = item.url;
@@ -259,16 +297,19 @@ const serializedImages = (images || []).map((img) => ({
             if (mainCaption) {
                 mainCaption.textContent = captionText;
             }
+            if (mainCounter) {
+                mainCounter.textContent = counterText;
+            }
 
             thumbBtns.forEach((btn) => {
                 const bIdx = Number(btn.getAttribute("data-index"));
                 if (bIdx === currentIndex) {
                     btn.classList.add("border-violet-500", "ring-2", "ring-violet-500/40", "opacity-100", "scale-102");
-                    btn.classList.remove("border-slate-700/60", "opacity-60");
+                    btn.classList.remove("border-slate-300", "dark:border-slate-700/60", "opacity-65");
                     btn.setAttribute("aria-current", "true");
                 } else {
                     btn.classList.remove("border-violet-500", "ring-2", "ring-violet-500/40", "opacity-100", "scale-102");
-                    btn.classList.add("border-slate-700/60", "opacity-60");
+                    btn.classList.add("border-slate-300", "dark:border-slate-700/60", "opacity-65");
                     btn.removeAttribute("aria-current");
                 }
             });
@@ -281,107 +322,152 @@ const serializedImages = (images || []).map((img) => ({
                 lightboxCaption.textContent = captionText;
             }
             if (lightboxCounter) {
-                lightboxCounter.textContent = `${currentIndex + 1} / ${images.length}`;
+                lightboxCounter.textContent = counterText;
             }
         }
 
         function openLightbox() {
             if (!lightbox) return;
-            lastFocusedElement = document.activeElement as HTMLElement | null;
             updateView(currentIndex);
-            lightbox.removeAttribute("inert");
-            lightbox.setAttribute("aria-hidden", "false");
-            lightbox.classList.remove("opacity-0", "pointer-events-none");
-            lightbox.classList.add("opacity-100", "pointer-events-auto");
-            document.body.style.overflow = "hidden";
-            lightboxClose?.focus();
+            if (!lightbox.open) {
+                lightbox.showModal();
+            }
         }
 
         function closeLightbox() {
-            if (!lightbox) return;
-            lightbox.setAttribute("inert", "");
-            lightbox.setAttribute("aria-hidden", "true");
-            lightbox.classList.add("opacity-0", "pointer-events-none");
-            lightbox.classList.remove("opacity-100", "pointer-events-auto");
-            document.body.style.overflow = "";
-            if (lastFocusedElement && document.contains(lastFocusedElement)) {
-                lastFocusedElement.focus();
+            if (lightbox?.open) {
+                lightbox.close();
             }
-            lastFocusedElement = null;
         }
 
+        function attachSwipe(element: HTMLElement | null) {
+            if (!element || images.length <= 1) return;
+            let startX = 0;
+            let startY = 0;
+
+            element.addEventListener(
+                "touchstart",
+                (e: TouchEvent) => {
+                    if (e.touches.length !== 1) return;
+                    startX = e.touches[0].clientX;
+                    startY = e.touches[0].clientY;
+                },
+                { passive: true, signal },
+            );
+
+            element.addEventListener(
+                "touchend",
+                (e: TouchEvent) => {
+                    if (e.changedTouches.length !== 1) return;
+                    const dx = e.changedTouches[0].clientX - startX;
+                    const dy = e.changedTouches[0].clientY - startY;
+                    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.3) {
+                        updateView(currentIndex + (dx < 0 ? 1 : -1));
+                    }
+                },
+                { passive: true, signal },
+            );
+        }
+
+        attachSwipe(mainStage);
+        attachSwipe(lightboxStage);
+
         thumbBtns.forEach((btn) => {
-            btn.addEventListener("click", () => {
-                const idx = Number(btn.getAttribute("data-index"));
-                updateView(idx);
-            }, { signal });
+            btn.addEventListener(
+                "click",
+                () => {
+                    const idx = Number(btn.getAttribute("data-index"));
+                    updateView(idx);
+                },
+                { signal },
+            );
         });
 
-        mainPrev?.addEventListener("click", (e) => {
-            e.stopPropagation();
-            updateView(currentIndex - 1);
-        }, { signal });
+        mainPrev?.addEventListener(
+            "click",
+            (e) => {
+                e.stopPropagation();
+                updateView(currentIndex - 1);
+            },
+            { signal },
+        );
 
-        mainNext?.addEventListener("click", (e) => {
-            e.stopPropagation();
-            updateView(currentIndex + 1);
-        }, { signal });
+        mainNext?.addEventListener(
+            "click",
+            (e) => {
+                e.stopPropagation();
+                updateView(currentIndex + 1);
+            },
+            { signal },
+        );
 
         openBtn?.addEventListener("click", openLightbox, { signal });
         lightboxClose?.addEventListener("click", closeLightbox, { signal });
 
-        lightbox?.addEventListener("click", (e) => {
-            if (e.target === lightbox) {
-                closeLightbox();
-            }
-        }, { signal });
-
-        lightboxPrev?.addEventListener("click", (e) => {
-            e.stopPropagation();
-            updateView(currentIndex - 1);
-        }, { signal });
-
-        lightboxNext?.addEventListener("click", (e) => {
-            e.stopPropagation();
-            updateView(currentIndex + 1);
-        }, { signal });
-
-        window.addEventListener("keydown", (e) => {
-            if (!isLightboxOpen() || !lightbox) return;
-
-            if (e.key === "Escape") {
-                e.preventDefault();
-                closeLightbox();
-            } else if (e.key === "ArrowLeft") {
-                e.preventDefault();
-                updateView(currentIndex - 1);
-            } else if (e.key === "ArrowRight") {
-                e.preventDefault();
-                updateView(currentIndex + 1);
-            } else if (e.key === "Tab") {
-                const focusables = Array.from(
-                    lightbox.querySelectorAll<HTMLElement>(
-                        'button:not([disabled]), [href], [tabindex]:not([tabindex="-1"])'
-                    )
+        // Fallback for browsers without <dialog closedby="any"> support (e.g. Safari)
+        if (lightbox && !("closedBy" in HTMLDialogElement.prototype)) {
+            const isOutside = (e: PointerEvent) => {
+                const r = lightbox.getBoundingClientRect();
+                return (
+                    e.clientX < r.left ||
+                    e.clientX > r.right ||
+                    e.clientY < r.top ||
+                    e.clientY > r.bottom
                 );
-                if (focusables.length === 0) return;
-
-                const first = focusables[0];
-                const last = focusables[focusables.length - 1];
-
-                if (e.shiftKey) {
-                    if (document.activeElement === first || !lightbox.contains(document.activeElement)) {
-                        e.preventDefault();
-                        last.focus();
+            };
+            let pressedOutside = false;
+            lightbox.addEventListener(
+                "pointerdown",
+                (e) => {
+                    pressedOutside = isOutside(e);
+                },
+                { signal },
+            );
+            lightbox.addEventListener(
+                "pointerup",
+                (e) => {
+                    if (pressedOutside && isOutside(e)) {
+                        closeLightbox();
                     }
-                } else {
-                    if (document.activeElement === last || !lightbox.contains(document.activeElement)) {
-                        e.preventDefault();
-                        first.focus();
-                    }
+                    pressedOutside = false;
+                },
+                { signal },
+            );
+        }
+
+        lightboxPrev?.addEventListener(
+            "click",
+            (e) => {
+                e.stopPropagation();
+                updateView(currentIndex - 1);
+            },
+            { signal },
+        );
+
+        lightboxNext?.addEventListener(
+            "click",
+            (e) => {
+                e.stopPropagation();
+                updateView(currentIndex + 1);
+            },
+            { signal },
+        );
+
+        window.addEventListener(
+            "keydown",
+            (e) => {
+                if (!lightbox?.open) return;
+
+                if (e.key === "ArrowLeft") {
+                    e.preventDefault();
+                    updateView(currentIndex - 1);
+                } else if (e.key === "ArrowRight") {
+                    e.preventDefault();
+                    updateView(currentIndex + 1);
                 }
-            }
-        }, { signal });
+            },
+            { signal },
+        );
     }
 
     document.addEventListener("astro:before-swap", cleanupGallery);
