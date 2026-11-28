@@ -1,117 +1,706 @@
 ---
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
 import { Icon } from "astro-icon/components";
+import { projects } from "../data/projects";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+
+const projectsCount = projects.length;
+const projectUrlPrefix = lang === "en" ? "/en/proyectos" : "/proyectos";
+
+const pillars = [
+    {
+        id: "arch",
+        index: "01",
+        accent: "violet",
+        icon: "mdi:layers-triple-outline",
+        iconColorClass: "text-violet-600 dark:text-violet-400",
+        badgeClass:
+            "bg-violet-500/10 text-violet-700 dark:text-violet-300 border-violet-500/25",
+        bulletIconClass: "text-violet-500 dark:text-violet-400",
+        tabLabel: t("about.pillar.arch.tab"),
+        code: t("about.pillar.arch.code"),
+        badge: t("about.pillar.arch.badge"),
+        title: t("about.pillar.arch.title"),
+        desc: t("about.pillar.arch.desc"),
+        points: [
+            t("about.pillar.arch.p1"),
+            t("about.pillar.arch.p2"),
+            t("about.pillar.arch.p3"),
+        ],
+        projects: [
+            { name: "Zenith POS", slug: "zenith-pos" },
+            { name: "TimeLens", slug: "timelens" },
+            { name: "OCR Web", slug: "ocr-web" },
+        ],
+    },
+    {
+        id: "shipping",
+        index: "02",
+        accent: "fuchsia",
+        icon: "mdi:rocket-launch-outline",
+        iconColorClass: "text-fuchsia-600 dark:text-fuchsia-400",
+        badgeClass:
+            "bg-fuchsia-500/10 text-fuchsia-700 dark:text-fuchsia-300 border-fuchsia-500/25",
+        bulletIconClass: "text-fuchsia-500 dark:text-fuchsia-400",
+        tabLabel: t("about.pillar.shipping.tab"),
+        code: t("about.pillar.shipping.code"),
+        badge: t("about.pillar.shipping.badge"),
+        title: t("about.pillar.shipping.title"),
+        desc: t("about.pillar.shipping.desc"),
+        points: [
+            t("about.pillar.shipping.p1"),
+            t("about.pillar.shipping.p2"),
+            t("about.pillar.shipping.p3"),
+        ],
+        projects: [
+            { name: "PCFIX", slug: "pcfix" },
+            { name: "TicketApp", slug: "ticketapp" },
+            { name: "ImpulsaMe", slug: "impulsame" },
+        ],
+    },
+    {
+        id: "platforms",
+        index: "03",
+        accent: "cyan",
+        icon: "mdi:devices",
+        iconColorClass: "text-cyan-600 dark:text-cyan-400",
+        badgeClass:
+            "bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border-cyan-500/25",
+        bulletIconClass: "text-cyan-500 dark:text-cyan-400",
+        tabLabel: t("about.pillar.platforms.tab"),
+        code: t("about.pillar.platforms.code"),
+        badge: t("about.pillar.platforms.badge"),
+        title: t("about.pillar.platforms.title"),
+        desc: t("about.pillar.platforms.desc"),
+        points: [
+            t("about.pillar.platforms.p1"),
+            t("about.pillar.platforms.p2"),
+            t("about.pillar.platforms.p3"),
+        ],
+        projects: [
+            { name: "TimeLens", slug: "timelens" },
+            { name: "BuyJugador", slug: "buyjugador" },
+            { name: "Extractor OCR", slug: "extractor-ocr" },
+        ],
+    },
+    {
+        id: "quality",
+        index: "04",
+        accent: "emerald",
+        icon: "mdi:shield-check-outline",
+        iconColorClass: "text-emerald-600 dark:text-emerald-400",
+        badgeClass:
+            "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/25",
+        bulletIconClass: "text-emerald-500 dark:text-emerald-400",
+        tabLabel: t("about.pillar.quality.tab"),
+        code: t("about.pillar.quality.code"),
+        badge: t("about.pillar.quality.badge"),
+        title: t("about.pillar.quality.title"),
+        desc: t("about.pillar.quality.desc"),
+        points: [
+            t("about.pillar.quality.p1"),
+            t("about.pillar.quality.p2"),
+            t("about.pillar.quality.p3"),
+        ],
+        projects: [
+            { name: "Tracker UTN", slug: "tracker-utn" },
+            { name: "PCFIX", slug: "pcfix" },
+            { name: "TimeLens", slug: "timelens" },
+        ],
+    },
+] as const;
+
+const stats = [
+    {
+        value: `${projectsCount}+`,
+        label: t("about.stat.projects.label"),
+        sub: t("about.stat.projects.sub"),
+        valueClass: "text-violet-600 dark:text-violet-400",
+    },
+    {
+        value: "4",
+        label: t("about.stat.platforms.label"),
+        sub: t("about.stat.platforms.sub"),
+        valueClass: "text-fuchsia-600 dark:text-fuchsia-400",
+    },
+    {
+        value: "E2E",
+        label: t("about.stat.focus.label"),
+        sub: t("about.stat.focus.sub"),
+        valueClass: "text-cyan-600 dark:text-cyan-400",
+    },
+] as const;
 ---
 
-<section id="sobre-mi" class="py-20 px-4 max-w-6xl mx-auto scroll-mt-16">
-    <h2
-        class="text-3xl font-bold mb-12 text-center flex items-center justify-center gap-3"
-    >
-        <Icon name="mdi:account" class="w-8 h-8 text-violet-400" aria-hidden="true" />
-        {t("about.title")}
-    </h2>
+<section id="sobre-mi" class="py-16 sm:py-24 px-4 max-w-6xl mx-auto scroll-mt-16">
+    <!-- Editorial Header -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-8 sm:mb-12">
+        <div>
+            <div class="inline-flex items-center gap-3 mb-2 sm:mb-3">
+                <span class="font-mono text-xs uppercase tracking-[0.22em] text-violet-600 dark:text-violet-400 font-semibold">
+                    {t("about.eyebrow")}
+                </span>
+                <span class="h-px w-10 bg-linear-to-r from-violet-500/60 to-transparent" aria-hidden="true"></span>
+            </div>
+            <h2 class="text-[1.75rem] sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.15] sm:leading-[1.12]">
+                {t("about.headline.prefix")}{" "}
+                <span class="text-gradient">{t("about.headline.highlight")}</span>
+            </h2>
+        </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <article
-            class="md:col-span-2 glass-card p-10 md:p-12 rounded-3xl flex flex-col justify-center relative overflow-hidden group shadow-xl shadow-slate-200/50 dark:shadow-none"
-        >
+        <div class="inline-flex items-center gap-2 self-start md:self-auto px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full bg-white/75 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 text-[11px] sm:text-xs font-medium text-slate-600 dark:text-slate-300 shadow-sm shrink-0">
+            <Icon name="mdi:map-marker-outline" class="w-4 h-4 text-violet-500 shrink-0" aria-hidden="true" />
+            <span>{t("about.location")}</span>
+        </div>
+    </div>
+
+    <!-- Row 1: Asymmetric 12-col Dossier Spread -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-8 mb-6 sm:mb-8">
+        <!-- Left: Full-bleed Portrait Card -->
+        <article class="lg:col-span-5 glass-card about-reveal rounded-2xl sm:rounded-3xl relative overflow-hidden group aspect-[4/4.2] max-h-[380px] sm:aspect-auto sm:max-h-none sm:min-h-[420px] lg:min-h-full shadow-xl shadow-slate-200/50 dark:shadow-none">
+            <img
+                src="/martin-ratti.webp"
+                alt="Martín Ratti"
+                width="800"
+                height="800"
+                loading="lazy"
+                decoding="async"
+                class="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+            />
             <div
-                class="absolute inset-0 bg-linear-to-br from-violet-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                class="absolute inset-0 bg-linear-to-t from-slate-950/90 via-slate-950/20 to-slate-950/10 pointer-events-none"
+                aria-hidden="true"
             >
             </div>
-            <p
-                class="text-xl md:text-2xl font-medium text-slate-900 dark:text-white leading-relaxed relative z-10 mb-6"
-            >
-                {t("about.story")}
-            </p>
-            <p
-                class="text-lg text-slate-500 dark:text-slate-400 leading-relaxed relative z-10"
-            >
-                {t("about.specialty")}
-            </p>
+
+            <!-- Top badge -->
+            <div class="relative z-10 p-3.5 sm:p-5 flex items-center justify-between">
+                <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-950/65 backdrop-blur-md border border-white/15 text-[11px] font-mono uppercase tracking-wider text-slate-100">
+                    <span class="h-1.5 w-1.5 rounded-full bg-emerald-400" aria-hidden="true"></span>
+                    UTN FRRo
+                </span>
+            </div>
+
+            <!-- Bottom floating HUD bar -->
+            <div class="absolute inset-x-0 bottom-0 z-10 p-3.5 sm:p-5">
+                <div class="rounded-xl sm:rounded-2xl bg-slate-950/70 backdrop-blur-md border border-white/15 px-3.5 py-2.5 sm:px-4 sm:py-3.5 flex items-center justify-between gap-3">
+                    <div class="min-w-0">
+                        <p class="text-sm font-bold text-white truncate">Martín Ratti</p>
+                        <p class="text-xs text-slate-300 truncate">{t("about.photo.role")}</p>
+                    </div>
+                    <span class="font-mono text-[11px] font-semibold text-violet-300 px-2.5 py-1 rounded-lg bg-violet-500/20 border border-violet-400/30 shrink-0">
+                        {t("about.photo.badge")}
+                    </span>
+                </div>
+            </div>
         </article>
 
-        <article
-            class="glass-card rounded-3xl p-6 flex items-center justify-center bg-linear-to-br from-violet-500/5 to-fuchsia-500/5 shadow-xl shadow-slate-200/50 dark:shadow-none"
-        >
-            <div
-                class="w-full h-full min-h-[300px] bg-white/50 dark:bg-slate-800/50 rounded-2xl flex items-center justify-center relative overflow-hidden group/photo border border-slate-200 dark:border-slate-700 shadow-inner"
-            >
-                <img
-                    src="/martin-ratti.webp"
-                    alt="Martín Ratti"
-                    width="800"
-                    height="800"
-                    loading="lazy"
-                    decoding="async"
-                    class="w-full h-full object-cover object-center transition-transform duration-700 group-hover/photo:scale-105"
-                />
+        <!-- Right: Narrative + Education + 3-col Proof Strip -->
+        <div class="lg:col-span-7 flex flex-col gap-4 sm:gap-6">
+            <article class="glass-card about-reveal rounded-2xl sm:rounded-3xl p-5 sm:p-9 flex-1 flex flex-col justify-between shadow-xl shadow-slate-200/50 dark:shadow-none">
                 <div
-                    class="absolute inset-0 bg-linear-to-t from-slate-950/80 via-slate-950/20 to-transparent opacity-0 group-hover/photo:opacity-100 transition-opacity duration-300 pointer-events-none flex items-end justify-center p-4"
+                    class="absolute -right-12 -top-12 w-48 h-48 rounded-full bg-violet-500/10 dark:bg-violet-500/15 blur-3xl pointer-events-none"
+                    aria-hidden="true"
                 >
-                    <span
-                        class="text-xs font-bold text-white uppercase tracking-[0.2em]"
-                        >Martín Ratti</span
-                    >
                 </div>
-            </div>
-        </article>
 
-        <article
-            class="glass-card p-10 md:p-12 rounded-3xl md:col-span-1 flex flex-col justify-center hover:bg-white/80 dark:hover:bg-slate-800/60 transition-all duration-500 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-slate-700"
-        >
-            <h3
-                class="text-2xl font-bold text-fuchsia-600 dark:text-fuchsia-300 mb-4"
-            >
-                {t("about.education.title")}
-            </h3>
-            <p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-                {t("about.education.desc")}
+                <div class="relative z-10">
+                    <p class="border-l-2 border-violet-500 pl-3.5 sm:pl-5 mb-4 sm:mb-6 text-base sm:text-xl md:text-2xl font-medium text-slate-900 dark:text-white leading-snug sm:leading-relaxed">
+                        {t("about.lead")}
+                    </p>
+                    <p class="text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-400 leading-relaxed mb-5 sm:mb-7">
+                        {t("about.body")}
+                    </p>
+                </div>
+
+                <div class="relative z-10 pt-4 sm:pt-5 border-t border-slate-200/80 dark:border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 sm:gap-4">
+                    <div class="flex items-start sm:items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-fuchsia-500/10 border border-fuchsia-500/25 flex items-center justify-center shrink-0">
+                            <Icon name="mdi:school-outline" class="w-5 h-5 text-fuchsia-600 dark:text-fuchsia-300" aria-hidden="true" />
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">
+                                {t("about.education.title")}
+                            </h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">
+                                {t("about.education.meta")}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-1.5 sm:gap-2 shrink-0">
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-semibold bg-fuchsia-100/70 dark:bg-fuchsia-500/10 text-fuchsia-700 dark:text-fuchsia-300 border border-fuchsia-300/60 dark:border-fuchsia-500/30">
+                            <Icon name="simple-icons:scrumalliance" class="w-3.5 h-3.5" aria-hidden="true" />
+                            Scrum
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-semibold bg-fuchsia-100/70 dark:bg-fuchsia-500/10 text-fuchsia-700 dark:text-fuchsia-300 border border-fuchsia-300/60 dark:border-fuchsia-500/30">
+                            <Icon name="mdi:view-column-outline" class="w-3.5 h-3.5" aria-hidden="true" />
+                            Kanban
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-semibold bg-violet-100/70 dark:bg-violet-500/10 text-violet-700 dark:text-violet-300 border border-violet-300/60 dark:border-violet-500/30">
+                            <Icon name="mdi:layers-triple-outline" class="w-3.5 h-3.5" aria-hidden="true" />
+                            Clean Arch
+                        </span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 3-Column Proof Strip -->
+            <div class="grid grid-cols-3 gap-2.5 sm:gap-4 about-reveal">
+                {
+                    stats.map((stat) => (
+                        <div class="glass-card rounded-xl sm:rounded-2xl px-2.5 py-3.5 sm:p-5 text-center sm:text-left shadow-md shadow-slate-200/40 dark:shadow-none">
+                            <p class={`text-xl sm:text-3xl font-bold tracking-tight mb-1 ${stat.valueClass}`}>
+                                {stat.value}
+                            </p>
+                            <p class="text-[11px] sm:text-sm font-semibold text-slate-800 dark:text-slate-200 leading-tight">
+                                {stat.label}
+                            </p>
+                            <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 hidden sm:block">
+                                {stat.sub}
+                            </p>
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Row 2: Interactive Engineering Blueprint -->
+    <div class="glass-card about-reveal rounded-2xl sm:rounded-3xl p-4 sm:p-8 lg:p-10 shadow-xl shadow-slate-200/50 dark:shadow-none">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:gap-4 mb-5 sm:mb-7 pb-4 sm:pb-6 border-b border-slate-200/80 dark:border-slate-800/80">
+            <div>
+                <p class="font-mono text-xs uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400 font-semibold mb-1.5">
+                    {t("about.blueprint.eyebrow")}
+                </p>
+                <h3 class="text-xl sm:text-3xl font-bold text-slate-900 dark:text-white">
+                    {t("about.blueprint.title")}
+                </h3>
+            </div>
+
+            <p class="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
+                <Icon name="mdi:cursor-default-click-outline" class="w-4 h-4 text-violet-500 shrink-0" aria-hidden="true" />
+                <span>{t("about.blueprint.hint")}</span>
             </p>
-            <div class="mt-5 flex flex-wrap gap-2">
-                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-fuchsia-100/70 dark:bg-fuchsia-500/10 text-fuchsia-700 dark:text-fuchsia-300 border border-fuchsia-300/60 dark:border-fuchsia-500/30">
-                    <Icon name="simple-icons:scrumalliance" class="w-3.5 h-3.5" aria-hidden="true" />
-                    Scrum
-                </span>
-                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-fuchsia-100/70 dark:bg-fuchsia-500/10 text-fuchsia-700 dark:text-fuchsia-300 border border-fuchsia-300/60 dark:border-fuchsia-500/30">
-                    <Icon name="mdi:view-column-outline" class="w-3.5 h-3.5" aria-hidden="true" />
-                    Kanban
-                </span>
-            </div>
-        </article>
+        </div>
 
-        <article
-            class="glass-card p-10 md:p-12 rounded-3xl md:col-span-2 flex flex-col justify-center shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-slate-700"
-        >
-            <h3
-                class="text-2xl font-bold text-emerald-600 dark:text-emerald-300 mb-8"
-            >
-                {t("about.skills.title")}
-            </h3>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                <div class="group/skill flex flex-col items-center justify-center p-6 rounded-2xl bg-white/40 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 hover:border-violet-500/50 hover:bg-violet-500/5 transition-all duration-300 hover:-translate-y-1">
-                    <Icon name="mdi:lightning-bolt" class="w-10 h-10 mb-3 text-amber-500 transform transition-transform duration-300 group-hover/skill:scale-125" aria-hidden="true" />
-                    <span class="text-sm font-bold text-slate-700 dark:text-slate-200 tracking-wide">{t("about.skills.proactive")}</span>
-                </div>
-                
-                <div class="group/skill flex flex-col items-center justify-center p-6 rounded-2xl bg-white/40 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 hover:border-sky-500/50 hover:bg-sky-500/5 transition-all duration-300 hover:-translate-y-1">
-                    <Icon name="mdi:magnify" class="w-10 h-10 mb-3 text-sky-500 transform transition-transform duration-300 group-hover/skill:scale-125" aria-hidden="true" />
-                    <span class="text-sm font-bold text-slate-700 dark:text-slate-200 tracking-wide">{t("about.skills.curious")}</span>
-                </div>
-
-                <div class="group/skill flex flex-col items-center justify-center p-6 rounded-2xl bg-white/40 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/50 hover:bg-emerald-500/5 transition-all duration-300 hover:-translate-y-1">
-                    <Icon name="mdi:lightbulb-on" class="w-10 h-10 mb-3 text-emerald-500 transform transition-transform duration-300 group-hover/skill:scale-125" aria-hidden="true" />
-                    <span class="text-sm font-bold text-slate-700 dark:text-slate-200 tracking-wide text-center">{t("about.skills.solution")}</span>
-                </div>
-
-                <div class="group/skill flex flex-col items-center justify-center p-6 rounded-2xl bg-white/40 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 hover:border-fuchsia-500/50 hover:bg-fuchsia-500/5 transition-all duration-300 hover:-translate-y-1">
-                    <Icon name="mdi:auto-fix" class="w-10 h-10 mb-3 text-fuchsia-500 transform transition-transform duration-300 group-hover/skill:scale-125" aria-hidden="true" />
-                    <span class="text-sm font-bold text-slate-700 dark:text-slate-200 tracking-wide">{t("about.skills.clean")}</span>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 items-stretch">
+            <!-- Left: Accessible Tablist -->
+            <div class="lg:col-span-5">
+                <div
+                    id="about-pillar-tablist"
+                    role="tablist"
+                    aria-label={t("about.blueprint.title")}
+                    class="about-tablist flex flex-row lg:flex-col gap-2 lg:gap-2.5 overflow-x-auto lg:overflow-visible no-scrollbar pb-1 lg:pb-0"
+                >
+                    {
+                        pillars.map((pillar, index) => (
+                            <button
+                                type="button"
+                                role="tab"
+                                id={`pillar-tab-${pillar.id}`}
+                                aria-selected={index === 0 ? "true" : "false"}
+                                tabindex={index === 0 ? "0" : "-1"}
+                                data-pillar={pillar.id}
+                                data-accent={pillar.accent}
+                                class="about-tab flex-none lg:w-full text-left px-3.5 py-2.5 sm:px-4 sm:py-3.5 min-h-[44px] rounded-xl sm:rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/50 dark:bg-slate-900/40 hover:bg-white/90 dark:hover:bg-slate-800/70 transition-colors cursor-pointer flex items-center justify-between gap-2.5 sm:gap-3"
+                            >
+                                <span class="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                                    <span class="hidden sm:inline font-mono text-xs text-slate-400 dark:text-slate-500 shrink-0">
+                                        {pillar.index}
+                                    </span>
+                                    <Icon name={pillar.icon} class={`w-4 h-4 sm:w-5 sm:h-5 shrink-0 ${pillar.iconColorClass}`} aria-hidden="true" />
+                                    <span class="text-[13px] sm:text-base font-semibold text-slate-800 dark:text-slate-100 whitespace-nowrap truncate">
+                                        {pillar.tabLabel}
+                                    </span>
+                                </span>
+                                <Icon name="mdi:chevron-right" class="about-tab-chevron w-4 h-4 text-slate-400 shrink-0 hidden lg:block transition-transform duration-200" aria-hidden="true" />
+                            </button>
+                        ))
+                    }
                 </div>
             </div>
-        </article>
+
+            <!-- Right: Overlapping Tab Panels (no padding/border/bg on role="tabpanel" itself) -->
+            <div class="lg:col-span-7 grid">
+                {
+                    pillars.map((pillar, index) => (
+                        <div
+                            role="tabpanel"
+                            id={`pillar-panel-${pillar.id}`}
+                            aria-labelledby={`pillar-tab-${pillar.id}`}
+                            data-pillar-panel={pillar.id}
+                            class="col-start-1 row-start-1"
+                            {...(index !== 0 ? { hidden: "until-found" as unknown as boolean } : {})}
+                        >
+                            <div class="about-panel-card h-full rounded-xl sm:rounded-2xl p-4 sm:p-7 bg-slate-50/85 dark:bg-slate-950/65 border border-slate-200/90 dark:border-slate-800/90 flex flex-col justify-between gap-5 sm:gap-6 relative overflow-hidden">
+                                <div class="about-blueprint-grid absolute inset-0 pointer-events-none" aria-hidden="true"></div>
+
+                                <div class="relative z-10">
+                                    <div class="flex flex-col items-start sm:flex-row sm:items-center justify-between gap-2 mb-3.5 sm:mb-4">
+                                        <span class="font-mono text-xs tracking-wider text-slate-500 dark:text-slate-400">
+                                            {pillar.code}
+                                        </span>
+                                        <span class={`inline-flex items-center px-2.5 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-[11px] font-mono font-semibold border ${pillar.badgeClass}`}>
+                                            {pillar.badge}
+                                        </span>
+                                    </div>
+
+                                    <h4 class="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white mb-2 sm:mb-2.5 leading-snug">
+                                        {pillar.title}
+                                    </h4>
+                                    <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed mb-5 sm:mb-6">
+                                        {pillar.desc}
+                                    </p>
+
+                                    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400 mb-3">
+                                        {t("about.blueprint.practice")}
+                                    </p>
+                                    <ul class="space-y-2 sm:space-y-2.5">
+                                        {
+                                            pillar.points.map((point) => (
+                                                <li class="flex items-start gap-2.5 text-[13.5px] sm:text-sm text-slate-700 dark:text-slate-300 leading-snug">
+                                                    <Icon name="mdi:check-circle-outline" class={`w-4 h-4 mt-0.5 shrink-0 ${pillar.bulletIconClass}`} aria-hidden="true" />
+                                                    <span>{point}</span>
+                                                </li>
+                                            ))
+                                        }
+                                    </ul>
+                                </div>
+
+                                <div class="relative z-10 pt-4 sm:pt-5 border-t border-slate-200/80 dark:border-slate-800/80 flex flex-wrap items-center gap-2">
+                                    <span class="w-full sm:w-auto mb-0.5 sm:mb-0 font-mono text-[11px] uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400 sm:mr-1">
+                                        {t("about.blueprint.appliedIn")}:
+                                    </span>
+                                    {
+                                        pillar.projects.map((proj) => (
+                                            <a
+                                                href={`${projectUrlPrefix}/${proj.slug}`}
+                                                class="inline-flex items-center gap-1 px-3 py-1.5 sm:py-1 min-h-[36px] sm:min-h-0 rounded-full text-xs font-semibold bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-violet-500/60 hover:text-violet-600 dark:hover:text-violet-300 transition-colors"
+                                            >
+                                                <span>{proj.name}</span>
+                                                <Icon name="mdi:arrow-top-right" class="w-3.5 h-3.5" aria-hidden="true" />
+                                            </a>
+                                        ))
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
     </div>
 </section>
+
+<style>
+    .about-tablist {
+        scroll-snap-type: inline proximity;
+    }
+
+    @media (max-width: 1023px) {
+        .about-tablist {
+            --fade-size: 2.25rem;
+            --fade-dir: right;
+            --fade-start-pos: 0;
+            --fade-end-pos: 100%;
+            scroll-padding-inline: var(--fade-size);
+            mask:
+                linear-gradient(black, black) no-clip subtract,
+                linear-gradient(to var(--fade-dir), black, transparent) var(--fade-start-pos) 0 / var(--fade-start) 100% no-repeat no-clip,
+                linear-gradient(to var(--fade-dir), transparent, black) var(--fade-end-pos) 0 / var(--fade-end) 100% no-repeat no-clip;
+        }
+
+        @supports (animation-timeline: scroll(self inline)) {
+            .about-tablist {
+                animation: aboutFadeStart linear both, aboutFadeEnd linear both;
+                animation-timeline: scroll(self inline);
+                animation-range: 0 var(--fade-size), calc(100% - var(--fade-size)) 100%;
+            }
+        }
+
+        @supports not (animation-timeline: scroll(self inline)) {
+            .about-tablist {
+                transition: --fade-start 0.2s, --fade-end 0.2s;
+            }
+
+            .about-tablist.more-start {
+                --fade-start: var(--fade-size);
+            }
+
+            .about-tablist.more-end {
+                --fade-end: var(--fade-size);
+            }
+        }
+    }
+
+    @keyframes aboutFadeStart {
+        to {
+            --fade-start: var(--fade-size);
+        }
+    }
+
+    @keyframes aboutFadeEnd {
+        from {
+            --fade-end: var(--fade-size);
+        }
+    }
+
+    .about-tab {
+        position: relative;
+        scroll-snap-align: start;
+    }
+
+    .about-tab[data-accent="violet"] {
+        --pillar-accent: #7c3aed;
+    }
+
+    .about-tab[data-accent="fuchsia"] {
+        --pillar-accent: #c026d3;
+    }
+
+    .about-tab[data-accent="cyan"] {
+        --pillar-accent: #0891b2;
+    }
+
+    .about-tab[data-accent="emerald"] {
+        --pillar-accent: #059669;
+    }
+
+    :global(.dark) .about-tab[data-accent="violet"] {
+        --pillar-accent: #a78bfa;
+    }
+
+    :global(.dark) .about-tab[data-accent="fuchsia"] {
+        --pillar-accent: #e879f9;
+    }
+
+    :global(.dark) .about-tab[data-accent="cyan"] {
+        --pillar-accent: #22d3ee;
+    }
+
+    :global(.dark) .about-tab[data-accent="emerald"] {
+        --pillar-accent: #34d399;
+    }
+
+    .about-tab[aria-selected="true"] {
+        background-color: rgba(255, 255, 255, 0.92);
+        border-color: var(--pillar-accent);
+    }
+
+    :global(.dark) .about-tab[aria-selected="true"] {
+        background-color: rgba(15, 23, 42, 0.92);
+    }
+
+    .about-tab[aria-selected="true"]::after {
+        content: "";
+        position: absolute;
+        inset: auto 0.75rem 0;
+        border-block-end: 3px solid var(--pillar-accent);
+    }
+
+    @media (min-width: 1024px) {
+        .about-tab[aria-selected="true"]::after {
+            inset: 0.65rem auto 0.65rem 0;
+            border-block-end: none;
+            border-inline-start: 3px solid var(--pillar-accent);
+        }
+
+        .about-tab[aria-selected="true"] .about-tab-chevron {
+            color: var(--pillar-accent);
+            transform: translateX(2px);
+        }
+    }
+
+    .about-blueprint-grid {
+        background-image: radial-gradient(rgba(100, 116, 139, 0.14) 1px, transparent 1px);
+        background-size: 18px 18px;
+    }
+
+    :global(.dark) .about-blueprint-grid {
+        background-image: radial-gradient(rgba(148, 163, 184, 0.12) 1px, transparent 1px);
+    }
+
+    @keyframes aboutReveal {
+        from {
+            opacity: 0;
+            translate: 0 18px;
+        }
+        to {
+            opacity: 1;
+            translate: 0 0;
+        }
+    }
+
+    @keyframes aboutPanelIn {
+        from {
+            opacity: 0;
+            translate: 0 6px;
+        }
+        to {
+            opacity: 1;
+            translate: 0 0;
+        }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        @supports ((animation-timeline: view()) and (animation-range: entry)) {
+            .about-reveal {
+                animation: aboutReveal linear both;
+                animation-timeline: view();
+                animation-range: entry 0% entry 20%;
+            }
+        }
+
+        .about-panel-card {
+            animation: aboutPanelIn 0.25s ease-out;
+        }
+    }
+</style>
+
+<script>
+    let aboutController: AbortController | null = null;
+    let aboutFadeObserver: IntersectionObserver | null = null;
+
+    function cleanupAboutBlueprint() {
+        if (aboutController) {
+            aboutController.abort();
+            aboutController = null;
+        }
+        if (aboutFadeObserver) {
+            aboutFadeObserver.disconnect();
+            aboutFadeObserver = null;
+        }
+    }
+
+    function initAboutBlueprint() {
+        cleanupAboutBlueprint();
+
+        const tablist = document.getElementById("about-pillar-tablist");
+        if (!tablist) return;
+
+        aboutController = new AbortController();
+        const { signal } = aboutController;
+
+        const tabs = Array.from(tablist.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+        const panels = Array.from(
+            document.querySelectorAll<HTMLElement>('[data-pillar-panel]'),
+        );
+
+        if (tabs.length === 0 || panels.length === 0) return;
+
+        if (!CSS.supports("animation-timeline", "scroll(self inline)") && tabs.length >= 2) {
+            const first = tabs[0];
+            const last = tabs[tabs.length - 1];
+            aboutFadeObserver = new IntersectionObserver(
+                (entries) => {
+                    for (const { target, intersectionRatio } of entries) {
+                        tablist.classList.toggle(
+                            target === first ? "more-start" : "more-end",
+                            intersectionRatio < 1,
+                        );
+                    }
+                },
+                { root: tablist, threshold: 1, rootMargin: "1px" },
+            );
+            aboutFadeObserver.observe(first);
+            aboutFadeObserver.observe(last);
+        }
+
+        const selectPillar = (
+            pillarId: string,
+            options: { focus?: boolean } = {},
+        ) => {
+            let selectedTab: HTMLButtonElement | null = null;
+
+            for (const tab of tabs) {
+                const isSelected = tab.dataset.pillar === pillarId;
+                tab.setAttribute("aria-selected", isSelected ? "true" : "false");
+                tab.setAttribute("tabindex", isSelected ? "0" : "-1");
+                if (isSelected) selectedTab = tab;
+            }
+
+            for (const panel of panels) {
+                const isMatch = panel.dataset.pillarPanel === pillarId;
+                if (isMatch) {
+                    panel.removeAttribute("hidden");
+                } else {
+                    panel.setAttribute("hidden", "until-found");
+                }
+            }
+
+            if (selectedTab) {
+                selectedTab.scrollIntoView({
+                    block: "nearest",
+                    inline: "nearest",
+                    container: "nearest",
+                } as ScrollIntoViewOptions);
+
+                if (options.focus) {
+                    selectedTab.focus();
+                }
+            }
+        };
+
+        for (const tab of tabs) {
+            tab.addEventListener(
+                "click",
+                () => {
+                    const pillarId = tab.dataset.pillar;
+                    if (pillarId) selectPillar(pillarId);
+                },
+                { signal },
+            );
+        }
+
+        tablist.addEventListener(
+            "keydown",
+            (e: KeyboardEvent) => {
+                const currentIndex = tabs.findIndex((t) => t === document.activeElement);
+                if (currentIndex === -1) return;
+
+                let nextIndex: number | null = null;
+
+                switch (e.key) {
+                    case "ArrowRight":
+                    case "ArrowDown":
+                        nextIndex = (currentIndex + 1) % tabs.length;
+                        break;
+                    case "ArrowLeft":
+                    case "ArrowUp":
+                        nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+                        break;
+                    case "Home":
+                        nextIndex = 0;
+                        break;
+                    case "End":
+                        nextIndex = tabs.length - 1;
+                        break;
+                }
+
+                if (nextIndex !== null) {
+                    e.preventDefault();
+                    const targetId = tabs[nextIndex]?.dataset.pillar;
+                    if (targetId) selectPillar(targetId, { focus: true });
+                }
+            },
+            { signal },
+        );
+
+        for (const panel of panels) {
+            panel.addEventListener(
+                "beforematch",
+                () => {
+                    const panelId = panel.dataset.pillarPanel;
+                    if (panelId) selectPillar(panelId, { focus: false });
+                },
+                { signal },
+            );
+        }
+    }
+
+    document.addEventListener("astro:before-swap", cleanupAboutBlueprint);
+    document.addEventListener("astro:page-load", initAboutBlueprint);
+</script>
