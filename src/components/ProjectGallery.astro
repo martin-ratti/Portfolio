@@ -13,20 +13,37 @@ const t = useTranslations(lang);
 
 const hasMultiple = images && images.length > 1;
 const primaryImage = images && images.length > 0 ? images[0] : null;
+
+const serializedImages = (images || []).map((img) => ({
+    url: img.url,
+    alt: img.alt[lang] || projectTitle,
+    caption: img.caption?.[lang] || img.alt[lang] || projectTitle,
+}));
 ---
 
 {
     primaryImage && (
         <section class="project-gallery w-full my-8" aria-label={t("project.gallery")}>
+            <script is:inline type="application/json" id="gallery-data" set:html={JSON.stringify(serializedImages)} />
+
             <!-- Main Featured Image Display -->
-            <div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-slate-900/80 border border-slate-700/60 shadow-2xl group cursor-zoom-in">
-                <img
-                    id="gallery-main-img"
-                    src={primaryImage.url}
-                    alt={primaryImage.alt || projectTitle}
-                    class="w-full h-full object-cover object-top transition-all duration-300 group-hover:scale-[1.02]"
-                    data-current-index="0"
-                />
+            <div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-slate-900/80 border border-slate-700/60 shadow-2xl group">
+                <button
+                    type="button"
+                    id="gallery-open-btn"
+                    class="block w-full h-full cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-violet-500"
+                    aria-label={t("project.openFullscreen")}
+                >
+                    <img
+                        id="gallery-main-img"
+                        src={primaryImage.url}
+                        alt={primaryImage.alt[lang] || projectTitle}
+                        fetchpriority="high"
+                        decoding="async"
+                        class="w-full h-full object-cover object-top transition-all duration-300 group-hover:scale-[1.02]"
+                        data-current-index="0"
+                    />
+                </button>
 
                 <!-- Quick Navigation Arrows on Main Frame -->
                 {hasMultiple && (
@@ -34,8 +51,8 @@ const primaryImage = images && images.length > 0 ? images[0] : null;
                         <button
                             type="button"
                             id="gallery-main-prev"
-                            class="absolute left-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-slate-900/70 hover:bg-violet-600 text-white backdrop-blur-md border border-slate-700/50 opacity-0 group-hover:opacity-100 transition-all duration-200 focus:opacity-100 shadow-lg cursor-pointer"
-                            aria-label={t("project.prev")}
+                            class="absolute left-3 top-1/2 -translate-y-1/2 z-10 p-2.5 rounded-full bg-slate-900/75 hover:bg-violet-600 text-white backdrop-blur-md border border-slate-700/50 opacity-90 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100 focus-visible:opacity-100 transition-all duration-200 shadow-lg cursor-pointer"
+                            aria-label={t("project.galleryPrev")}
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                 <path d="m15 18-6-6 6-6" />
@@ -44,8 +61,8 @@ const primaryImage = images && images.length > 0 ? images[0] : null;
                         <button
                             type="button"
                             id="gallery-main-next"
-                            class="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-slate-900/70 hover:bg-violet-600 text-white backdrop-blur-md border border-slate-700/50 opacity-0 group-hover:opacity-100 transition-all duration-200 focus:opacity-100 shadow-lg cursor-pointer"
-                            aria-label={t("project.next")}
+                            class="absolute right-3 top-1/2 -translate-y-1/2 z-10 p-2.5 rounded-full bg-slate-900/75 hover:bg-violet-600 text-white backdrop-blur-md border border-slate-700/50 opacity-90 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100 focus-visible:opacity-100 transition-all duration-200 shadow-lg cursor-pointer"
+                            aria-label={t("project.galleryNext")}
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                 <path d="m9 18 6-6-6-6" />
@@ -60,7 +77,7 @@ const primaryImage = images && images.length > 0 ? images[0] : null;
                         id="gallery-main-caption"
                         class="text-xs sm:text-sm text-slate-200 font-medium drop-shadow-md line-clamp-2"
                     >
-                        {primaryImage.caption?.[lang] || primaryImage.alt}
+                        {primaryImage.caption?.[lang] || primaryImage.alt[lang]}
                     </p>
                     <span class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-violet-300 bg-violet-950/60 border border-violet-800/60 px-2.5 py-1 rounded-full shrink-0 backdrop-blur-sm self-start sm:self-auto">
                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -82,12 +99,14 @@ const primaryImage = images && images.length > 0 ? images[0] : null;
                             type="button"
                             class={`gallery-thumb-btn shrink-0 w-24 sm:w-32 aspect-video rounded-xl overflow-hidden border-2 transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-violet-500 ${idx === 0 ? "border-violet-500 ring-2 ring-violet-500/40 opacity-100 scale-102" : "border-slate-700/60 opacity-60 hover:opacity-100 hover:border-slate-500"}`}
                             data-index={idx}
-                            aria-label={`Ver captura ${idx + 1}`}
+                            aria-label={`${t("project.viewScreenshot")} ${idx + 1}`}
+                            aria-current={idx === 0 ? "true" : undefined}
                         >
                             <img
                                 src={img.url}
-                                alt={img.alt}
+                                alt={img.alt[lang]}
                                 loading="lazy"
+                                decoding="async"
                                 class="w-full h-full object-cover"
                             />
                         </button>
@@ -98,6 +117,8 @@ const primaryImage = images && images.length > 0 ? images[0] : null;
             <!-- Fullscreen Lightbox Modal -->
             <div
                 id="gallery-lightbox"
+                inert
+                aria-hidden="true"
                 class="fixed inset-0 z-50 bg-slate-950/92 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 opacity-0 pointer-events-none transition-opacity duration-300"
                 role="dialog"
                 aria-modal="true"
@@ -108,7 +129,7 @@ const primaryImage = images && images.length > 0 ? images[0] : null;
                     type="button"
                     id="lightbox-close"
                     class="absolute top-4 right-4 z-60 p-3 rounded-full bg-slate-800/80 hover:bg-violet-600 text-white border border-slate-700/60 transition cursor-pointer shadow-xl focus:outline-none focus:ring-2 focus:ring-violet-400"
-                    aria-label="Cerrar visor a pantalla completa"
+                    aria-label={t("project.closeLightbox")}
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <line x1="18" y1="6" x2="6" y2="18" />
@@ -122,7 +143,7 @@ const primaryImage = images && images.length > 0 ? images[0] : null;
                         type="button"
                         id="lightbox-prev"
                         class="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-60 p-3 rounded-full bg-slate-900/80 hover:bg-violet-600 text-white border border-slate-700/60 backdrop-blur-md transition cursor-pointer shadow-xl focus:outline-none focus:ring-2 focus:ring-violet-400"
-                        aria-label={t("project.prev")}
+                        aria-label={t("project.galleryPrev")}
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="m15 18-6-6 6-6" />
@@ -135,12 +156,12 @@ const primaryImage = images && images.length > 0 ? images[0] : null;
                     <img
                         id="lightbox-img"
                         src={primaryImage.url}
-                        alt={primaryImage.alt || projectTitle}
+                        alt={primaryImage.alt[lang] || projectTitle}
                         class="max-w-[92vw] max-h-[75vh] object-contain rounded-xl shadow-2xl border border-slate-700/60 select-none"
                     />
                     <div class="mt-4 text-center px-4 max-w-2xl">
                         <p id="lightbox-caption" class="text-sm sm:text-base text-slate-200 font-medium drop-shadow">
-                            {primaryImage.caption?.[lang] || primaryImage.alt}
+                            {primaryImage.caption?.[lang] || primaryImage.alt[lang]}
                         </p>
                         <span id="lightbox-counter" class="text-xs text-slate-400 font-mono mt-1 block">
                             1 / {images.length}
@@ -154,7 +175,7 @@ const primaryImage = images && images.length > 0 ? images[0] : null;
                         type="button"
                         id="lightbox-next"
                         class="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-60 p-3 rounded-full bg-slate-900/80 hover:bg-violet-600 text-white border border-slate-700/60 backdrop-blur-md transition cursor-pointer shadow-xl focus:outline-none focus:ring-2 focus:ring-violet-400"
-                        aria-label={t("project.next")}
+                        aria-label={t("project.galleryNext")}
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="m9 18 6-6-6-6" />
@@ -166,35 +187,69 @@ const primaryImage = images && images.length > 0 ? images[0] : null;
     )
 }
 
-<!-- Embedded Images Data for JS Controller -->
-<script define:vars={{ imagesData: images, currentLang: lang }}>
+<script>
+    interface GalleryImageItem {
+        url: string;
+        alt: string;
+        caption: string;
+    }
+
+    let galleryAbortController: AbortController | null = null;
+    let lastFocusedElement: HTMLElement | null = null;
+
+    function cleanupGallery() {
+        if (galleryAbortController) {
+            galleryAbortController.abort();
+            galleryAbortController = null;
+        }
+        document.body.style.overflow = "";
+        lastFocusedElement = null;
+    }
+
     function initGallery() {
-        const images = imagesData || [];
-        if (images.length === 0) return;
+        cleanupGallery();
+
+        const dataEl = document.getElementById("gallery-data");
+        if (!dataEl?.textContent) return;
+
+        let images: GalleryImageItem[] = [];
+        try {
+            images = JSON.parse(dataEl.textContent) as GalleryImageItem[];
+        } catch {
+            return;
+        }
+        if (!Array.isArray(images) || images.length === 0) return;
+
+        galleryAbortController = new AbortController();
+        const { signal } = galleryAbortController;
 
         let currentIndex = 0;
 
-        const mainImg = document.getElementById("gallery-main-img");
+        const mainImg = document.getElementById("gallery-main-img") as HTMLImageElement | null;
         const mainCaption = document.getElementById("gallery-main-caption");
+        const openBtn = document.getElementById("gallery-open-btn");
         const mainPrev = document.getElementById("gallery-main-prev");
         const mainNext = document.getElementById("gallery-main-next");
-        const thumbBtns = document.querySelectorAll(".gallery-thumb-btn");
+        const thumbBtns = document.querySelectorAll<HTMLButtonElement>(".gallery-thumb-btn");
 
         const lightbox = document.getElementById("gallery-lightbox");
-        const lightboxImg = document.getElementById("lightbox-img");
+        const lightboxImg = document.getElementById("lightbox-img") as HTMLImageElement | null;
         const lightboxCaption = document.getElementById("lightbox-caption");
         const lightboxCounter = document.getElementById("lightbox-counter");
-        const lightboxClose = document.getElementById("lightbox-close");
+        const lightboxClose = document.getElementById("lightbox-close") as HTMLButtonElement | null;
         const lightboxPrev = document.getElementById("lightbox-prev");
         const lightboxNext = document.getElementById("lightbox-next");
 
-        function updateView(idx) {
+        const isLightboxOpen = () =>
+            Boolean(lightbox && !lightbox.hasAttribute("inert") && lightbox.getAttribute("aria-hidden") !== "true");
+
+        function updateView(idx: number) {
             if (idx < 0) idx = images.length - 1;
             if (idx >= images.length) idx = 0;
             currentIndex = idx;
 
             const item = images[currentIndex];
-            const captionText = item.caption?.[currentLang] || item.caption?.es || item.alt || "";
+            const captionText = item.caption || item.alt || "";
 
             if (mainImg) {
                 mainImg.src = item.url;
@@ -205,19 +260,19 @@ const primaryImage = images && images.length > 0 ? images[0] : null;
                 mainCaption.textContent = captionText;
             }
 
-            // Update thumb active state
             thumbBtns.forEach((btn) => {
                 const bIdx = Number(btn.getAttribute("data-index"));
                 if (bIdx === currentIndex) {
                     btn.classList.add("border-violet-500", "ring-2", "ring-violet-500/40", "opacity-100", "scale-102");
                     btn.classList.remove("border-slate-700/60", "opacity-60");
+                    btn.setAttribute("aria-current", "true");
                 } else {
                     btn.classList.remove("border-violet-500", "ring-2", "ring-violet-500/40", "opacity-100", "scale-102");
                     btn.classList.add("border-slate-700/60", "opacity-60");
+                    btn.removeAttribute("aria-current");
                 }
             });
 
-            // Update lightbox if open
             if (lightboxImg) {
                 lightboxImg.src = item.url;
                 lightboxImg.alt = item.alt;
@@ -230,91 +285,105 @@ const primaryImage = images && images.length > 0 ? images[0] : null;
             }
         }
 
-        // Thumb click
-        thumbBtns.forEach((btn) => {
-            btn.addEventListener("click", () => {
-                const idx = Number(btn.getAttribute("data-index"));
-                updateView(idx);
-            });
-        });
-
-        // Main Prev/Next buttons
-        if (mainPrev) {
-            mainPrev.addEventListener("click", (e) => {
-                e.stopPropagation();
-                updateView(currentIndex - 1);
-            });
-        }
-        if (mainNext) {
-            mainNext.addEventListener("click", (e) => {
-                e.stopPropagation();
-                updateView(currentIndex + 1);
-            });
-        }
-
-        // Open Lightbox
-        if (mainImg) {
-            mainImg.parentElement?.addEventListener("click", () => {
-                openLightbox();
-            });
-        }
-
         function openLightbox() {
             if (!lightbox) return;
+            lastFocusedElement = document.activeElement as HTMLElement | null;
             updateView(currentIndex);
+            lightbox.removeAttribute("inert");
+            lightbox.setAttribute("aria-hidden", "false");
             lightbox.classList.remove("opacity-0", "pointer-events-none");
             lightbox.classList.add("opacity-100", "pointer-events-auto");
             document.body.style.overflow = "hidden";
+            lightboxClose?.focus();
         }
 
         function closeLightbox() {
             if (!lightbox) return;
+            lightbox.setAttribute("inert", "");
+            lightbox.setAttribute("aria-hidden", "true");
             lightbox.classList.add("opacity-0", "pointer-events-none");
             lightbox.classList.remove("opacity-100", "pointer-events-auto");
             document.body.style.overflow = "";
+            if (lastFocusedElement && document.contains(lastFocusedElement)) {
+                lastFocusedElement.focus();
+            }
+            lastFocusedElement = null;
         }
 
-        if (lightboxClose) {
-            lightboxClose.addEventListener("click", closeLightbox);
-        }
+        thumbBtns.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                const idx = Number(btn.getAttribute("data-index"));
+                updateView(idx);
+            }, { signal });
+        });
 
-        if (lightbox) {
-            lightbox.addEventListener("click", (e) => {
-                if (e.target === lightbox) {
-                    closeLightbox();
-                }
-            });
-        }
+        mainPrev?.addEventListener("click", (e) => {
+            e.stopPropagation();
+            updateView(currentIndex - 1);
+        }, { signal });
 
-        if (lightboxPrev) {
-            lightboxPrev.addEventListener("click", (e) => {
-                e.stopPropagation();
-                updateView(currentIndex - 1);
-            });
-        }
+        mainNext?.addEventListener("click", (e) => {
+            e.stopPropagation();
+            updateView(currentIndex + 1);
+        }, { signal });
 
-        if (lightboxNext) {
-            lightboxNext.addEventListener("click", (e) => {
-                e.stopPropagation();
-                updateView(currentIndex + 1);
-            });
-        }
+        openBtn?.addEventListener("click", openLightbox, { signal });
+        lightboxClose?.addEventListener("click", closeLightbox, { signal });
 
-        // Keyboard handler
-        function onKeyDown(e) {
-            if (!lightbox || lightbox.classList.contains("pointer-events-none")) return;
+        lightbox?.addEventListener("click", (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        }, { signal });
+
+        lightboxPrev?.addEventListener("click", (e) => {
+            e.stopPropagation();
+            updateView(currentIndex - 1);
+        }, { signal });
+
+        lightboxNext?.addEventListener("click", (e) => {
+            e.stopPropagation();
+            updateView(currentIndex + 1);
+        }, { signal });
+
+        window.addEventListener("keydown", (e) => {
+            if (!isLightboxOpen() || !lightbox) return;
+
             if (e.key === "Escape") {
+                e.preventDefault();
                 closeLightbox();
             } else if (e.key === "ArrowLeft") {
+                e.preventDefault();
                 updateView(currentIndex - 1);
             } else if (e.key === "ArrowRight") {
+                e.preventDefault();
                 updateView(currentIndex + 1);
-            }
-        }
+            } else if (e.key === "Tab") {
+                const focusables = Array.from(
+                    lightbox.querySelectorAll<HTMLElement>(
+                        'button:not([disabled]), [href], [tabindex]:not([tabindex="-1"])'
+                    )
+                );
+                if (focusables.length === 0) return;
 
-        window.addEventListener("keydown", onKeyDown);
+                const first = focusables[0];
+                const last = focusables[focusables.length - 1];
+
+                if (e.shiftKey) {
+                    if (document.activeElement === first || !lightbox.contains(document.activeElement)) {
+                        e.preventDefault();
+                        last.focus();
+                    }
+                } else {
+                    if (document.activeElement === last || !lightbox.contains(document.activeElement)) {
+                        e.preventDefault();
+                        first.focus();
+                    }
+                }
+            }
+        }, { signal });
     }
 
-    // Support Astro View Transitions
+    document.addEventListener("astro:before-swap", cleanupGallery);
     document.addEventListener("astro:page-load", initGallery);
 </script>

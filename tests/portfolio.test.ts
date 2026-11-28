@@ -6,13 +6,14 @@ import { skills } from "../src/data/skills.ts";
 import { projects } from "../src/data/projects.ts";
 
 describe("Chat HTML Sanitization & Markdown Rendering (Mejora #1)", () => {
-    it("strips <script>, <iframe>, <object>, <embed>, and <form> tags", () => {
+    it("strips <script>, <iframe>, <object>, <embed>, <svg>, and <form> tags", () => {
         const malicious = `
             <p>Hola</p>
             <script>alert('xss')</script>
             <iframe src="https://evil.com"></iframe>
             <object data="evil.swf"></object>
             <embed src="evil.swf" />
+            <svg onload="alert(1)"><circle /></svg>
             <form action="https://evil.com"><input type="submit" /></form>
         `;
         const clean = sanitizeAssistantHtml(malicious);
@@ -21,6 +22,7 @@ describe("Chat HTML Sanitization & Markdown Rendering (Mejora #1)", () => {
         assert.ok(!clean.includes("<iframe"));
         assert.ok(!clean.includes("<object"));
         assert.ok(!clean.includes("<embed"));
+        assert.ok(!clean.includes("<svg"));
         assert.ok(!clean.includes("<form"));
     });
 
@@ -71,6 +73,36 @@ describe("i18n Key Parity & Completeness (Mejora #7)", () => {
     });
 });
 
+describe("Projects Data Completeness & Integrity", () => {
+    it("has complete Spanish and English translations for title, description, challenges, and gallery items", () => {
+        for (const project of projects) {
+            assert.ok(project.title.es.trim().length > 0, `Missing title.es in ${project.slug}`);
+            assert.ok(project.title.en.trim().length > 0, `Missing title.en in ${project.slug}`);
+            assert.ok(project.description.es.trim().length > 0, `Missing description.es in ${project.slug}`);
+            assert.ok(project.description.en.trim().length > 0, `Missing description.en in ${project.slug}`);
+            assert.ok(project.challenges?.es.trim().length, `Missing challenges.es in ${project.slug}`);
+            assert.ok(project.challenges?.en.trim().length, `Missing challenges.en in ${project.slug}`);
+
+            assert.ok(project.gallery.length > 0, `Empty gallery in ${project.slug}`);
+            for (const [index, img] of project.gallery.entries()) {
+                assert.ok(img.alt.es.trim().length > 0, `Missing gallery[${index}].alt.es in ${project.slug}`);
+                assert.ok(img.alt.en.trim().length > 0, `Missing gallery[${index}].alt.en in ${project.slug}`);
+                assert.ok(img.caption.es.trim().length > 0, `Missing gallery[${index}].caption.es in ${project.slug}`);
+                assert.ok(img.caption.en.trim().length > 0, `Missing gallery[${index}].caption.en in ${project.slug}`);
+            }
+        }
+    });
+
+    it("does not include trailing .git suffix on any repository URL", () => {
+        for (const project of projects) {
+            assert.ok(
+                !project.repo.endsWith(".git"),
+                `Project "${project.slug}" repo URL should not end with .git: ${project.repo}`
+            );
+        }
+    });
+});
+
 describe("Skill-to-Project Filter Alignment (Mejora #7)", () => {
     const allSkills = [
         ...skills.languages,
@@ -96,7 +128,7 @@ describe("Skill-to-Project Filter Alignment (Mejora #7)", () => {
             for (const tag of project.tags) {
                 assert.ok(
                     skillSet.has(tag),
-                    `Project "${project.title}" has tag "${tag}" which is not in skills.ts`
+                    `Project "${project.title.es}" has tag "${tag}" which is not in skills.ts`
                 );
             }
         }
