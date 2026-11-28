@@ -102,11 +102,16 @@ function validateMessages(rawMessages: unknown): ValidatedMessage[] | null {
     return sanitized;
 }
 
-const models = [
-    "meta-llama/llama-3.2-3b-instruct:free",
-    "google/gemma-3-4b-it:free",
-    "stepfun/step-3.5-flash:free",
-    "liquid/lfm-2.5-1.2b-instruct:free"
+interface ModelConfig {
+    id: string;
+    disableReasoning?: boolean;
+}
+
+const models: ModelConfig[] = [
+    { id: "particle-ai/particle-1:free", disableReasoning: true },
+    { id: "nvidia/nemotron-3.5-lightning:free", disableReasoning: true },
+    { id: "google/gemma-4-26b-a4b-it:free", disableReasoning: true },
+    { id: "openrouter/free" },
 ];
 
 export const POST: APIRoute = async ({ request, clientAddress }) => {
@@ -187,8 +192,16 @@ ${PORTFOLIO_CONTEXT}
                 : { role: msg.role, content: msg.content }
         );
 
-        for (const model of models) {
+        for (const modelConfig of models) {
             try {
+                const payload: Record<string, unknown> = {
+                    model: modelConfig.id,
+                    messages: conversation,
+                };
+                if (modelConfig.disableReasoning) {
+                    payload.reasoning = { enabled: false };
+                }
+
                 const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
                     method: "POST",
                     headers: {
@@ -197,20 +210,18 @@ ${PORTFOLIO_CONTEXT}
                         "X-Title": SITE_NAME,
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({
-                        "model": model,
-                        "messages": conversation
-                    }),
+                    body: JSON.stringify(payload),
                     signal: AbortSignal.timeout(MODEL_TIMEOUT_MS),
                 });
 
                 const data = await response.json();
+                const replyContent = data?.choices?.[0]?.message?.content;
 
-                if (response.ok && !data.error) {
+                if (response.ok && !data.error && typeof replyContent === 'string' && replyContent.trim().length > 0) {
                     successData = data;
                     break;
                 } else {
-                    lastError = data.error || { message: "Unknown error" };
+                    lastError = data?.error || { message: "Empty or invalid model response" };
                 }
             } catch (err) {
                 const isTimeout = err instanceof DOMException && err.name === "TimeoutError";
@@ -227,7 +238,7 @@ ${PORTFOLIO_CONTEXT}
 
         return new Response(JSON.stringify({
             error: lastError || 'All models failed',
-            details: 'Tried: ' + models.join(', ')
+            details: 'Tried: ' + models.map((m) => m.id).join(', ')
         }), {
             status: 500,
             headers: { 'Content-Type': 'application/json' }
