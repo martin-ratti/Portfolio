@@ -32,31 +32,78 @@ const t = useTranslations(lang);
                 </p>
 
                 <div
-                    class="flex flex-col gap-4 items-center md:items-start max-w-xs mx-auto md:mx-0"
+                    class="flex flex-col gap-4 items-center md:items-start max-w-xs mx-auto md:mx-0 w-full"
                 >
-                    <a
-                        href="mailto:martinratti10@gmail.com"
-                        class="inline-flex items-center justify-center gap-3 px-8 py-3 glass-card border border-slate-200 dark:border-slate-700 font-medium rounded-2xl hover:bg-slate-100/50 dark:hover:bg-slate-800 transition text-slate-700 dark:text-slate-300 hover:text-red-500 dark:hover:text-red-400 w-full text-base group"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="20"
-                            height="20"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="group-hover:scale-110 transition-transform"
-                            aria-hidden="true"
-                            ><rect width="20" height="16" x="2" y="4" rx="2"
-                            ></rect><path
-                                d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"
-                            ></path></svg
+                    <div class="flex items-stretch gap-2 w-full">
+                        <a
+                            href="mailto:martinratti10@gmail.com"
+                            class="inline-flex items-center justify-center gap-3 px-6 py-3 glass-card border border-slate-200 dark:border-slate-700 font-medium rounded-2xl hover:bg-slate-100/50 dark:hover:bg-slate-800 transition text-slate-700 dark:text-slate-300 hover:text-red-500 dark:hover:text-red-400 flex-1 text-base group"
                         >
-                        Email
-                    </a>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="group-hover:scale-110 transition-transform"
+                                aria-hidden="true"
+                                ><rect width="20" height="16" x="2" y="4" rx="2"
+                                ></rect><path
+                                    d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"
+                                ></path></svg
+                            >
+                            Email
+                        </a>
+                        <button
+                            id="copy-email-btn"
+                            type="button"
+                            aria-label={t("contact.email.copyAria")}
+                            title={t("contact.email.copy")}
+                            data-email="martinratti10@gmail.com"
+                            data-label-copy={t("contact.email.copy")}
+                            data-label-copied={t("contact.email.copied")}
+                            class="inline-flex items-center justify-center gap-1.5 px-4 py-3 glass-card border border-slate-200 dark:border-slate-700 font-medium rounded-2xl hover:bg-slate-100/50 dark:hover:bg-slate-800 hover:border-violet-500/50 transition text-slate-600 dark:text-slate-300 hover:text-violet-600 dark:hover:text-violet-300 text-xs shrink-0 cursor-pointer"
+                        >
+                            <svg
+                                id="copy-email-icon"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                            >
+                                <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+                                <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+                            </svg>
+                            <svg
+                                id="copy-email-check"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2.5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="hidden text-emerald-500"
+                                aria-hidden="true"
+                            >
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                            <span id="copy-email-label">{t("contact.email.copy")}</span>
+                        </button>
+                        <span id="copy-email-status" class="sr-only" role="status" aria-live="polite"></span>
+                    </div>
                     <a
                         href="https://www.linkedin.com/in/martin-ratti-dev/"
                         target="_blank"
@@ -127,6 +174,7 @@ const t = useTranslations(lang);
                             type="text"
                             id="name"
                             name="name"
+                            autocomplete="name"
                             required
                             placeholder=" "
                             class="peer w-full bg-white dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded-xl px-4 pt-6 pb-2 text-slate-900 dark:text-white focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all duration-300 placeholder-transparent"
@@ -147,6 +195,7 @@ const t = useTranslations(lang);
                             type="email"
                             id="email"
                             name="email"
+                            autocomplete="email"
                             required
                             placeholder=" "
                             class="peer w-full bg-white dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded-xl px-4 pt-6 pb-2 text-slate-900 dark:text-white focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all duration-300 placeholder-transparent"
@@ -226,7 +275,12 @@ const t = useTranslations(lang);
                     </div>
                 </form>
 
-                <div id="success-state" class="hidden flex-col items-center justify-center text-center p-6 md:p-12 animate-fade-in bg-slate-50/30 dark:bg-slate-800/20 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 min-h-[490px]">
+                <div
+                    id="success-state"
+                    role="status"
+                    tabindex="-1"
+                    class="hidden flex-col items-center justify-center text-center p-6 md:p-12 animate-fade-in bg-slate-50/30 dark:bg-slate-800/20 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 min-h-[490px] focus:outline-none focus:ring-2 focus:ring-violet-500"
+                >
                     <div class="relative mb-8 flex items-center justify-center">
                         <svg class="w-24 h-24" viewBox="0 0 52 52" aria-hidden="true">
                             <circle class="animate-circle text-green-500 dark:text-green-400" cx="26" cy="26" r="25" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="160" stroke-dashoffset="160" />
@@ -259,11 +313,67 @@ const t = useTranslations(lang);
 
 <script>
     let contactAbortController: AbortController | null = null;
+    let resultHideTimer: ReturnType<typeof setTimeout> | null = null;
+    let copyEmailTimer: ReturnType<typeof setTimeout> | null = null;
+
+    function cleanupContactForm() {
+        if (contactAbortController) {
+            contactAbortController.abort();
+            contactAbortController = null;
+        }
+        if (resultHideTimer !== null) {
+            clearTimeout(resultHideTimer);
+            resultHideTimer = null;
+        }
+        if (copyEmailTimer !== null) {
+            clearTimeout(copyEmailTimer);
+            copyEmailTimer = null;
+        }
+    }
 
     function initContactForm() {
-        if (contactAbortController) contactAbortController.abort();
+        cleanupContactForm();
         contactAbortController = new AbortController();
         const { signal } = contactAbortController;
+
+        // Copy Email Button
+        const copyEmailBtn = document.getElementById("copy-email-btn");
+        const copyEmailIcon = document.getElementById("copy-email-icon");
+        const copyEmailCheck = document.getElementById("copy-email-check");
+        const copyEmailLabel = document.getElementById("copy-email-label");
+        const copyEmailStatus = document.getElementById("copy-email-status");
+
+        copyEmailBtn?.addEventListener("click", async () => {
+            const email = copyEmailBtn.dataset.email || "martinratti10@gmail.com";
+            const labelCopy = copyEmailBtn.dataset.labelCopy || "Copiar email";
+            const labelCopied = copyEmailBtn.dataset.labelCopied || "¡Copiado!";
+
+            let copied = false;
+            try {
+                if (navigator.clipboard?.writeText) {
+                    await navigator.clipboard.writeText(email);
+                    copied = true;
+                }
+            } catch {
+                copied = false;
+            }
+
+            if (copied) {
+                if (copyEmailTimer !== null) clearTimeout(copyEmailTimer);
+                copyEmailIcon?.classList.add("hidden");
+                copyEmailCheck?.classList.remove("hidden");
+                if (copyEmailLabel) copyEmailLabel.textContent = labelCopied;
+                if (copyEmailStatus) copyEmailStatus.textContent = labelCopied;
+
+                copyEmailTimer = setTimeout(() => {
+                    copyEmailIcon?.classList.remove("hidden");
+                    copyEmailCheck?.classList.add("hidden");
+                    if (copyEmailLabel) copyEmailLabel.textContent = labelCopy;
+                    if (copyEmailStatus) copyEmailStatus.textContent = "";
+                    copyEmailTimer = null;
+                }, 2200);
+            }
+        }, { signal });
 
         const form = document.getElementById("contact-form") as HTMLFormElement;
         const result = document.getElementById("form-result");
@@ -295,6 +405,33 @@ const t = useTranslations(lang);
         const originalText = submitText.innerText;
         const sendingText = submitText.dataset.sending || "Enviando...";
 
+        const scheduleHideResult = () => {
+            if (resultHideTimer !== null) {
+                clearTimeout(resultHideTimer);
+            }
+            resultHideTimer = setTimeout(() => {
+                result.classList.add("hidden");
+                resultHideTimer = null;
+            }, 5000);
+        };
+
+        const showErrorBanner = () => {
+            result.classList.remove("hidden");
+            const resultMessage = document.getElementById("result-message");
+            const resultIcon = document.getElementById("result-icon");
+            const resultContainer = result.querySelector("div");
+
+            if (resultMessage && resultIcon && resultContainer) {
+                resultContainer.className =
+                    "flex items-center gap-3 p-4 rounded-xl border backdrop-blur-sm shadow-lg shadow-red-500/10 bg-red-500/10 border-red-500/20 text-red-500 dark:text-red-400";
+                resultIcon.className =
+                    "shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-lg bg-red-500/20";
+                resultIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>`;
+                resultMessage.innerText = result.dataset.error || "Error";
+            }
+            scheduleHideResult();
+        };
+
         form.addEventListener("submit", function (e) {
             e.preventDefault();
 
@@ -302,6 +439,11 @@ const t = useTranslations(lang);
                 form.querySelector('input[type="email"]') as HTMLInputElement
             ).value;
             if (!emailValue) return;
+
+            if (resultHideTimer !== null) {
+                clearTimeout(resultHideTimer);
+                resultHideTimer = null;
+            }
 
             submitBtn.disabled = true;
             submitBtn.classList.add("opacity-70", "cursor-not-allowed");
@@ -330,14 +472,6 @@ const t = useTranslations(lang);
                     );
                     submitText.innerText = originalText;
 
-                    const resultMessage =
-                        document.getElementById("result-message");
-                    const resultIcon = document.getElementById("result-icon");
-                    const resultContainer = result.querySelector("div");
-
-                    if (!resultMessage || !resultIcon || !resultContainer)
-                        return;
-
                     if (response.ok && jsonResponse.success !== false) {
                         result.classList.add("hidden");
                         const successState = document.getElementById("success-state");
@@ -345,7 +479,8 @@ const t = useTranslations(lang);
                             form.classList.add("hidden");
                             successState.classList.remove("hidden");
                             successState.classList.add("flex");
-                            
+                            successState.focus();
+
                             const resetBtn = document.getElementById("reset-form");
                             resetBtn?.addEventListener("click", () => {
                                 successState.classList.add("hidden");
@@ -358,47 +493,21 @@ const t = useTranslations(lang);
                             }, { once: true, signal });
                         }
                     } else {
-                        result.classList.remove("hidden");
-                        resultContainer.className =
-                            "flex items-center gap-3 p-4 rounded-xl border backdrop-blur-sm shadow-lg shadow-red-500/10 bg-red-500/10 border-red-500/20 text-red-500 dark:text-red-400";
-                        resultIcon.className =
-                            "shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-lg bg-red-500/20";
-                        resultIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>`;
-                        resultMessage.innerText =
-                            result.dataset.error || "Error";
+                        showErrorBanner();
                     }
                 })
                 .catch(() => {
-                    result.classList.remove("hidden");
-                    const resultMessage =
-                        document.getElementById("result-message");
-                    const resultIcon = document.getElementById("result-icon");
-                    const resultContainer = result.querySelector("div");
-
-                    if (resultMessage && resultIcon && resultContainer) {
-                        resultContainer.className =
-                            "flex items-center gap-3 p-4 rounded-xl border backdrop-blur-sm shadow-lg shadow-red-500/10 bg-red-500/10 border-red-500/20 text-red-500 dark:text-red-400";
-                        resultIcon.className =
-                            "shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-lg bg-red-500/20";
-                        resultIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>`;
-                        resultMessage.innerText =
-                            result.dataset.error || "Error";
-                    }
-
+                    showErrorBanner();
                     submitBtn.disabled = false;
                     submitBtn.classList.remove(
                         "opacity-70",
                         "cursor-not-allowed",
                     );
                     submitText.innerText = originalText;
-                })
-                .finally(() => {
-                    setTimeout(() => {
-                        result.classList.add("hidden");
-                    }, 5000);
                 });
         }, { signal });
     }
 
+    document.addEventListener("astro:before-swap", cleanupContactForm);
     document.addEventListener("astro:page-load", initContactForm);
 </script>

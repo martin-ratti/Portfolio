@@ -1,0 +1,96 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import { ui } from "../i18n/ui";
+
+const es = ui.es;
+const en = ui.en;
+---
+
+<Layout
+    title="404 | Martín Ratti"
+    description={es["notFound.desc"]}
+    noindex={true}
+>
+    <Navbar />
+
+    <main id="main-content" class="min-h-[82vh] flex items-center justify-center px-4 pt-28 pb-16">
+        <section
+            id="not-found-section"
+            class="glass-card max-w-2xl w-full rounded-3xl p-8 md:p-14 text-center relative overflow-hidden animate-fade-in-up"
+        >
+            <div
+                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-violet-600/20 rounded-full blur-[80px] -z-10"
+                aria-hidden="true"
+            >
+            </div>
+
+            <p class="text-7xl md:text-8xl font-extrabold tracking-tight mb-4">
+                <span class="text-gradient">404</span>
+            </p>
+
+            <h1
+                id="not-found-title"
+                class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-4"
+                data-en={en["notFound.title"]}
+            >
+                {es["notFound.title"]}
+            </h1>
+
+            <p
+                id="not-found-desc"
+                class="text-base md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed mb-8 max-w-lg mx-auto"
+                data-en={en["notFound.desc"]}
+            >
+                {es["notFound.desc"]}
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a
+                    id="not-found-home"
+                    href="/"
+                    data-en={en["notFound.home"]}
+                    data-en-href="/en"
+                    class="px-7 py-3 bg-violet-600 hover:bg-violet-700 text-white font-semibold rounded-full transition-all hover:scale-105 shadow-lg shadow-violet-600/25"
+                >
+                    {es["notFound.home"]}
+                </a>
+                <a
+                    id="not-found-projects"
+                    href="/#proyectos"
+                    data-en={en["notFound.projects"]}
+                    data-en-href="/en#proyectos"
+                    class="px-7 py-3 glass-card border border-slate-200 dark:border-slate-700 font-semibold rounded-full text-slate-700 dark:text-slate-200 hover:border-violet-500/50 hover:text-violet-600 dark:hover:text-violet-300 transition-all hover:scale-105"
+                >
+                    {es["notFound.projects"]}
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <Footer />
+</Layout>
+
+<script>
+    function syncNotFoundLocale() {
+        const section = document.getElementById("not-found-section");
+        if (!section) return;
+
+        const isEn = window.location.pathname === "/en" || window.location.pathname.startsWith("/en/");
+        if (!isEn) return;
+
+        document.documentElement.lang = "en";
+        const ids = ["not-found-title", "not-found-desc", "not-found-home", "not-found-projects"];
+        for (const id of ids) {
+            const el = document.getElementById(id);
+            if (!el) continue;
+            const enText = el.getAttribute("data-en");
+            const enHref = el.getAttribute("data-en-href");
+            if (enText) el.textContent = enText;
+            if (enHref && el instanceof HTMLAnchorElement) el.setAttribute("href", enHref);
+        }
+    }
+
+    document.addEventListener("astro:page-load", syncNotFoundLocale);
+</script>
