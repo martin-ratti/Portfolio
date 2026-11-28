@@ -1,15 +1,18 @@
 ---
+import "@fontsource-variable/inter";
 import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
 import ChatWidget from "../components/ChatWidget.astro";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
 
 interface Props {
 	title: string;
 	description?: string;
 	image?: string;
+	noindex?: boolean;
+	jsonLd?: Record<string, unknown>[];
 }
 
-import { getLangFromUrl, useTranslations } from "../i18n/utils";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
@@ -17,18 +20,25 @@ const {
 	title,
 	description = t('seo.description'),
 	image = "/og-image.png",
+	noindex = false,
+	jsonLd = [],
 } = Astro.props;
 
 const siteUrl = "https://martinratti.com.ar";
-// Lógica para rutas alternativas: limpia /en del inicio para obtener la ruta base
-const cleanPath = Astro.url.pathname.replace(/^\/en(\/|$)/, "$1") || "/";
+const normalizePath = (p: string) => p.replace(/\/+$/, "") || "/";
+const currentPath = normalizePath(Astro.url.pathname);
+const cleanPath = normalizePath(currentPath.replace(/^\/en(\/|$)/, "/"));
+const enPath = cleanPath === "/" ? "/en" : `/en${cleanPath}`;
+
 const alternates = {
-    es: new URL(cleanPath, siteUrl).href,
-    en: new URL("/en" + (cleanPath.startsWith("/") ? cleanPath : "/" + cleanPath), siteUrl).href,
+	es: new URL(cleanPath, siteUrl).href,
+	en: new URL(enPath, siteUrl).href,
 };
-const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
+const canonicalUrl = new URL(currentPath, siteUrl).href;
 const ogImageUrl = new URL("/og-image.png", siteUrl).href;
 const pageImageUrl = new URL(image, siteUrl).href;
+const isDefaultOg = image === "/og-image.png";
+const pageImageType = image.toLowerCase().endsWith(".webp") ? "image/webp" : undefined;
 ---
 
 <!doctype html>
@@ -37,18 +47,13 @@ const pageImageUrl = new URL(image, siteUrl).href;
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		{noindex && <meta name="robots" content="noindex, nofollow" />}
 		<meta name="theme-color" content="#7c3aed" media="(prefers-color-scheme: light)" />
 		<meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
 		<meta name="color-scheme" content="light dark" />
 		<meta name="author" content="Martín Ratti" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-			rel="stylesheet"
-		/>
 		<meta property="og:type" content="website" />
 		<meta property="og:locale" content={lang === 'es' ? 'es_AR' : 'en_US'} />
 		<meta property="og:locale:alternate" content={lang === 'es' ? 'en_US' : 'es_AR'} />
@@ -56,14 +61,38 @@ const pageImageUrl = new URL(image, siteUrl).href;
 		<meta property="og:url" content={canonicalUrl} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
-		<meta property="og:image" content={pageImageUrl} />
-		<meta property="og:image:alt" content={title} />
+		{
+			isDefaultOg ? (
+				<>
+					<meta property="og:image" content={ogImageUrl} />
+					<meta property="og:image:type" content="image/png" />
+					<meta property="og:image:width" content="1200" />
+					<meta property="og:image:height" content="630" />
+					<meta property="og:image:alt" content={title} />
+				</>
+			) : (
+				<>
+					<meta property="og:image" content={pageImageUrl} />
+					{pageImageType && <meta property="og:image:type" content={pageImageType} />}
+					<meta property="og:image:alt" content={title} />
+					<meta property="og:image" content={ogImageUrl} />
+					<meta property="og:image:type" content="image/png" />
+					<meta property="og:image:width" content="1200" />
+					<meta property="og:image:height" content="630" />
+				</>
+			)
+		}
 
-		<!-- SEO Expansion 1: Bidirectional Semantic Connection (hreflang) -->
-		<link rel="canonical" href={canonicalUrl} />
-		<link rel="alternate" hreflang="es" href={alternates.es} />
-		<link rel="alternate" hreflang="en" href={alternates.en} />
-		<link rel="alternate" hreflang="x-default" href={alternates.en} />
+		{
+			!noindex && (
+				<>
+					<link rel="canonical" href={canonicalUrl} />
+					<link rel="alternate" hreflang="es" href={alternates.es} />
+					<link rel="alternate" hreflang="en" href={alternates.en} />
+					<link rel="alternate" hreflang="x-default" href={alternates.en} />
+				</>
+			)
+		}
 
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:url" content={canonicalUrl} />
@@ -86,7 +115,8 @@ const pageImageUrl = new URL(image, siteUrl).href;
 			],
 			"knowsAbout": [
 				"Astro", "React", "TypeScript", "Node.js", "Express",
-				".NET", "C#", "Java", "Python", "PostgreSQL", "SQL Server",
+				".NET", "C#", "Java", "Kotlin", "Android", "Jetpack Compose",
+				"Python", "PostgreSQL", "MySQL", "SQL Server", "Firebase",
 				"Tailwind CSS", "Docker", "Prisma"
 			],
 			"alumniOf": {
@@ -108,6 +138,11 @@ const pageImageUrl = new URL(image, siteUrl).href;
 			"inLanguage": [lang === 'es' ? 'es-AR' : 'en-US'],
 			"author": { "@type": "Person", "name": "Martín Ratti" }
 		})} />
+		{
+			jsonLd.map((schema) => (
+				<script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
+			))
+		}
 		<script is:inline defer src="/_vercel/insights/script.js"></script>
 		<script is:inline defer src="/_vercel/speed-insights/script.js"></script>
 		<title>{title}</title>
@@ -240,18 +275,8 @@ const pageImageUrl = new URL(image, siteUrl).href;
 				);
 			};
 
-			const initThemeTransitions = () => {
-				// UI/UX Expansion 4: Transición sin destellos
-				setTimeout(() => {
-					document.body.classList.add('theme-transitions-ready');
-				}, 100);
-			};
-
 			document.addEventListener("astro:before-swap", cleanupSpotlight);
-			document.addEventListener("astro:page-load", () => {
-				initSpotlight();
-				initThemeTransitions();
-			});
+			document.addEventListener("astro:page-load", initSpotlight);
 		</script>
 		<ChatWidget />
 	</body>
