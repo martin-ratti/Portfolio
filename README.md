@@ -93,7 +93,7 @@ El sitio incluye páginas dedicadas para cada proyecto que documentan a fondo:
 4. **Desafíos Técnicos y Soluciones:** Retos superados durante el desarrollo.
 5. **Galería con Lightbox:** Visor interactivo con selector de capturas y vista a pantalla completa (`Esc` para cerrar, `←` / `→` para navegar).
 
-Para conocer cómo agregar o actualizar capturas reales de proyectos, consulta la [Guía de Gestión de Imágenes](public/projects/README.md).
+Para conocer cómo agregar o actualizar capturas reales de proyectos, consulta la [Guía de Gestión de Imágenes](docs/projects-images.md).
 
 ---
 
@@ -143,5 +143,5 @@ Disponible para nuevas oportunidades laborales, proyectos y colaboraciones.
 ---
 
 <p align="center">
-  © 2025 Martín Ratti. Desarrollado con excelencia técnica y pasión.
+  © 2026 Martín Ratti. Desarrollado con excelencia técnica y pasión.
 </p>

@@ -69,11 +69,13 @@ El proyecto presenta una ejecución excepcional con un enfoque **premium y moder
 
 ## 6. Lista de Acciones Recomendadas (Task List)
 
-- [ ] **Accesibilidad**: Añadir `Skip Link` en el layout principal.
-- [ ] **Accesibilidad**: Auditar todos los SVGs y añadir `aria-hidden="true"` a los decorativos.
-- [ ] **SEO**: Añadir script de JSON-LD para `Schema:Person`.
-- [ ] **UX**: Mejorar el foco visual (`:focus-visible`) para que sea más evidente en todos los elementos interactivos.
-- [ ] **Code Style**: Migrar los SVGs manuales de `Navbar` y `AboutMe` a `astro-icon` para consistencia.
+- [x] **Accesibilidad**: Añadir `Skip Link` en el layout principal.
+- [x] **Accesibilidad**: Auditar todos los SVGs y añadir `aria-hidden="true"` a los decorativos.
+- [x] **SEO**: Añadir script de JSON-LD para `Schema:Person` (además de `WebSite`, `SoftwareSourceCode` y `BreadcrumbList` por proyecto).
+- [x] **UX**: Mejorar el foco visual (`:focus-visible`) para que sea más evidente en todos los elementos interactivos.
+- [x] **Code Style**: Migrar los SVGs manuales de `Navbar` y `AboutMe` a `astro-icon` para consistencia.
+- [x] **Navegación, Tarjetas y Galería**: Corregir scrollspy/anchors en `Navbar.astro`, capas `z-index` en `ProjectCard.astro`, lifecycle/accesibilidad con focus trap e `inert` en `ProjectGallery.astro` y página `404.astro` personalizada.
+- [x] **Optimización & i18n**: Self-host de `Inter Variable`, lazy-load de `marked` en el chat, endpoint estático `/llms.txt`, i18n completo en proyectos (títulos y 51 imágenes), banner de filtro activo y CI en GitHub Actions.
 
 ---
-**Conclusión**: El portfolio está en un estado de madurez muy alto. Con pequeños ajustes en accesibilidad y datos estructurados, se posicionará como una referencia de calidad técnica.
+**Conclusión**: El portfolio está en un estado de madurez muy alto, con todas las recomendaciones de accesibilidad, SEO, rendimiento, i18n y estabilidad de `ClientRouter` aplicadas y verificadas.
