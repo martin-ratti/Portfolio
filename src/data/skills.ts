@@ -7,6 +7,7 @@ export interface Skills {
     languages: SkillItem[];
     frontend: SkillItem[];
     backend: SkillItem[];
+    databases: SkillItem[];
     tools: SkillItem[];
 }
 
@@ -39,27 +40,29 @@ export const skills: Skills = {
         { name: "Tomcat", icon: "simple-icons:apachetomcat" },
         { name: "Zod", icon: "simple-icons:zod" }
     ],
+    databases: [
+        { name: "PostgreSQL", icon: "simple-icons:postgresql" },
+        { name: "MySQL", icon: "simple-icons:mysql" },
+        { name: "SQL Server", icon: "simple-icons:microsoftsqlserver" },
+        { name: "SQLite", icon: "simple-icons:sqlite" },
+        { name: "Firebase", icon: "simple-icons:firebase" },
+        { name: "Dapper", icon: "mdi:database-cog" }
+    ],
     tools: [
         { name: "Git", icon: "simple-icons:git" },
         { name: "GitHub", icon: "simple-icons:github" },
         { name: "Docker", icon: "simple-icons:docker" },
-        { name: "Scrum", icon: "simple-icons:scrumalliance" },
-        { name: "Kanban", icon: "mdi:view-column-outline" },
         { name: "Vercel", icon: "simple-icons:vercel" },
         { name: "Railway", icon: "simple-icons:railway" },
-        { name: "MySQL", icon: "simple-icons:mysql" },
-        { name: "PostgreSQL", icon: "simple-icons:postgresql" },
-        { name: "SQL Server", icon: "simple-icons:microsoftsqlserver" },
-        { name: "Jest", icon: "simple-icons:jest" },
-        { name: "Vitest", icon: "simple-icons:vitest" },
-        { name: "Playwright", icon: "simple-icons:playwright" },
-        { name: "SQLite", icon: "simple-icons:sqlite" },
-        { name: "Firebase", icon: "simple-icons:firebase" },
-        { name: "Dapper", icon: "mdi:database-cog" },
-        { name: "Stripe", icon: "simple-icons:stripe" },
         { name: "pnpm", icon: "simple-icons:pnpm" },
         { name: "Vite", icon: "simple-icons:vite" },
+        { name: "Playwright", icon: "simple-icons:playwright" },
+        { name: "Vitest", icon: "simple-icons:vitest" },
+        { name: "Jest", icon: "simple-icons:jest" },
+        { name: "Stripe", icon: "simple-icons:stripe" },
         { name: "Gemini AI", icon: "simple-icons:googlegemini" },
-        { name: "Android", icon: "simple-icons:android" }
+        { name: "Android", icon: "simple-icons:android" },
+        { name: "Scrum", icon: "simple-icons:scrumalliance" },
+        { name: "Kanban", icon: "mdi:view-column-outline" }
     ]
 };

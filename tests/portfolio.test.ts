@@ -108,6 +108,7 @@ describe("Skill-to-Project Filter Alignment (Mejora #7)", () => {
         ...skills.languages,
         ...skills.frontend,
         ...skills.backend,
+        ...skills.databases,
         ...skills.tools,
     ].map((s) => s.name);
 

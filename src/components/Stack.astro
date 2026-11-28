@@ -1,16 +1,25 @@
 ---
 import { skills } from "../data/skills";
+import { projects } from "../data/projects";
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
 import { Icon } from "astro-icon/components";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
+const projectCountBySkill = new Map<string, number>();
+for (const project of projects) {
+    for (const tag of project.tags) {
+        projectCountBySkill.set(tag, (projectCountBySkill.get(tag) ?? 0) + 1);
+    }
+}
+
 const skillCategories = [
     {
         title: "Frontend",
         icon: "mdi:web",
         skills: skills.frontend,
+        spanClass: "lg:col-span-3",
         glowClass: "bg-violet-400/30 dark:bg-violet-500/30",
         iconClass: "text-violet-700 dark:text-violet-300",
         colorClass:
@@ -20,6 +29,7 @@ const skillCategories = [
         title: "Backend",
         icon: "mdi:server",
         skills: skills.backend,
+        spanClass: "lg:col-span-3",
         glowClass: "bg-fuchsia-400/30 dark:bg-fuchsia-500/30",
         iconClass: "text-fuchsia-700 dark:text-fuchsia-300",
         colorClass:
@@ -29,15 +39,27 @@ const skillCategories = [
         title: t("stack.languages"),
         icon: "mdi:code-tags",
         skills: skills.languages,
+        spanClass: "lg:col-span-3",
         glowClass: "bg-cyan-400/30 dark:bg-cyan-500/30",
         iconClass: "text-cyan-700 dark:text-cyan-300",
         colorClass:
             "border-cyan-200 dark:border-cyan-500/30 bg-cyan-100/50 dark:bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 hover:bg-cyan-200 dark:hover:bg-cyan-500/20",
     },
     {
+        title: t("stack.databases"),
+        icon: "mdi:database-outline",
+        skills: skills.databases,
+        spanClass: "lg:col-span-3",
+        glowClass: "bg-amber-400/30 dark:bg-amber-500/30",
+        iconClass: "text-amber-700 dark:text-amber-300",
+        colorClass:
+            "border-amber-200 dark:border-amber-500/30 bg-amber-100/50 dark:bg-amber-500/10 text-amber-800 dark:text-amber-300 hover:bg-amber-200/70 dark:hover:bg-amber-500/20",
+    },
+    {
         title: t("stack.tools"),
         icon: "mdi:tools",
         skills: skills.tools,
+        spanClass: "md:col-span-2 lg:col-span-6",
         glowClass: "bg-emerald-400/30 dark:bg-emerald-500/30",
         iconClass: "text-emerald-700 dark:text-emerald-300",
         colorClass:
@@ -46,87 +68,194 @@ const skillCategories = [
 ];
 ---
 
-<section id="stack" class="py-20 px-4 relative scroll-mt-16">
-    <div class="max-w-6xl mx-auto">
-        <h2
-            class="text-3xl font-bold mb-4 text-center text-slate-900 dark:text-white"
-        >
-            {t("stack.title")}
-        </h2>
-        <p
-            class="text-slate-500 dark:text-slate-400 text-center mb-12 text-sm max-w-md mx-auto flex items-center justify-center gap-1"
-        >
-            <Icon name="mdi:lightbulb-outline" class="w-4 h-4 text-amber-500 shrink-0" aria-hidden="true" />
-            {t("stack.instruction")}
+<section id="stack" class="py-16 sm:py-24 px-4 max-w-6xl mx-auto relative scroll-mt-16">
+    <!-- Editorial Header -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-8 sm:mb-12">
+        <div>
+            <div class="inline-flex items-center gap-3 mb-2 sm:mb-3">
+                <span class="font-mono text-xs uppercase tracking-[0.22em] text-violet-600 dark:text-violet-400 font-semibold">
+                    {t("stack.eyebrow")}
+                </span>
+                <span class="h-px w-10 bg-linear-to-r from-violet-500/60 to-transparent" aria-hidden="true"></span>
+            </div>
+            <h2 class="text-[1.75rem] sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.15] sm:leading-[1.12]">
+                {t("stack.headline.prefix")}{" "}
+                <span class="text-gradient">{t("stack.headline.highlight")}</span>
+            </h2>
+        </div>
+
+        <p class="inline-flex items-center gap-2 self-start md:self-auto px-3.5 py-2 rounded-2xl sm:rounded-full bg-white/75 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-600 dark:text-slate-300 shadow-sm max-w-sm">
+            <Icon name="mdi:filter-variant" class="w-4 h-4 text-violet-500 shrink-0" aria-hidden="true" />
+            <span>{t("stack.instruction")}</span>
         </p>
+    </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {
-                skillCategories.map((category) => (
-                    <div class="glass-card p-8 rounded-2xl relative overflow-hidden group">
-                        <div
-                            class={`absolute -right-4 -top-4 w-24 h-24 rounded-full blur-2xl opacity-30 group-hover:opacity-60 transition-opacity pointer-events-none ${category.glowClass}`}
-                        />
+    <!-- Inline Active Filter Bar -->
+    <div
+        id="stack-active-bar"
+        role="status"
+        aria-live="polite"
+        data-prefix={t("projects.filter.active")}
+        data-singular={t("projects.filter.countSingular")}
+        data-plural={t("projects.filter.countPlural")}
+        class="hidden mb-6 rounded-2xl glass-card px-4 py-3 border border-violet-500/35 flex-wrap items-center justify-between gap-3 shadow-md shadow-violet-500/10"
+    >
+        <span id="stack-active-text" class="text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-100"></span>
+        <div class="flex items-center gap-2">
+            <a
+                href="#proyectos"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 min-h-[36px] rounded-full text-xs font-semibold bg-violet-600 hover:bg-violet-700 text-white transition-colors"
+            >
+                <span>{t("stack.viewProjects")}</span>
+                <Icon name="mdi:arrow-down" class="w-3.5 h-3.5" aria-hidden="true" />
+            </a>
+            <button
+                type="button"
+                id="stack-clear-btn"
+                class="inline-flex items-center gap-1 px-3 py-1.5 min-h-[36px] rounded-full text-xs font-semibold border border-slate-300 dark:border-slate-700 bg-white/80 dark:bg-slate-900/70 text-slate-700 dark:text-slate-200 hover:border-violet-500/50 transition-colors cursor-pointer"
+            >
+                <Icon name="mdi:close" class="w-3.5 h-3.5" aria-hidden="true" />
+                <span>{t("stack.clear")}</span>
+            </button>
+        </div>
+    </div>
 
-                        <div class="flex items-center gap-2 mb-6">
-                            <Icon 
-                                name={category.icon} 
-                                class={`w-6 h-6 ${category.iconClass}`} 
+    <!-- Balanced 6-column Bento -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 sm:gap-6">
+        {
+            skillCategories.map((category) => (
+                <div class={`glass-card stack-reveal p-5 sm:p-7 rounded-2xl sm:rounded-3xl relative overflow-hidden group shadow-lg shadow-slate-200/40 dark:shadow-none ${category.spanClass}`}>
+                    <div
+                        class={`absolute -right-4 -top-4 w-24 h-24 rounded-full blur-2xl opacity-30 group-hover:opacity-60 transition-opacity pointer-events-none ${category.glowClass}`}
+                        aria-hidden="true"
+                    />
+
+                    <div class="flex items-center justify-between gap-2 mb-4 sm:mb-5 relative z-10">
+                        <div class="flex items-center gap-2.5">
+                            <Icon
+                                name={category.icon}
+                                class={`w-5 h-5 sm:w-6 sm:h-6 shrink-0 ${category.iconClass}`}
                                 aria-hidden="true"
                             />
-                            <h3 class="text-xl font-semibold text-slate-800 dark:text-slate-200">
+                            <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-slate-100">
                                 {category.title}
                             </h3>
                         </div>
+                        <span class="font-mono text-xs px-2 py-0.5 rounded-md bg-slate-200/70 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400">
+                            {category.skills.length}
+                        </span>
+                    </div>
 
-                        <div class="flex flex-wrap gap-3">
-                            {category.skills.map((skill) => (
+                    <div class="flex flex-wrap gap-2 sm:gap-2.5 relative z-10">
+                        {category.skills.map((skill) => {
+                            const count = projectCountBySkill.get(skill.name) ?? 0;
+                            return (
                                 <button
                                     type="button"
-                                    class={`skill-btn px-4 py-2 rounded-lg text-sm font-medium border transition-all cursor-pointer hover:scale-105 active:scale-95 flex items-center gap-2 ${category.colorClass}`}
+                                    class={`skill-btn min-h-[40px] sm:min-h-0 px-3 py-2 sm:px-3.5 sm:py-2 rounded-xl text-xs sm:text-sm font-medium border transition-all cursor-pointer hover:scale-[1.03] active:scale-95 inline-flex items-center gap-2 ${category.colorClass}`}
                                     data-skill={skill.name}
+                                    data-count={count}
                                     aria-pressed="false"
-                                    aria-label={`${t("stack.filterBy")} ${skill.name}`}
+                                    aria-label={`${t("stack.filterBy")} ${skill.name} (${count})`}
                                 >
-                                    <Icon name={skill.icon} class="w-4 h-4" aria-hidden="true" />
-                                    {skill.name}
+                                    <Icon name={skill.icon} class="w-4 h-4 shrink-0" aria-hidden="true" />
+                                    <span>{skill.name}</span>
+                                    <span class="font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-black/5 dark:bg-white/10 opacity-80">
+                                        {count}
+                                    </span>
                                 </button>
-                            ))}
-                        </div>
+                            );
+                        })}
                     </div>
-                ))
-            }
-        </div>
+                </div>
+            ))
+        }
     </div>
 </section>
+
+<style>
+    @keyframes stackReveal {
+        from {
+            opacity: 0;
+            translate: 0 18px;
+        }
+        to {
+            opacity: 1;
+            translate: 0 0;
+        }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        @supports ((animation-timeline: view()) and (animation-range: entry)) {
+            .stack-reveal {
+                animation: stackReveal linear both;
+                animation-timeline: view();
+                animation-range: entry 0% entry 20%;
+            }
+        }
+    }
+</style>
 
 <script>
     let activeSkill: string | null = null;
     let abortController: AbortController | null = null;
 
-    const ACTIVE_CLASSES = ["ring-2", "ring-offset-2", "ring-violet-500", "scale-105"];
+    const ACTIVE_CLASSES = [
+        "ring-2",
+        "ring-offset-2",
+        "ring-offset-slate-50",
+        "dark:ring-offset-slate-950",
+        "ring-violet-500",
+        "scale-[1.03]",
+    ];
+
+    function syncActiveBar(skill: string | null, count: number) {
+        const bar = document.getElementById("stack-active-bar");
+        const barText = document.getElementById("stack-active-text");
+        if (!bar || !barText) return;
+
+        if (!skill) {
+            bar.classList.add("hidden");
+            bar.classList.remove("flex");
+            barText.textContent = "";
+            return;
+        }
+
+        const prefix = bar.dataset.prefix || "Filtrando por";
+        const noun =
+            count === 1
+                ? bar.dataset.singular || "proyecto"
+                : bar.dataset.plural || "proyectos";
+        barText.textContent = `${prefix} ${skill} (${count} ${noun})`;
+        bar.classList.remove("hidden");
+        bar.classList.add("flex");
+    }
 
     function resetSkills() {
         activeSkill = null;
         document.querySelectorAll(".skill-btn").forEach((b) => {
-            b.classList.remove(...ACTIVE_CLASSES, "opacity-50");
+            b.classList.remove(...ACTIVE_CLASSES, "opacity-60");
             b.classList.add("opacity-100");
             b.setAttribute("aria-pressed", "false");
         });
+        syncActiveBar(null, 0);
     }
 
     function highlightSkill(skill: string) {
-        document.querySelectorAll(".skill-btn").forEach((b) => {
+        let count = 0;
+        document.querySelectorAll<HTMLElement>(".skill-btn").forEach((b) => {
             const match = b.getAttribute("data-skill") === skill;
             b.setAttribute("aria-pressed", match ? "true" : "false");
             if (match) {
+                count = Number(b.dataset.count || "0");
                 b.classList.add(...ACTIVE_CLASSES);
-                b.classList.remove("opacity-50", "opacity-100");
+                b.classList.remove("opacity-60", "opacity-100");
             } else {
                 b.classList.remove(...ACTIVE_CLASSES, "opacity-100");
-                b.classList.add("opacity-50");
+                b.classList.add("opacity-60");
             }
         });
+        syncActiveBar(skill, count);
     }
 
     function cleanupStackFilter() {
@@ -144,46 +273,74 @@ const skillCategories = [
 
         const buttons = document.querySelectorAll(".skill-btn");
         buttons.forEach((btn) => {
-            btn.addEventListener("click", () => {
-                const skill = (btn as HTMLElement).getAttribute("data-skill");
+            btn.addEventListener(
+                "click",
+                () => {
+                    const skill = (btn as HTMLElement).getAttribute("data-skill");
 
-                if (activeSkill === skill) {
-                    resetSkills();
-                } else {
-                    activeSkill = skill;
-                    if (skill) highlightSkill(skill);
-                }
+                    if (activeSkill === skill) {
+                        resetSkills();
+                    } else {
+                        activeSkill = skill;
+                        if (skill) highlightSkill(skill);
+                    }
 
-                window.dispatchEvent(
-                    new CustomEvent("filter-projects", {
-                        detail: { skill: activeSkill },
-                    }),
-                );
-            }, { signal });
+                    window.dispatchEvent(
+                        new CustomEvent("filter-projects", {
+                            detail: { skill: activeSkill },
+                        }),
+                    );
+                },
+                { signal },
+            );
         });
 
-        window.addEventListener("filter-projects", (e: Event) => {
-            const customEvent = e as CustomEvent<{ skill?: string | null }>;
-            if (!customEvent.detail?.skill) {
+        const clearBtn = document.getElementById("stack-clear-btn");
+        clearBtn?.addEventListener(
+            "click",
+            () => {
                 resetSkills();
-            }
-        }, { signal });
+                window.dispatchEvent(
+                    new CustomEvent("filter-projects", {
+                        detail: { skill: null },
+                    }),
+                );
+            },
+            { signal },
+        );
 
-        window.addEventListener("keydown", (e: KeyboardEvent) => {
-            if (e.key !== "Escape" || !activeSkill) return;
+        window.addEventListener(
+            "filter-projects",
+            (e: Event) => {
+                const customEvent = e as CustomEvent<{ skill?: string | null }>;
+                if (!customEvent.detail?.skill) {
+                    resetSkills();
+                }
+            },
+            { signal },
+        );
 
-            const hasOpenDialog = Boolean(
-                document.querySelector("#chat-window:not([inert]), #gallery-lightbox:not([inert])")
-            );
-            if (hasOpenDialog) return;
+        window.addEventListener(
+            "keydown",
+            (e: KeyboardEvent) => {
+                if (e.key !== "Escape" || !activeSkill) return;
 
-            resetSkills();
-            window.dispatchEvent(
-                new CustomEvent("filter-projects", {
-                    detail: { skill: null },
-                }),
-            );
-        }, { signal });
+                const hasOpenDialog = Boolean(
+                    document.querySelector(
+                        "#chat-window:not([inert]), #gallery-lightbox:not([inert])",
+                    ),
+                );
+                if (hasOpenDialog) return;
+
+                resetSkills();
+                window.dispatchEvent(
+                    new CustomEvent("filter-projects", {
+                        detail: { skill: null },
+                    }),
+                );
+            },
+            { signal },
+        );
     }
 
     document.addEventListener("astro:before-swap", cleanupStackFilter);
