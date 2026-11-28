@@ -134,10 +134,13 @@ function handleFocusTrap(e: KeyboardEvent) {
     }
 }
 
+const ERROR_ICON_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block mr-1.5 text-red-500 align-text-bottom shrink-0" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>';
+
 export function addMessageToDOM(
     container: HTMLElement | null,
     role: "user" | "assistant",
-    text: string
+    text: string,
+    isError = false
 ) {
     if (!container) return;
 
@@ -148,7 +151,7 @@ export function addMessageToDOM(
         ? `<div class="w-8 h-8 rounded-full bg-linear-to-tr from-violet-500 to-fuchsia-500 shrink-0 flex items-center justify-center text-white text-xs font-bold" aria-hidden="true">AI</div>`
         : "";
 
-    const content = role === "assistant"
+    const rawContent = role === "assistant"
         ? renderAssistantMarkdown(text)
         : text.replace(/[&<>"']/g, (m) => ({
             '&': '&amp;',
@@ -158,11 +161,18 @@ export function addMessageToDOM(
             "'": '&#39;'
         }[m] || m));
 
+    const content = role === "assistant" && isError
+        ? `<div class="flex items-start gap-1.5">${ERROR_ICON_SVG}<div class="min-w-0">${rawContent}</div></div>`
+        : rawContent;
+
+    const bubbleColorClass = role === "user"
+        ? "bg-violet-600 text-white"
+        : isError
+            ? "bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-red-500/30 dark:border-red-400/30"
+            : "bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-black/5 dark:border-white/10";
+
     const bubble = `
-        <div class="${role === "user"
-            ? "bg-violet-600 text-white"
-            : "bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-black/5 dark:border-white/10"
-        } p-3 rounded-2xl ${role === "user" ? "rounded-tr-none" : "rounded-tl-none"} shadow-sm max-w-[85%] text-sm prose cursor-text select-text">
+        <div class="${bubbleColorClass} p-3 rounded-2xl ${role === "user" ? "rounded-tr-none" : "rounded-tl-none"} shadow-sm max-w-[85%] text-sm prose cursor-text select-text">
         ${content}
         </div>
     `;

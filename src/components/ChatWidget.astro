@@ -47,11 +47,14 @@ const t = useTranslations(lang);
                         >
                             {t("chat.name")}
                         </h3>
-                        <p
-                            class="text-[10px] text-slate-500 dark:text-slate-400"
+                        <a
+                            href="/llms.txt"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="text-[10px] text-slate-500 dark:text-slate-400 hover:text-violet-600 dark:hover:text-violet-300 transition-colors"
                         >
                             {t("chat.powered")}
-                        </p>
+                        </a>
                     </div>
                 </div>
                 <button
@@ -187,7 +190,7 @@ const t = useTranslations(lang);
 
             <svg
                 id="icon-message"
-                class="absolute transition-all duration-300 transform group-hover:scale-0 w-8 h-8"
+                class="absolute transition-all duration-300 transform w-8 h-8"
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
                 height="24"
@@ -202,7 +205,7 @@ const t = useTranslations(lang);
             >
             <svg
                 id="icon-close"
-                class="absolute transition-all duration-300 transform scale-0 group-hover:scale-100 w-8 h-8"
+                class="absolute transition-all duration-300 transform scale-0 w-8 h-8"
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
                 height="24"
@@ -229,19 +232,36 @@ const t = useTranslations(lang);
         </button>
 
     <script>
-        import { sendChatMessage } from "../utils/chat/chatApi";
-        import {
-            addMessageToDOM,
-            showTypingIndicator,
-            hideTypingIndicator,
-            setupFocusTrap,
-            releaseFocusTrap,
-        } from "../utils/chat/chatUi";
         import type { ChatMessage } from "../utils/chat/chatApi";
+
+        type ChatModules = {
+            chatApi: typeof import("../utils/chat/chatApi");
+            chatUi: typeof import("../utils/chat/chatUi");
+        };
+
+        let chatModulesPromise: Promise<ChatModules> | null = null;
+        let cachedChatModules: ChatModules | null = null;
+
+        function loadChatModules(): Promise<ChatModules> {
+            if (!chatModulesPromise) {
+                chatModulesPromise = Promise.all([
+                    import("../utils/chat/chatApi"),
+                    import("../utils/chat/chatUi"),
+                ]).then(([chatApi, chatUi]) => {
+                    cachedChatModules = { chatApi, chatUi };
+                    return cachedChatModules;
+                });
+            }
+            return chatModulesPromise;
+        }
+
+        interface StoredChatMessage extends ChatMessage {
+            isError?: boolean;
+        }
 
         let isOpen = false;
         let isSending = false;
-        let messages: ChatMessage[] = [];
+        let messages: StoredChatMessage[] = [];
         let chatAbortController: AbortController | null = null;
 
         let widget: HTMLElement | null = null;
@@ -267,7 +287,6 @@ const t = useTranslations(lang);
         let errPrefix = "Error:";
         let labelOpen = "Abrir chat con Martín AI";
         let labelClose = "Cerrar chat con Martín AI";
-        const errorIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block mr-1 text-red-500"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>';
 
         function showTooltip() {
             if (!tooltip || isOpen) return;
@@ -290,7 +309,7 @@ const t = useTranslations(lang);
             });
         }
 
-        function applyChatOpenState(open: boolean, manageFocus = true) {
+        async function applyChatOpenState(open: boolean, manageFocus = true) {
             isOpen = open;
             toggleBtn?.setAttribute("aria-expanded", open ? "true" : "false");
             toggleBtn?.setAttribute("aria-label", open ? labelClose : labelOpen);
@@ -306,11 +325,12 @@ const t = useTranslations(lang);
                 messageIcon?.classList.add("scale-0");
                 closeIcon?.classList.remove("scale-0");
 
-                if (windowEl && toggleBtn) {
-                    setupFocusTrap(windowEl, toggleBtn);
+                const { chatUi } = await loadChatModules();
+                if (isOpen && windowEl && toggleBtn) {
+                    chatUi.setupFocusTrap(windowEl, toggleBtn);
                 }
 
-                if (manageFocus) {
+                if (manageFocus && isOpen) {
                     setTimeout(() => input?.focus(), 300);
                 }
             } else {
@@ -320,18 +340,18 @@ const t = useTranslations(lang);
                 messageIcon?.classList.remove("scale-0");
                 closeIcon?.classList.add("scale-0");
 
-                releaseFocusTrap(manageFocus);
+                cachedChatModules?.chatUi.releaseFocusTrap(manageFocus);
             }
         }
 
         function toggleChat() {
-            applyChatOpenState(!isOpen, true);
+            void applyChatOpenState(!isOpen, true);
         }
 
         function handleKeyDown(e: KeyboardEvent) {
             if (e.key === "Escape" && isOpen) {
                 e.preventDefault();
-                applyChatOpenState(false, true);
+                void applyChatOpenState(false, true);
             }
         }
 
@@ -339,34 +359,35 @@ const t = useTranslations(lang);
             if (!messagesContainer || isSending) return;
 
             setSendingState(true);
-            addMessageToDOM(messagesContainer, "user", text);
+            const { chatApi, chatUi } = await loadChatModules();
+
+            chatUi.addMessageToDOM(messagesContainer, "user", text);
             if (input) input.value = "";
+            const apiHistory: ChatMessage[] = messages
+                .filter((m) => !m.isError)
+                .map(({ role, content }) => ({ role, content }));
+            apiHistory.push({ role: "user", content: text });
             messages.push({ role: "user", content: text });
 
-            showTypingIndicator(messagesContainer);
+            chatUi.showTypingIndicator(messagesContainer);
 
             try {
-                const response = await sendChatMessage(messages, currentLang, errInvalid);
-                hideTypingIndicator();
+                const response = await chatApi.sendChatMessage(apiHistory, currentLang, errInvalid);
+                chatUi.hideTypingIndicator();
 
                 if (response.error) {
-                    if (response.error === "Network error") {
-                        addMessageToDOM(messagesContainer, "assistant", errServer);
-                    } else {
-                        addMessageToDOM(
-                            messagesContainer,
-                            "assistant",
-                            `${errorIcon} **${errPrefix}** ${response.error}`,
-                        );
-                    }
+                    const errorText = response.error === "Network error"
+                        ? errServer
+                        : `**${errPrefix}** ${response.error}`;
+                    chatUi.addMessageToDOM(messagesContainer, "assistant", errorText, true);
                 } else if (response.reply) {
-                    addMessageToDOM(messagesContainer, "assistant", response.reply);
+                    chatUi.addMessageToDOM(messagesContainer, "assistant", response.reply);
                     messages.push({ role: "assistant", content: response.reply });
                 } else {
-                    addMessageToDOM(messagesContainer, "assistant", errConnection);
+                    chatUi.addMessageToDOM(messagesContainer, "assistant", errConnection, true);
                 }
             } finally {
-                hideTypingIndicator();
+                chatUi.hideTypingIndicator();
                 setSendingState(false);
                 if (isOpen) {
                     input?.focus();
@@ -374,14 +395,14 @@ const t = useTranslations(lang);
             }
         }
 
-        async function handleChatSubmit(e: SubmitEvent) {
+        function handleChatSubmit(e: SubmitEvent) {
             e.preventDefault();
             if (!input || isSending) return;
 
             const text = input.value.trim();
             if (!text) return;
 
-            sendMessage(text);
+            void sendMessage(text);
         }
 
         function handleChipClick(e: Event) {
@@ -389,9 +410,8 @@ const t = useTranslations(lang);
             const btn = (e.currentTarget as HTMLElement).closest(".chat-chip") as HTMLButtonElement;
             const message = btn?.dataset.message;
             if (message) {
-                sendMessage(message);
+                void sendMessage(message);
 
-                // Animación de salida para los chips
                 if (chipsContainer) {
                     chipsContainer.classList.add("opacity-0", "pointer-events-none");
                     setTimeout(() => {
@@ -401,13 +421,25 @@ const t = useTranslations(lang);
             }
         }
 
+        function cleanupChatWidget() {
+            if (chatAbortController) {
+                chatAbortController.abort();
+                chatAbortController = null;
+            }
+            if (tooltipTimer) {
+                clearTimeout(tooltipTimer);
+                tooltipTimer = null;
+            }
+            if (hideTooltipTimer) {
+                clearTimeout(hideTooltipTimer);
+                hideTooltipTimer = null;
+            }
+        }
+
         function initChatWidget() {
-            if (chatAbortController) chatAbortController.abort();
+            cleanupChatWidget();
             chatAbortController = new AbortController();
             const { signal } = chatAbortController;
-
-            if (tooltipTimer) clearTimeout(tooltipTimer);
-            if (hideTooltipTimer) clearTimeout(hideTooltipTimer);
 
             widget = document.getElementById("chat-widget");
             toggleBtn = document.getElementById("chat-toggle");
@@ -442,14 +474,17 @@ const t = useTranslations(lang);
             const domIsClosed = !windowEl || windowEl.hasAttribute("inert") || windowEl.getAttribute("aria-hidden") === "true";
             isOpen = !domIsClosed;
             isSending = false;
-            applyChatOpenState(isOpen, false);
+            void applyChatOpenState(isOpen, false);
 
             // Re-populate conversation history if messages exist across navigation
             if (messagesContainer && messages.length > 0) {
-                for (const msg of messages) {
-                    addMessageToDOM(messagesContainer, msg.role, msg.content);
-                }
                 chipsContainer?.classList.add("hidden");
+                const targetContainer = messagesContainer;
+                void loadChatModules().then(({ chatUi }) => {
+                    for (const msg of messages) {
+                        chatUi.addMessageToDOM(targetContainer, msg.role, msg.content, Boolean(msg.isError));
+                    }
+                });
             }
 
             toggleBtn?.addEventListener("click", toggleChat, { signal });
@@ -457,13 +492,18 @@ const t = useTranslations(lang);
             form?.addEventListener("submit", handleChatSubmit, { signal });
             document.addEventListener("keydown", handleKeyDown, { signal });
 
-            // Chips click events
             document.querySelectorAll(".chat-chip").forEach((chip) => {
                 chip.addEventListener("click", handleChipClick, { signal });
             });
 
-            // Hover effects for manual visibility
-            toggleBtn?.addEventListener("mouseenter", showTooltip, { signal });
+            // Preload modules on hover/focus + tooltip visibility
+            toggleBtn?.addEventListener("mouseenter", () => {
+                showTooltip();
+                void loadChatModules();
+            }, { signal });
+            toggleBtn?.addEventListener("focus", () => {
+                void loadChatModules();
+            }, { signal });
             toggleBtn?.addEventListener("mouseleave", hideTooltip, { signal });
 
             // Proactive Tooltip Timer
@@ -473,6 +513,7 @@ const t = useTranslations(lang);
             }, 6000);
         }
 
+        document.addEventListener("astro:before-swap", cleanupChatWidget);
         document.addEventListener("astro:page-load", initChatWidget);
     </script>
 

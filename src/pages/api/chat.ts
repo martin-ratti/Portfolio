@@ -37,6 +37,9 @@ function isOriginAllowed(origin: string, requestUrl: string): boolean {
         if ((protocol === 'http:' || protocol === 'https:') && (hostname === 'localhost' || hostname === '127.0.0.1')) {
             return true;
         }
+        if (protocol === 'https:' && /^martin-ratti-portfolio(?:-[a-z0-9-]+)?\.vercel\.app$/i.test(hostname)) {
+            return true;
+        }
     } catch {
         return false;
     }
@@ -184,7 +187,7 @@ Your goal is to chat about Martín's skills and projects in a professional yet a
     - NEVER invent technologies.
     - **Project Integrity:** Do NOT mix technologies between projects. (e.g., Do NOT say "Extractor-OCR" uses Blazor). Check the context strictly.
     - **Scope:** You are a portfolio assistant. You only know about Martín's work.
-- **Stack Coverage:** When asked about skills, mention the full range: **Web** (Astro/React/Node), **Desktop** (.NET/Python), and **Backend/Data** (Java/.NET/SQL).
+- **Stack Coverage:** When asked about skills, mention the full range: **Web** (Astro/React/Node), **Mobile** (Kotlin/Android/Jetpack Compose), **Desktop** (.NET/Python), and **Backend/Data** (Java/.NET/SQL).
 - **GitHub:** If asked, share his profile: https://github.com/martin-ratti
 
 Context about Martín:

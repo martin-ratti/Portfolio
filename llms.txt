@@ -87,7 +87,7 @@ This website serves as a professional portfolio and technical demonstration. It 
 
 ---
 
-### [OCR Web - Sirviendo Apuntes](https://github.com/martin-ratti/OCR-Web.git)
+### [OCR Web - Sirviendo Apuntes](https://github.com/martin-ratti/OCR-Web)
 - **Description:** Fullstack web evolution of desktop OCR, designed as a custom tool for study notes with highlighter detection and cloud/local AI vision. Live at https://ocr-web-frontend.vercel.app/
 - **Tech Stack:** Frontend: React 19, TypeScript, Tailwind CSS, Shadcn/ui, Radix UI, Zustand, PP-OCRv6 (WebGPU / ONNX Runtime Web). Backend: Node.js, Express 5, Zod, Multer. AI: Gemini Flash-Lite cascade, Groq Qwen 3.8. Monorepo: pnpm workspaces.
 - **Key Features:** Three swappable OCR engines (Gemini highlighter cascade with Zero-Quota Waste pre-filter, Groq Qwen 3.8 forensic, 100% offline WebGPU/WASM PP-OCRv6), modular Clean Architecture, batch processing with ZIP export, hyphenation repair, and Word (.docx) export.
@@ -119,7 +119,7 @@ This website serves as a professional portfolio and technical demonstration. It 
 
 ---
 
-### [ImpulsaMe - Java Crowdfunding](https://github.com/agussantinelli/ImpulsaMe-Java.git)
+### [ImpulsaMe - Java Crowdfunding](https://github.com/agussantinelli/ImpulsaMe-Java)
 
 - **Description:** Crowdfunding web platform built with a 3-tier MVC architecture in Java EE, Apache Tomcat, and MySQL, developed with Joaquín Peralta and Agustín Santinelli.
 
